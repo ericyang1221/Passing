@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:ApplicationControlBar xmlns:mx="http://www.adobe.com/2006/mxml"  width="300" height="90">
+     <mx:Label text="PASSING" fontSize="20" color="white" />
+</mx:ApplicationControlBar>

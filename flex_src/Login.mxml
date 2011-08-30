@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" xmlns:uc="user_components.*">
+	<mx:Style source="../css/fontFace.css" />
+	<mx:Style source="../skin/SummerSky.css" />
+	
+	<uc:LoginDiv top="50" left="50"/>
+	
+</mx:Application>

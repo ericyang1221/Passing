@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="400" height="40">
+	<mx:Style source="../../css/everydayasentence.css" />
+	<mx:HBox styleName="sentencebox">
+		<mx:Label text="[今日口语]" color="#ccffff" />
+		<mx:Label useHandCursor="true" mouseChildren="false" buttonMode="true" styleName="sentence" id="everydayASentence" text="ちょっとお腹が空いちゃったので、何か食べよ！" />
+	</mx:HBox>
+</mx:Canvas>

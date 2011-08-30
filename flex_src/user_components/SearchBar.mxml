@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:ApplicationControlBar xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="90">
+	<mx:Script>
+		<![CDATA[
+			import ascript.common.services.RO;
+		]]>
+	</mx:Script>
+	<mx:Script source="../ascript/SearchBar.as" />
+	
+	<mx:VBox width="100%" height="100%">
+		<mx:LinkBar dataProvider="{searchViewStack}" itemClick="changeSearchType(event);" />
+		<mx:ViewStack id="searchViewStack" width="100%" height="100%">
+			<mx:Canvas label="查单词" width="100%" height="100%">
+				<mx:HBox verticalAlign="middle">
+					<mx:TextInput width="250" id="searchWordStr" />
+					<mx:Button label="中日" click="RO.sendRequest('SearchCnToJp','doCnToJp',searchWordStr.text,processCnToJpResultFunc);" />
+					<mx:Button label="日中" click="RO.sendRequest('SearchJpToCn','doJpToCn',searchWordStr.text,processJpToCnResultFunc);" />
+				</mx:HBox>
+			</mx:Canvas>
+			<mx:Canvas label="查语法" width="100%" height="100%">
+				<mx:HBox verticalAlign="middle">
+					<mx:TextInput width="250" id="searchGrammerStr" />
+					<mx:Button label="查语法" />
+					<mx:Button label="设置" />
+   				</mx:HBox>
+			</mx:Canvas>
+		</mx:ViewStack>
+	</mx:VBox>
+</mx:ApplicationControlBar>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:ApplicationControlBar xmlns:mx="http://www.adobe.com/2006/mxml" paddingBottom="20" paddingLeft="20" paddingRight="20" paddingTop="20">
+   	<mx:Script source="../ascript/SearchDiv.as" />
+   	<mx:Script>
+		<![CDATA[
+			import ascript.common.services.RO;
+		]]>
+	</mx:Script>
+   	
+   	<mx:Fade id="tabFade" alphaFrom="0" alphaTo="1" duration="200" />
+   	<mx:Glow id="buttonGlow" alphaFrom="0" alphaTo="1" blurXFrom="0" blurXTo="-5" blurYFrom="0" blurYTo="-5" duration="200" color="0xCCCCCC" />
+
+   	<mx:Box width="100%" height="100%" >
+		<mx:TabNavigator id="searchNav" width="100%" height="80%" creationComplete="searchTabFade();" fontSize="12" >
+			<mx:VBox id="wordTab" label="查单词" horizontalAlign="center" paddingTop="80" >
+				<mx:HBox verticalAlign="middle">
+					<mx:TextInput width="300" id="searchWordStr" />
+					<mx:LinkButton label="设置" />
+				</mx:HBox>		
+				<mx:HBox horizontalAlign="center">
+					<mx:Button label="中日" rollOut="glowButton(event);" rollOver="glowButton(event);" />
+ 					<mx:Spacer width="20" />
+					<mx:Button label="日中" rollOut="glowButton(event);" rollOver="glowButton(event);" click="RO.sendRequest('SearchJpToCn','doJpToCn',searchWordStr.text,processResultFunc);" />
+				</mx:HBox>
+  				<mx:HBox horizontalAlign="center" paddingTop="60">
+  					<mx:Label text="最新热词：" fontSize="12" paddingTop="3" />
+   					<mx:LinkBar horizontalAlign="center" itemClick="navigateToURL(new URLRequest('http://localhost:8080/'+String(event.label).toLowerCase()),'_blank')">
+   						<mx:dataProvider>
+       						{linkData}
+	   					</mx:dataProvider>
+					</mx:LinkBar>
+   				</mx:HBox>
+   			</mx:VBox>
+   			<mx:VBox id="grammerTab" label="查语法" horizontalAlign="center" paddingTop="80" >
+   				<mx:HBox verticalAlign="middle">
+   					<mx:TextInput width="300" />
+   					<mx:Button label="查语法" rollOut="glowButton(event);" rollOver="glowButton(event);" />
+   				</mx:HBox>
+   				<mx:HBox horizontalAlign="center" fontSize="10">
+   					<mx:RadioButton groupName="gs" id="mine" label="自己的" />
+   					<mx:RadioButton groupName="gs" id="friends" label="朋友的" />
+   					<mx:RadioButton groupName="gs" id="all" label="全部" />
+   				</mx:HBox>
+   			</mx:VBox>
+   		</mx:TabNavigator>
+   		<mx:HBox width="100%" height="20%" verticalAlign="middle" horizontalAlign="center" fontSize="12" >
+   			<mx:Label text="导航：" />
+   			<mx:LinkButton label="单词笔记本" />
+   			<mx:LinkButton label="语法笔记本" />
+   			<mx:Label text=",如有疑问欢迎" />
+   			<mx:LinkButton label="联系我们" />
+   			<mx:Label text="Passing ©2010" />
+   		</mx:HBox>
+   	</mx:Box>
+</mx:ApplicationControlBar>

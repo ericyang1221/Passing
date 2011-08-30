@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" xmlns:uc="user_components.*" >
+	<mx:Style source="../css/fontFace.css" />
+	<mx:Style source="../skin/SummerSky.css" />
+	
+	<uc:Logo  top="10" left="10" />
+	<uc:LoginState  top="10" right="10" color="white" />
+	<uc:SearchDiv  right="100" top="140" left="100" bottom="100" />
+	<uc:BottomBar  bottom="0" left="40" right="40" />
+    
+</mx:Application>

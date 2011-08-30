@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:ApplicationControlBar xmlns:mx="http://www.adobe.com/2006/mxml" name="bottomBar" height="40">
+	<mx:Script source="../ascript/BottomBar.as" />
+
+	<mx:Zoom id="zoomButton" zoomHeightFrom="1" zoomWidthFrom="1" zoomHeightTo="1.2" zoomWidthTo="1.2" duration="200" />
+	<mx:Zoom id="myAppZoom" zoomHeightFrom="0" zoomWidthFrom="0" zoomHeightTo="1" zoomWidthTo="1" duration="100" />
+	
+   	<mx:Box width="120" horizontalAlign="center" >
+   		<mx:Button label="我的应用程序"  click="myApp();" rollOut="buttonZoom(event);" rollOver="buttonZoom(event);" />
+   	</mx:Box>
+   	<mx:Spacer width="100%" />
+   	<mx:Box width="240" horizontalAlign="center" >
+   		<mx:Button label="我的好友" click="myFriends();" width="200" rollOut="buttonZoom(event);" rollOver="buttonZoom(event);" />
+   	</mx:Box>
+</mx:ApplicationControlBar>

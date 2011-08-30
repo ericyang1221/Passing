@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:flex="http://www.springframework.org/schema/flex"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+		http://www.springframework.org/schema/flex
+		http://www.springframework.org/schema/flex/spring-flex-1.0.xsd">
+
+	<import resource="data-access-config.xml" />
+    
+    <!-- openSessionInViewInterceptor -->
+    <bean id="openSessionInViewInterceptor"
+           class="org.springframework.orm.hibernate3.support.OpenSessionInViewInterceptor">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+	
+
+	<!-- Bootstraps and exposes the BlazeDS MessageBroker -->
+	<bean id="_messageBroker"
+		class="org.springframework.flex.core.MessageBrokerFactoryBean">
+		<property name="servicesConfigPath"
+			value="/WEB-INF/config/flex/services-config.xml" />
+	</bean>
+
+	<!-- Maps request paths at /* to the BlazeDS MessageBroker -->
+	<bean
+		class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		 <property name="interceptors" ref="openSessionInViewInterceptor"/>
+		<property name="mappings">
+			<value>/*=_messageBroker</value>
+		</property>
+	</bean>
+
+	<!-- Dispatches requests mapped to a MessageBroker -->
+	<bean
+		class="org.springframework.flex.servlet.MessageBrokerHandlerAdapter" />
+
+	<bean id="searchJpToCn"
+		class="com.passing.spring.service.impl.SearchJpToCnBean">
+		<property name="jpwordDao">
+			<ref bean="jpwordDao" />
+		</property>
+	</bean>
+	<bean id="searchCnToJp"
+		class="com.passing.spring.service.impl.SearchCnToJpBean">
+		<property name="jpwordDao">
+			<ref bean="jpwordDao" />
+		</property>
+	</bean>
+	<bean id="register" class="com.passing.spring.service.impl.RegisterServiceBean">
+		<property name="passingUserDao">
+			<ref bean="passingUserDao"/>
+		</property>
+	</bean>
+	<bean id="login" class="com.passing.spring.service.impl.LoginServiceBean">
+		<property name="passingUserDao">
+			<ref bean="passingUserDao"/>
+		</property>
+	</bean>
+
+
+	<!-- Expose the productService bean for BlazeDS remoting -->
+	<bean id="doSearchJapaneseWord"
+		class="org.springframework.flex.remoting.RemotingDestinationExporter">
+		<property name="messageBroker" ref="_messageBroker" />
+		<property name="service" ref="searchJpToCn" />
+		<property name="destinationId" value="SearchJpToCn" />
+		<property name="channels" value="my-amf" />
+	</bean>
+	<bean id="doSearchChineseWord"
+		class="org.springframework.flex.remoting.RemotingDestinationExporter">
+		<property name="messageBroker" ref="_messageBroker" />
+		<property name="service" ref="searchCnToJp" />
+		<property name="destinationId" value="SearchCnToJp" />
+		<property name="channels" value="my-amf" />
+	</bean>
+	<bean id="registerUser"
+		class="org.springframework.flex.remoting.RemotingDestinationExporter">
+		<property name="messageBroker" ref="_messageBroker"></property>
+		<property name="service" ref="register"></property>
+		<property name="destinationId" value="register"></property>
+		<property name="channels" value="my-amf"></property>	
+	</bean>
+	<bean id="userLogin"
+		class="org.springframework.flex.remoting.RemotingDestinationExporter">
+		<property name="messageBroker" ref="_messageBroker"></property>
+		<property name="service" ref="login"></property>
+		<property name="destinationId" value="login"></property>
+		<property name="channels" value="my-amf"></property>	
+	</bean>
+
+</beans>

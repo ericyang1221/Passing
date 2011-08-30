@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:ApplicationControlBar xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:myComp="ascript.common.validator.*" width="350" height="210" creationComplete="init();" >
+
+	<mx:Style source="../../css/login.css"/>
+	<mx:Script source="../ascript/Login.as"/>
+	
+	<mx:Script>
+		<![CDATA[
+			import ascript.common.consts.LoginConsts;
+		]]>
+	</mx:Script>
+	
+	<mx:Panel styleName="special" width="100%" height="100%" title="登 录" horizontalCenter="0" verticalCenter="0">
+		<mx:Form paddingTop="10" paddingBottom="10">
+			<mx:FormItem styleName="common" label="用户名">
+				<mx:TextInput styleName="common" id="nameTxt" width="170" restrict="a-z\A-Z\0-9\_" maxChars="20"/>
+			</mx:FormItem>
+			<mx:FormItem styleName="common" label="密码">
+				<mx:TextInput styleName="common" id="pwdTxt" width="170" displayAsPassword="true" restrict="a-z\A-Z\0-9" maxChars="20"/>
+			</mx:FormItem>
+			<mx:HBox width="257">
+				<mx:Spacer width="47"/>
+				<mx:Button id="submitBtn" label="确 定" width="72" height="30" click="submit();" />
+				<mx:Spacer width="10"/>
+				<mx:Button id="resetBtn" label="重 置" width="72" height="30" click="reset();"/>
+			</mx:HBox>
+		</mx:Form>
+		<mx:HBox width="289">
+			<mx:Spacer width="65"/>
+			<mx:LinkButton styleName="common" label="找回密码" width="68" height="25" click="findBackPwd();"/>
+			<mx:Spacer width="14"/>
+			<mx:LinkButton styleName="common" label="注册用户" width="68" height="25" click="register();"/>
+		</mx:HBox>
+	</mx:Panel>
+
+	<mx:StringValidator id="username_stringValidator" source="{nameTxt}" property="text"
+		requiredFieldError="{LoginConsts.VALIDMSG_NAME_REQUIRED}"/>
+	<mx:StringValidator id="pwd_stringValidator" source="{pwdTxt}" property="text"
+		requiredFieldError="{LoginConsts.VALIDMSG_PWD_REQUIRED}"/>
+
+</mx:ApplicationControlBar>

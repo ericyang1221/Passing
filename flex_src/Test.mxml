@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute">
+	<mx:Script source="ascript/CommonEffects.as" />
+	<mx:Script source="ascript/chatWindow.as"/>
+	<mx:Style source="../css/fontFace.css" />
+
+	<mx:Script>      
+  		<![CDATA[
+  			import mx.collections.ArrayCollection;
+  		import mx.rpc.events.FaultEvent;
+		import mx.rpc.events.ResultEvent;
+		import mx.controls.Alert;
+		import mx.rpc.remoting.Operation;
+		[Bindable]    
+		private var helloResult:String;    
+		private function say(searchStr:String):void{
+			var o:Operation = ro.getOperation("doJpToCn") as Operation;  
+			o.addEventListener(ResultEvent.RESULT, resultHandler);
+			o.addEventListener(FaultEvent.FAULT,faultHandler);
+			o.send(searchStr);
+		}
+		
+		private function resultHandler(event:ResultEvent):void{
+			var wordList:ArrayCollection = event.result as ArrayCollection
+			Alert.show(wordList.length.toString());
+		}
+		
+		private function faultHandler(event:FaultEvent):void {
+			Alert.show(String(event.fault));
+		}
+		]]>
+	</mx:Script>      
+
+	<mx:Button id="bt" label="test" horizontalCenter="0" verticalCenter="0" click=""/>
+	
+	<mx:RemoteObject id="ro" destination="SearchWord"
+		endpoint="/Passing/messagebroker/amf"
+		showBusyCursor="true"/>
+	<mx:VBox>
+		<mx:Button label="test BlaxeDS" click="say('あ');" />
+		<mx:Label text="{helloResult}" /> 
+		<mx:TextInput id="inputText" /> 
+	</mx:VBox>
+		
+</mx:Application>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" xmlns:myComp="user_components.*">
+	<mx:Style source="../css/fontFace.css" />
+	<mx:Style source="../skin/SummerSky.css" />
+	
+	<myComp:RegisterDiv horizontalCenter="0" verticalCenter="0"/>
+
+</mx:Application>

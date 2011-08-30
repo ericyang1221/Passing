@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:ApplicationControlBar xmlns:mx="http://www.adobe.com/2006/mxml" width="20%" height="100%" paddingBottom="15" paddingLeft="15" paddingRight="15" paddingTop="15">
+	<mx:HBox width="100%" height="100%">
+		
+	</mx:HBox>
+</mx:ApplicationControlBar>

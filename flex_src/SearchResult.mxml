@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" xmlns:uc="user_components.*">
+	<mx:Style source="../css/fontFace.css" />
+	<mx:Style source="../skin/SummerSky.css" />
+
+	<mx:HBox left="10" top="10" right="10">
+		<uc:Logo />
+		<uc:SearchBar width="100%" />
+		<mx:VBox>
+			<uc:LoginState color="white" />
+			<uc:EveryDayASentence />
+		</mx:VBox>
+	</mx:HBox>
+	<mx:HBox  top="90" bottom="50" left="10" right="10" width="100%">
+		<uc:ApplicationList />
+		<uc:SearchResultDiv id="searchResultDiv" />
+		<uc:Advertisement />
+	</mx:HBox>
+	
+	<uc:BottomBar  bottom="0" left="40" right="40" />
+     
+</mx:Application>

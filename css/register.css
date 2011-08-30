@@ -1,0 +1,15 @@
+/* CSS file */
+.title
+{
+	fontWeight:bold;
+}
+.common
+{
+	fontSize:12;
+	fontWeight:normal;
+}
+.redLbl
+{
+	paddingTop:5;
+	color:red;
+}

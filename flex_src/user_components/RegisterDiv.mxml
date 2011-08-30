@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:ApplicationControlBar xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:myComp="ascript.common.validator.*" creationComplete="init();" width="600" height="450">
+	
+	<mx:Script source="../ascript/Register.as"/>
+	<mx:Style source="../../css/register.css"/>
+	
+	<mx:Script>
+		<![CDATA[
+			import ascript.common.consts.RegisterConsts;
+			import mx.controls.Alert;
+		]]>
+	</mx:Script>
+	
+	<mx:Panel styleName="title" title="注册" width="100%" height="100%" horizontalCenter="0" verticalCenter="0">
+		<mx:Form>
+			<mx:FormItem styleName="common" label="用户名">
+				<mx:HBox>
+					<mx:Label styleName="redLbl" text="*" width="10"/>
+					<mx:TextInput id="txtRegName" restrict="a-z\A-Z\0-9\_" maxChars="20" focusIn="recordUserName();" focusOut="validateUser();"/>
+					<mx:Label id="isUsed" text="" width="200" paddingTop="3"/>
+				</mx:HBox>
+			</mx:FormItem>
+			<mx:FormItem styleName="common" label="密码">
+				<mx:HBox>
+					<mx:Label styleName="redLbl" text="*" width="10"/>
+					<mx:TextInput id="txtRegPwd" displayAsPassword="true" restrict="a-z\A-Z\0-9" maxChars="20"/>
+					<mx:Label text="(密码区分大小写)" paddingTop="3"/>
+				</mx:HBox>
+			</mx:FormItem>
+			<mx:FormItem styleName="common" label="确认密码">
+				<mx:HBox>
+					<mx:Label styleName="redLbl" text="*" width="10"/>
+					<mx:TextInput id="txtCfmPwd" displayAsPassword="true" restrict="a-z\A-Z\0-9" maxChars="20"/>
+				</mx:HBox>
+			</mx:FormItem>
+			<mx:FormItem styleName="common" label="昵称">
+				<mx:HBox>
+					<mx:Label styleName="redLbl" text="" width="10"/>
+					<mx:TextInput id="txtRegNick" maxChars="20"/>
+					<mx:Label text="(最多可输入20个字符，1个汉字为2字符)" paddingTop="3"/>
+				</mx:HBox>
+			</mx:FormItem>
+			<mx:FormItem styleName="common" label="邮箱">
+				<mx:HBox>
+					<mx:Label styleName="redLbl" text="*" width="10"/>
+					<mx:TextInput id="txtRegEmail"/>
+				</mx:HBox>
+			</mx:FormItem>
+			<mx:FormItem styleName="common" label="性别">
+				<mx:HBox>
+					<mx:Label styleName="redLbl" text="*" width="10"/>
+					<mx:RadioButtonGroup id="sex"/>
+					<mx:RadioButton height="25" groupName="sex" id="male" value="1" label="男" selected="true"/>
+					<mx:RadioButton height="25" groupName="sex" id="female" value="0" label="女"/>
+					<mx:RadioButton height="25" groupName="sex" id="unknow" value="2" label="保密"/>
+				</mx:HBox>
+			</mx:FormItem>
+			<mx:FormItem styleName="common" label="密码提示问题">
+				<mx:HBox>
+					<mx:Label styleName="redLbl" text="" width="10"/>
+					<mx:ComboBox id="problem" dataProvider="{problems}" selectedIndex="0" width="160" rowCount="7"
+						fontWeight="nomal" fontFamily="Times New Roman" change="selected(event);"/>
+				</mx:HBox>
+					<mx:HBox>
+					<mx:Label styleName="redLbl" text="" width="10"/>
+					<mx:TextInput id="myProblem" text="自定义问题" maxChars="40" focusIn="clear();"/>
+					<mx:Label text="(最多可输入40个字符，1个汉字为2字符)" paddingTop="3"/>
+				</mx:HBox>
+			</mx:FormItem>
+			<mx:FormItem styleName="common" label="答案">
+				<mx:HBox>
+					<mx:Label styleName="redLbl" text="" width="10"/>
+					<mx:TextInput id="answer" maxChars="40"/>
+					<mx:Label text="(最多可输入40个字符，1个汉字为2字符)" paddingTop="3"/>
+				</mx:HBox>
+			</mx:FormItem>
+			<mx:Spacer height="10"/>
+			<mx:HBox width="281">
+				<mx:Spacer width="100"/>
+				<mx:Button id="submitBtn" label="确 定" width="60" click="registerUser();"/>
+				<mx:Spacer width="27"/>
+				<mx:Button label="重 置" width="60" click="reset(event);"/>
+			</mx:HBox>
+		</mx:Form>
+	</mx:Panel>
+
+	<mx:StringValidator id="regName_StringValidator" source="{txtRegName}" property="text" maxLength="20"
+		tooLongError="{RegisterConsts.REG_VALIDMSG_NAME_TOLONGERROR}" 
+		requiredFieldError="{RegisterConsts.REG_VALIDMSG_NAME_REQUIREDFIELDERROR}"/>
+	<mx:StringValidator id="regPwd_StringValidator" source="{txtRegPwd}" property="text" minLength="6" maxLength="20"
+		tooLongError="{RegisterConsts.REG_VALIDMSG_PWD_LENGTHERROR}" 
+		tooShortError="{RegisterConsts.REG_VALIDMSG_PWD_LENGTHERROR}" 
+		requiredFieldError="{RegisterConsts.REG_VALIDMSG_PWD_REQUIREDFIELDERROR}"/>
+	<myComp:PwdCfmValidator id="pwdCfm_StringValidator" source="{txtCfmPwd}" property="text" pwdUsedToCompare="{txtRegPwd.text}"
+		differentError="{RegisterConsts.REG_VALIDMSG_PWDCFM_DIFFERENT}"
+		requiredFieldError="{RegisterConsts.REG_VALIDMSG_PWDCFM_REQUIREDFEILDERROR}"/>
+	<mx:StringValidator id="regNick_StringValidator" source="{txtRegNick}" property="text" required="false"/>
+	<mx:EmailValidator id="regEmail_EmailValidator" source="{txtRegEmail}" property="text" 
+		requiredFieldError="{RegisterConsts.REG_VALIDMSG_EMAIL_REQUIREDFEILDERROR}" 
+		invalidCharError="{RegisterConsts.REG_VALIDMSG_EMAIL_INVALIDCHARERROR}"
+		invalidDomainError="{RegisterConsts.REG_VALIDMSG_EMAIL_INVALIDDOMAINERROR}"
+		invalidIPDomainError="{RegisterConsts.REG_VALIDMSG_EMAIL_INVALIDIPDOMAINERROR}"
+		invalidPeriodsInDomainError="{RegisterConsts.REG_VALIDMSG_EMAIL_INVALIDPERIODSINDOMAINERROR}" 
+		missingAtSignError="{RegisterConsts.REG_VALIDMSG_EMAIL_MISSINGATSIGNERROR}"
+		missingPeriodInDomainError="{RegisterConsts.REG_VALIDMSG_EMAIL_MISSINGPERIODINDOMAINERROR}"
+		tooManyAtSignsError="{RegisterConsts.REG_VALIDMSG_EMAIL_TOOMANYATSIGNERROR}"/>
+	<mx:StringValidator id="myProblem_StringValidator" source="{myProblem}" property="text" required="false"/>
+	<mx:StringValidator id="answer_StringValidator" source="{answer}" property="text" required="false"/>
+	
+</mx:ApplicationControlBar>

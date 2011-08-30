@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:ApplicationControlBar xmlns:mx="http://www.adobe.com/2006/mxml" width="60%" height="100%" paddingBottom="15" paddingLeft="15" paddingRight="15" paddingTop="15" xmlns:custom="ascript.components.*" >
+	<mx:Script source="../ascript/SearchResultDiv.as" />
+	<mx:Script>
+		<![CDATA[
+			
+		]]>
+	</mx:Script>
+
+	<mx:Canvas id="searchResultCanvas" width="100%" height="100%">
+		<custom:SearchResultPanel id="searchResultPanel" width="100%" height="100%" paddingLeft="30" paddingTop="10" verticalScrollPolicy="on" minHeight="0" childAdd="updateButtonState();" childRemove="updateButtonState();">
+		</custom:SearchResultPanel>
+		<mx:HBox left="15">
+			<mx:LinkButton id="backbtn" width="30" height="30" buttonMode="false" icon="@Embed('../img/back_img.png')" click="doBack()" disabledIcon="@Embed('../img/back_disable_img.png')" enabled="false" />
+			<mx:Spacer width="5" />
+			<mx:LinkButton id="forwardbtn" width="30" height="30" buttonMode="false" icon="@Embed('../img/forward_img.png')" click="doForward()" disabledIcon="@Embed('../img/forward_disable_img.png')" enabled="false" />
+		</mx:HBox>
+	</mx:Canvas>
+</mx:ApplicationControlBar>
