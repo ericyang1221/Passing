@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute">
 	<mx:Script source="ascript/CommonEffects.as" />
-	<mx:Script source="ascript/chatWindow.as"/>
+	<mx:Script source="ascript/ChatWindow.as"/>
 	<mx:Style source="../css/fontFace.css" />
 
 	<mx:Script>      
