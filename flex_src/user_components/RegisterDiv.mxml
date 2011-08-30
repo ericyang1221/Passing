@@ -59,7 +59,7 @@
 				<mx:HBox>
 					<mx:Label styleName="redLbl" text="" width="10"/>
 					<mx:ComboBox id="problem" dataProvider="{problems}" selectedIndex="0" width="160" rowCount="7"
-						fontWeight="nomal" fontFamily="Times New Roman" change="selected(event);"/>
+						fontWeight="normal" fontFamily="Times New Roman" change="selected(event);"/>
 				</mx:HBox>
 					<mx:HBox>
 					<mx:Label styleName="redLbl" text="" width="10"/>
