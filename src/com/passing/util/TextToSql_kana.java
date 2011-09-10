@@ -7,11 +7,6 @@ import java.io.FileOutputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
-/**
- * commit test
- * @author lovelease
- *
- */
 public class TextToSql_kana {
 
 	InputStreamReader fr;
