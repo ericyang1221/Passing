@@ -1,4 +1,4 @@
-package test;zxvz
+package test;
 
 import static org.junit.Assert.*;
 
