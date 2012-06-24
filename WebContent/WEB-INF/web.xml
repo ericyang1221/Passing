@@ -4,7 +4,7 @@
 
 	<display-name>Passing</display-name>
 	<description>Passing Application</description>
-test
+
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
