@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="../css/common.css">
+		<link rel="stylesheet" type="text/css" href="../css/login.css">
+
+<!--		<link type="text/css" href="../css/black-tie/jquery-ui-1.8.21.custom.css" rel="stylesheet" />
+		<script type="text/javascript" src="../js/jquery-1.7.js"></script>
+		<script type="text/javascript" src="../js/jquery-ui-1.8.21.custom.min.js"></script>
+
+		<iframe marginwidth=0 marginheight=0 width=100% height=30 frameborder=0 src="ui-page.html"></iframe>	
+		<script type="text/javascript" src="../js/jquery.form.js"></script>
+		<script type="text/javascript" src="../js/common.js"></script>
+		<script type="text/javascript" src="../js/login.js"></script>
+-->
+	</head>
+	<body>
+		<div id="pageDiv">
+			<div id="formDiv">
+				<form id="loginForm" name="loginForm" action="../doLogin.do" method="post">
+					<table id="table-input" align="center">
+						<tbody>
+							<tr>
+								<td class="loginlabel">用户名：</td>
+								<td><input id="userName" name="userName" type="text" size="20" aria-required="true"></td>
+								<td class="required-area">&nbsp;*</td>
+							</tr>
+							<tr>
+								<td class="loginlabel">密&nbsp;&nbsp;&nbsp;&nbsp;码：</td>
+								<td><input id="password" name="password" type="password" size="20" aria-required="true"></td>
+								<td class="required-area">&nbsp;*</td>
+							</tr>
+						</tbody>
+					</table>
+					<table id="table-submit" align="center">
+						<tbody>
+							<tr>
+								<td><input class="button" name="submit" type="submit" size="10" value="确定"></td>
+								<td><input class="button" name="reset" type="reset" size="10" value="重置"></td>
+							</tr>
+						</tbody>
+					</table>
+					<span id="Tip"></span>
+				</form>
+			</div>
+		</div>
+		<input type="text" name="date" id="date" />
+	</body>
+</html>

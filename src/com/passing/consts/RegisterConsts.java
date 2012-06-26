@@ -9,9 +9,9 @@ public class RegisterConsts {
 	public static int REG_EMAILADDRESS = 3;
 	public static int REG_SEX = 4;
 	
-	public RegisterConsts()
-	{
-		super();
-     	throw new Error("CANNOT CREATE INSTANCE");
-	}
+//	public RegisterConsts()
+//	{
+//		super();
+//     	throw new Error("CANNOT CREATE INSTANCE");
+//	}
 }

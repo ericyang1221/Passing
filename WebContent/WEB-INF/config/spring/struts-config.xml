@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!DOCTYPE struts-config PUBLIC
+		"-//Apache Software Foundation//DTD Struts Configuration 1.3//EN"
+		"http://struts.apache.org/dtds/struts-config_1_3.dtd">
+
+<struts-config>
+
+	<!-- FORM BEANS -->
+	<form-beans>
+		<form-bean name="searchForm" type="com.passing.struts.form.SearchEnToCnForm"></form-bean>
+		<form-bean name="loginForm" type="com.passing.struts.form.LoginForm"></form-bean>
+	</form-beans>
+
+	<!-- MAPPINGS -->
+	<action-mappings>
+		<action path="/doSearch" type="org.springframework.web.struts.DelegatingActionProxy" input="/html/search.html" name="searchForm" scope="request" validate="false">
+			<forward name="success" path="/html/success.html"></forward>
+			<forward name="failure" path="/html/failed.html"></forward>
+		</action>
+		<action path="/doLogin" type="org.springframework.web.struts.DelegatingActionProxy" input="/html/login.html" name="loginForm" scope="request" validate="false">
+			<forward name="success" path="/html/success.html"></forward>
+			<forward name="failure" path="/html/failed.html"></forward>
+		</action>
+	</action-mappings>
+	
+	<!-- spring与struts整合：把struts的Action托管给spring -->
+	<plug-in className="org.springframework.web.struts.ContextLoaderPlugIn">
+		<set-property property="contextConfigLocation" value="/WEB-INF/config/spring/web-application-config.xml"/>
+	</plug-in>
+
+</struts-config>

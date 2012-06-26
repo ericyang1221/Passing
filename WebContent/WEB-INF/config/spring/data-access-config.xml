@@ -25,7 +25,9 @@
 		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
 		<property name="mappingResources">
 			<list>
-				<value>com/passing/hibernate/hbm/Jpword.hbm.xml</value>
+				<value>
+					com/passing/hibernate/hbm/Jpword.hbm.xml
+				</value>
 				<value>
 					com/passing/hibernate/hbm/Jpwordmeaning.hbm.xml
 				</value>
@@ -38,6 +40,9 @@
 				<value>
 					com/passing/hibernate/hbm/PassingUser.hbm.xml
 				</value>
+				<value>
+					com/passing/hibernate/hbm/TbEnWord.hbm.xml
+				</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">
@@ -45,7 +50,10 @@
 				<prop key="hibernate.dialect">
 					org.hibernate.dialect.Oracle9Dialect
 				</prop>
-				<prop key="hibernate.show_sql">true</prop>
+			<!-- 由于配置了log4j以进行日志记录，这里关闭hibernate自带的show sql功能 -->
+			<!--	<prop key="hibernate.show_sql">true</prop> -->
+			<!--	<prop key="hibernate.format_sql">true</prop> -->
+			<!--	<prop key="hibernate.use_sql_comments">true</prop> -->
 			</props>
 		</property>
 		<property name="dataSource">
@@ -53,6 +61,7 @@
 		</property>
 	</bean>
 
+	<!-- DAO -->
 	<bean id="jpwordDao"
 		class="com.passing.hibernate.dao.impl.JPwordDaoBean">
 		<property name="sessionFactory">
@@ -65,5 +74,11 @@
 			<ref bean="sessionFactory" />
 		</property>
 	</bean>
-
+	<bean id="tbEnWordDao"
+		class="com.passing.hibernate.dao.impl.TbEnWordDaoBean">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	
 </beans>

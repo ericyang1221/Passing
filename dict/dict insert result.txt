@@ -1,0 +1,6 @@
+select count(*) from TB_EN_WORD;				22613	22613	0
+select count(*) from TB_EN_WORD_ATTR; 		46295	46295	0
+select count(*) from TB_EN_WORD_EXMP;			56628	56573	55
+select count(*) from TB_EN_EXTD_WORD;			30588	30493	95
+select count(*) from TB_EN_EXTD_WORD_ATTR;	37538	37538	0
+select count(*) from TB_EN_EXTD_WORD_EXMP;	24302	24247	55

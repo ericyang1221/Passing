@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:flex="http://www.springframework.org/schema/flex"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
 	xsi:schemaLocation="
 		http://www.springframework.org/schema/beans
-		http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
-		http://www.springframework.org/schema/flex
-		http://www.springframework.org/schema/flex/spring-flex-1.0.xsd">
+		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/aop
+		http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
 
 	<import resource="data-access-config.xml" />
     
@@ -15,28 +15,18 @@
            class="org.springframework.orm.hibernate3.support.OpenSessionInViewInterceptor">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
+
+	<!-- LOG INTERCEPTOR -->
+	<bean id="loginterceptor" class="com.passing.util.LogUtil"/>
+	<aop:config proxy-target-class="true">
+		<aop:aspect id="passinglog" ref="loginterceptor">
+			<aop:pointcut id="target" expression="execution(* com.passing..*.*(..))"/>
+			<aop:before method="beforeMethodLog" pointcut-ref="target"/>
+			<aop:after-returning method="afterMethodLog" pointcut-ref="target"/>
+		</aop:aspect>
+	</aop:config>
 	
-
-	<!-- Bootstraps and exposes the BlazeDS MessageBroker -->
-	<bean id="_messageBroker"
-		class="org.springframework.flex.core.MessageBrokerFactoryBean">
-		<property name="servicesConfigPath"
-			value="/WEB-INF/config/flex/services-config.xml" />
-	</bean>
-
-	<!-- Maps request paths at /* to the BlazeDS MessageBroker -->
-	<bean
-		class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
-		 <property name="interceptors" ref="openSessionInViewInterceptor"/>
-		<property name="mappings">
-			<value>/*=_messageBroker</value>
-		</property>
-	</bean>
-
-	<!-- Dispatches requests mapped to a MessageBroker -->
-	<bean
-		class="org.springframework.flex.servlet.MessageBrokerHandlerAdapter" />
-
+<!--
 	<bean id="searchJpToCn"
 		class="com.passing.spring.service.impl.SearchJpToCnBean">
 		<property name="jpwordDao">
@@ -59,9 +49,13 @@
 			<ref bean="passingUserDao"/>
 		</property>
 	</bean>
+	<bean id="searchEnToCn"
+		class="com.passing.spring.service.impl.SearchEnToCnBean">
+		<property name="tbEnWordDao">
+			<ref bean="tbEnWordDao" />
+		</property>
+	</bean>
 
-
-	<!-- Expose the productService bean for BlazeDS remoting -->
 	<bean id="doSearchJapaneseWord"
 		class="org.springframework.flex.remoting.RemotingDestinationExporter">
 		<property name="messageBroker" ref="_messageBroker" />
@@ -90,5 +84,30 @@
 		<property name="destinationId" value="login"></property>
 		<property name="channels" value="my-amf"></property>	
 	</bean>
-
+-->
+	
+	<!-- SERVICE BEANS -->
+	<bean id="searchEnToCnBean" class="com.passing.spring.service.impl.SearchEnToCnBean">
+		<property name="tbEnWordDao">
+			<ref bean="tbEnWordDao"/>
+		</property>
+	</bean>
+	<bean id="loginServiceBean" class="com.passing.spring.service.impl.LoginServiceBean">
+		<property name="passingUserDao">
+			<ref bean="passingUserDao"/>
+		</property>
+	</bean>
+	
+	<!-- ACTION BEANS -->
+	<bean name="/doSearch" class="com.passing.struts.action.SearchEnToCnAction">
+		<property name="searchEnToCnBean">
+			<ref bean="searchEnToCnBean"/>
+		</property>
+	</bean>
+	<bean name="/doLogin" class="com.passing.struts.action.LoginAction">
+		<property name="loginServiceBean">
+			<ref bean="loginServiceBean"/>
+		</property>
+	</bean>
+	
 </beans>
