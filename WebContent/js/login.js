@@ -10,7 +10,7 @@ $(document).ready(function() {
 			};
 	$('#loginForm').submit(function() {
 		//alert("Thank you for your comment!");
-		$('#loginForm').ajaxSubmit(options); 
+		$(this).ajaxSubmit(options); 
 		return false;//为了不刷新页面,返回false
 	});
 	
