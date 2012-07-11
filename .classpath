@@ -61,5 +61,7 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/aspectjweaver.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/aopalliance-1.0.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/cglib-nodep-2.1_3.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/json-lib-2.1.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/ezmorph-1.0.3.jar"/>
 	<classpathentry kind="output" path="WebContent/WEB-INF/classes"/>
 </classpath>

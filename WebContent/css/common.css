@@ -1,8 +1,8 @@
 body{
 	font-family:Georgia,serif;
-	background-color:#CFCFCF;
+/*	background-color:#CFCFCF;	*/
 }
-
+/*
 input[type=submit]{
 	background:#EC3A58;
 	color:white;
@@ -28,3 +28,4 @@ input[type=reset]{
 	border-top-right-radius: 4px;
 	text-shadow:0 -1px 0 rgba(0, 0, 0, .3);
 }
+*/

@@ -1,17 +1,21 @@
 $(document).ready(function() {
-	$('#date').datepicker();
+	$('.button').button();
 	// bind 'loginForm' and provide a simple callback function
-	$('#Tip').hide();//显示操作提示的元素不可见
 	var options = {
-				target:'#Tip', //后台将把传递过来的值赋给该元素 
 				url:'../doLogin.do',
 				type:'POST',
-				success: function(){ alert($('#Tip').text());}
+				dataType:'json',
+				success: loginResponse
 			};
+	
 	$('#loginForm').submit(function() {
-		//alert("Thank you for your comment!");
 		$(this).ajaxSubmit(options); 
-		return false;//为了不刷新页面,返回false
+		// return false to prevent normal browser submit and page navigation
+		return false;
 	});
 	
+	function loginResponse(result) { 
+		// 'result' is the json object returned from the server 
+		alert(result.loginResult);
+	}
 });
