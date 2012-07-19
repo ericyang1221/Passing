@@ -1,4 +1,22 @@
-@CHARSET "UTF-8";
-body{
-	color:#00FF00;
+#searchTabs{
+	width:25em;
+	height:5em;
+	margin-top:10%;
+	
+	/* to make a div positioned in the horizontal center */
+	margin-left:auto;
+	margin-right:auto;
+	
+}
+input[name=searchStr]{
+/*	height:1.9em; */
+	position:absolute;
+	top:1em;
+	left:1.5em;
+}
+input[name=transfer]{
+	height:1.7em;
+	position:absolute;
+	top:1em;
+	right:1.5em;
 }

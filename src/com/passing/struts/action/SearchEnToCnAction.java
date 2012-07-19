@@ -31,19 +31,8 @@ public class SearchEnToCnAction extends Action {
 	public ActionForward execute(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
-		SearchEnToCnForm searchEnToCnForm = (SearchEnToCnForm) form;
-		// ApplicationContext ctx=new
-		// FileSystemXmlApplicationContext("C:/Users/lovelease/git/Passing/WebContent/WEB-INF/config/spring/web-application-config.xml");
-		// ServletContext servletContext =
-		// request.getSession().getServletContext();
-		// WebApplicationContext ctx=WebApplicationContextUtils
-		// .getWebApplicationContext(servletContext);
-		// TbEnWordDao ebEnWordDao=(TbEnWordDao)ctx.getBean("tbEnWordDao");
 
-		// SearchEnToCnBean searchEnToCnBean =
-		// (SearchEnToCnBean)ctx.getBean("searchEnToCnBean");
-
-		String searchStr = searchEnToCnForm.getSearchStr();
+		String searchStr = request.getParameter("searchStr");
 
 		List<TbEnWord> searchRslt = searchEnToCnBean.searchEnToCn(searchStr);
 
@@ -55,10 +44,6 @@ public class SearchEnToCnAction extends Action {
 			return (mapping.findForward("failure"));
 		}
 	}
-
-	// public SearchEnToCnBean getSearchEnToCnBean() {
-	// return searchEnToCnBean;
-	// }
 
 	public void setSearchEnToCnBean(SearchEnToCnBean searchEnToCnBean) {
 		this.searchEnToCnBean = searchEnToCnBean;

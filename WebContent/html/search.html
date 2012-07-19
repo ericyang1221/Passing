@@ -2,16 +2,20 @@
 
 <html>
 	<head>
+		<link rel="stylesheet" type="text/css" href="../css/common.css">
 		<link rel="stylesheet" type="text/css" href="../css/search.css">
+		
+		<script type="text/javascript" src="../js/jquery-1.7.js"></script>
+		<script type="text/javascript" src="../js/common.js"></script>
+		<script type="text/javascript" src="../js/search.js"></script>
 		
 	</head>
 	<body>
-		<div id="page">
-		<p>This is a paragraph.</p>
-			<form name="searchForm" action="../doSearch.do" method="post">
-				<input type="search" name="searchStr" size="20">&nbsp;
-				<input type="submit" value="search" size="5">
-			</form>
+		<div id="searchTabs">
+			<div>
+				<input name="searchStr" type="search" size="30">
+				<input name="transfer" type="submit" value="GO" size="5">
+			</div>
 		</div>
 	</body>
 </html>
