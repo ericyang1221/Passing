@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	$('#searchTabs').tabs({ ajaxOptions: { async: false } });
+	$('#searchTabs').tabs();
 	$('input[type=submit]').button();
 	
 	$('input[type=submit]').click(function() {

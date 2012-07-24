@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- 
+	Mapping file generated manually
+-->
+<hibernate-mapping>
+	<class name="com.passing.hibernate.beans.TbEnWordAttr" table="TB_EN_WORD_ATTR" schema="PASSING">
+		<composite-id>
+			<key-property name="dict_id" column="DICT_ID" type="java.lang.Integer" />
+			<key-property name="word_id" column="WORD_ID" type="java.lang.Integer" />
+			<key-property name="part_of_speech" column="PART_OF_SPEECH" length="10" type="java.lang.String" />
+			<key-property name="meaning_num" column="MEANING_NUM" type="java.lang.Integer" />
+		</composite-id>
+		<property name="extd_attr" type="java.lang.String">
+			<column name="EXTD_ATTR" length="500" not-null="true" />
+		</property>
+		<property name="mean" type="java.lang.String">
+			<column name="MEAN" length="1000" not-null="true" />
+		</property>
+	</class>
+</hibernate-mapping>

@@ -1,22 +1,29 @@
 #searchTabs{
 	width:25em;
-	height:5em;
+	height:8em;
 	margin-top:10%;
-	
-	/* to make a div positioned in the horizontal center */
 	margin-left:auto;
 	margin-right:auto;
-	
+}
+.ui-tabs-nav{
+	height:1.8em;
+}
+.ui-tabs-li{
+	height:1.65em;
+}
+.ui-tabs-a{
+	font-size:0.8em;
+	font-weight:600;
 }
 input[name=searchStr]{
-/*	height:1.9em; */
 	position:absolute;
-	top:1em;
+	top:4em;
 	left:1.5em;
 }
-input[name=transfer]{
+input[name=transferButton]{
 	height:1.7em;
 	position:absolute;
-	top:1em;
+	top:4em;
 	right:1.5em;
+	padding-top:0.2em;
 }

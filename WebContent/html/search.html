@@ -11,10 +11,24 @@
 		
 	</head>
 	<body>
-		<div id="searchTabs">
-			<div>
-				<input name="searchStr" type="search" size="30">
-				<input name="transfer" type="submit" value="GO" size="5">
+		<div>
+			<div id="searchTabs">
+				<ul class="ui-tabs-nav">
+					<li class="ui-tabs-li">
+						<a class="ui-tabs-a" href="#chtoen">中英</a>
+					</li>
+					<li class="ui-tabs-li">
+						<a class="ui-tabs-a" href="#chtojp">中日</a>
+					</li>
+				</ul>
+				<div id="chtoen">
+					<input name="searchStr" type="search" size="30">
+					<input name="transferButton" type="submit" value="GO1" size="5">
+				</div>
+				<div id="chtojp">
+					<input name="searchStr" type="search" size="30">
+					<input name="transferButton" type="submit" value="GO2" size="5">
+				</div>
 			</div>
 		</div>
 	</body>
