@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- 
+	Mapping file generated manually
+-->
+<hibernate-mapping>
+	<class name="com.passing.hibernate.beans.TbEnExtdWordExmp" table="TB_EN_EXTD_WORD_EXMP" schema="PASSING">
+		<composite-id>
+			<key-property name="dict_id" column="DICT_ID" type="java.lang.Integer" />
+			<key-property name="word_id" column="WORD_ID" type="java.lang.Integer" />
+			<key-property name="extd_word_id" column="EXTD_WORD_ID" type="java.lang.Integer" />
+			<key-property name="extd_word_ptsp" column="EXTD_WORD_PTSP" type="java.lang.String" />
+			<key-property name="extd_word_mean_num" column="EXTD_WORD_MEAN_NUM" type="java.lang.Integer" />
+			<key-property name="extd_word_exmp_num" column="EXTD_WORD_EXMP_NUM" type="java.lang.Integer" />
+		</composite-id>
+		<property name="extd_word_exmp_extd_attr" type="java.lang.String">
+			<column name="EXTD_WORD_EXMP_EXTD_ATTR" length="500" not-null="true" />
+		</property>
+		<property name="extd_word_exmp" type="java.lang.String">
+			<column name="EXTD_WORD_EXMP" length="1000" not-null="true" />
+		</property>
+		<property name="extd_word_exmp_mean" type="java.lang.String">
+			<column name="EXTD_WORD_EXMP_MEAN" length="1000" not-null="true" />
+		</property>
+	</class>
+</hibernate-mapping>

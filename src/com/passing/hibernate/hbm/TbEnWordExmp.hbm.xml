@@ -5,18 +5,22 @@
 	Mapping file generated manually
 -->
 <hibernate-mapping>
-	<class name="com.passing.hibernate.beans.TbEnWordAttr" table="TB_EN_WORD_ATTR" schema="PASSING">
+	<class name="com.passing.hibernate.beans.TbEnWordExmp" table="TB_EN_WORD_EXMP" schema="PASSING">
 		<composite-id>
 			<key-property name="dict_id" column="DICT_ID" type="java.lang.Integer" />
 			<key-property name="word_id" column="WORD_ID" type="java.lang.Integer" />
 			<key-property name="part_of_speech" column="PART_OF_SPEECH" type="java.lang.String" />
 			<key-property name="meaning_num" column="MEANING_NUM" type="java.lang.Integer" />
+			<key-property name="example_num" column="EXAMPLE_NUM" type="java.lang.Integer" />
 		</composite-id>
-		<property name="extd_attr" type="java.lang.String">
-			<column name="EXTD_ATTR" length="500" not-null="true" />
+		<property name="example_extd_attr" type="java.lang.String">
+			<column name="EXAMPLE_EXTD_ATTR" length="500" not-null="true" />
 		</property>
-		<property name="mean" type="java.lang.String">
-			<column name="MEAN" length="1000" not-null="true" />
+		<property name="en_exmp" type="java.lang.String">
+			<column name="EN_EXMP" length="1000" not-null="true" />
+		</property>
+		<property name="exmp_meaning" type="java.lang.String">
+			<column name="EXMP_MEANING" length="1000" not-null="true" />
 		</property>
 	</class>
 </hibernate-mapping>

@@ -7,15 +7,15 @@ package com.passing.hibernate.beans;
  */
 public class TbEnWord extends AbstractTbEnWord implements java.io.Serializable {
 
-    // Constructors
+	// Constructors
 
-    /** default constructor */
-    public TbEnWord() {
-    }
+	/** default constructor */
+	public TbEnWord() {
+	}
 
-    /** full constructor */
-    public TbEnWord(int dict_id, int word_id, String word) {
-        super(dict_id, word_id, word);
-    }
-    
+	/** full constructor */
+	public TbEnWord(int dict_id, int word_id, String word) {
+		super(dict_id, word_id, word);
+	}
+
 }
