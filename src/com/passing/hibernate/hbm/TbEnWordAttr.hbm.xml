@@ -18,5 +18,14 @@
 		<property name="mean" type="java.lang.String">
 			<column name="MEAN" length="1000" not-null="true" />
 		</property>
+		<set name="tb_en_word_exmp" table="com.passing.hibernate.beans.TbEnWordExmp" lazy="false" cascade="all">
+			<key>
+				<column name="dict_id" />
+				<column name="word_id" />
+				<column name="part_of_speech" />
+				<column name="meaning_num" />
+			</key>
+			<one-to-many not-found="ignore" class="com.passing.hibernate.beans.TbEnWordExmp" />
+		</set>
 	</class>
 </hibernate-mapping>

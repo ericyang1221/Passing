@@ -1,5 +1,8 @@
 package com.passing.hibernate.beans;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 /**
@@ -17,6 +20,8 @@ public abstract class AbstractTbEnWord implements java.io.Serializable {
 	protected int dict_id;
 	protected int word_id;
 	protected String word;
+	protected Set<TbEnWordAttr> tb_en_word_attr = new HashSet<TbEnWordAttr>();
+	protected Set<TbEnWordExmp> tb_en_word_exmp = new HashSet<TbEnWordExmp>();
 
 	// Constructors
 
@@ -25,10 +30,12 @@ public abstract class AbstractTbEnWord implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public AbstractTbEnWord(int dict_id, int word_id, String word) {
+	public AbstractTbEnWord(int dict_id, int word_id, String word, Set<TbEnWordAttr> tb_en_word_attr, Set<TbEnWordExmp> tb_en_word_exmp) {
 		this.dict_id = dict_id;
 		this.word_id = word_id;
 		this.word = word;
+		this.tb_en_word_attr = tb_en_word_attr;
+		this.tb_en_word_exmp = tb_en_word_exmp;
 
 	}
 
@@ -57,6 +64,22 @@ public abstract class AbstractTbEnWord implements java.io.Serializable {
 	}
 	
 	
+	public Set<TbEnWordAttr> getTb_en_word_attr() {
+		return tb_en_word_attr;
+	}
+
+	public void setTb_en_word_attr(Set<TbEnWordAttr> tb_en_word_attr) {
+		this.tb_en_word_attr = tb_en_word_attr;
+	}
+
+	public Set<TbEnWordExmp> getTb_en_word_exmp() {
+		return tb_en_word_exmp;
+	}
+
+	public void setTb_en_word_exmp(Set<TbEnWordExmp> tb_en_word_exmp) {
+		this.tb_en_word_exmp = tb_en_word_exmp;
+	}
+
 	// over ride equals() and hashCode()
 	public boolean equals(Object obj) {
 		if (obj == this) {

@@ -34,7 +34,7 @@ public class SearchEnToCnAction extends Action {
 
 		String searchStr = request.getParameter("searchStr");
 
-		List<TbEnWord> searchRslt = searchEnToCnBean.searchEnToCn(searchStr);
+		List<Object[]> searchRslt = searchEnToCnBean.searchEnToCn(searchStr);
 
 		if (searchRslt.size() != 0) {
 			request.getSession().setAttribute("searchRslt", searchRslt);

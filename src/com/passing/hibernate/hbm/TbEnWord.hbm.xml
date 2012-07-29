@@ -13,5 +13,19 @@
 		<property name="word" type="java.lang.String">
 			<column name="WORD" length="50" not-null="true" />
 		</property>
+		<set name="tb_en_word_attr" table="com.passing.hibernate.beans.TbEnWordAttr" lazy="false" cascade="all">
+			<key>
+				<column name="dict_id" />
+				<column name="word_id" />
+			</key>
+			<one-to-many not-found="ignore" class="com.passing.hibernate.beans.TbEnWordAttr" />
+		</set>
+		<set name="tb_en_word_exmp" table="com.passing.hibernate.beans.TbEnWordExmp" lazy="false" cascade="all">
+			<key>
+				<column name="dict_id" />
+				<column name="word_id" />
+			</key>
+			<one-to-many not-found="ignore" class="com.passing.hibernate.beans.TbEnWordExmp" />
+		</set>
 	</class>
 </hibernate-mapping>

@@ -28,7 +28,7 @@ public class TbEnWordDaoTester {
 	
 	@Test
 	public void testGetEnWord(){
-		List<TbEnWord> list = dao.getEnWord("a");
+		List<TbEnWord> list = dao.getEnWordInfoWithExtdInfo("a");
 		TbEnWord word = (TbEnWord)list.get(0);
 		System.out.println(word.getDict_id());
 	}

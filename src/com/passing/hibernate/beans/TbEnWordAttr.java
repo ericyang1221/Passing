@@ -1,5 +1,7 @@
 package com.passing.hibernate.beans;
 
+import java.util.Set;
+
 
 
 /**
@@ -14,8 +16,8 @@ public class TbEnWordAttr extends AbstractTbEnWordAttr implements java.io.Serial
 	}
 
 	/** full constructor */
-	public TbEnWordAttr(int dict_id, int word_id, String part_of_speech, int meaning_num, String extd_attr, String mean) {
-		super(dict_id, word_id, part_of_speech, meaning_num, extd_attr, mean);
+	public TbEnWordAttr(int dict_id, int word_id, String part_of_speech, int meaning_num, String extd_attr, String mean, Set<TbEnWordExmp> tb_en_word_exmp) {
+		super(dict_id, word_id, part_of_speech, meaning_num, extd_attr, mean, tb_en_word_exmp);
 	}
 
 }

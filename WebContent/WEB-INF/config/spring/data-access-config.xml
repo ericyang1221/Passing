@@ -43,6 +43,21 @@
 				<value>
 					com/passing/hibernate/hbm/TbEnWord.hbm.xml
 				</value>
+				<value>
+					com/passing/hibernate/hbm/TbEnWordAttr.hbm.xml
+				</value>
+				<value>
+					com/passing/hibernate/hbm/TbEnWordExmp.hbm.xml
+				</value>
+				<value>
+					com/passing/hibernate/hbm/TbEnExtdWord.hbm.xml
+				</value>
+				<value>
+					com/passing/hibernate/hbm/TbEnExtdWordAttr.hbm.xml
+				</value>
+				<value>
+					com/passing/hibernate/hbm/TbEnExtdWordExmp.hbm.xml
+				</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">

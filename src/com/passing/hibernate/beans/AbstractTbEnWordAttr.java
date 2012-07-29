@@ -1,5 +1,8 @@
 package com.passing.hibernate.beans;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 /**
@@ -20,6 +23,7 @@ public abstract class AbstractTbEnWordAttr implements java.io.Serializable {
 	protected int meaning_num;
 	protected String extd_attr;
 	protected String mean;
+	protected Set<TbEnWordExmp> tb_en_word_exmp = new HashSet<TbEnWordExmp>();
 
 	// Constructors
 
@@ -28,13 +32,14 @@ public abstract class AbstractTbEnWordAttr implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public AbstractTbEnWordAttr(int dict_id, int word_id, String part_of_speech, int meaning_num, String extd_attr, String mean) {
+	public AbstractTbEnWordAttr(int dict_id, int word_id, String part_of_speech, int meaning_num, String extd_attr, String mean, Set<TbEnWordExmp> tb_en_word_exmp) {
 		this.dict_id = dict_id;
 		this.word_id = word_id;
 		this.part_of_speech = part_of_speech;
 		this.meaning_num = meaning_num;
 		this.extd_attr = extd_attr;
 		this.mean = mean;
+		this.tb_en_word_exmp = tb_en_word_exmp;
 
 	}
 
@@ -85,6 +90,14 @@ public abstract class AbstractTbEnWordAttr implements java.io.Serializable {
 
 	public void setMean(String mean) {
 		this.mean = mean;
+	}
+
+	public Set<TbEnWordExmp> getTb_en_word_exmp() {
+		return tb_en_word_exmp;
+	}
+
+	public void setTb_en_word_exmp(Set<TbEnWordExmp> tb_en_word_exmp) {
+		this.tb_en_word_exmp = tb_en_word_exmp;
 	}
 
 	// over ride equals() and hashCode()
