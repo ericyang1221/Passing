@@ -26,9 +26,12 @@ import com.passing.util.LogUtil;
 public class LoginAction extends BaseAction {
 
 	private LoginServiceBean loginServiceBean;
-//	private String encoding = "UTF-8";
-//	private String contentType = "application/json";
-
+/** put the following part into method makeJSONObject(HttpServletResponse response, String objName, Object obj) of the common class BaseAction
+ * part.1
+	private String encoding = "UTF-8";
+	private String contentType = "application/json";
+*/
+	
 	@Override
 	public ActionForward execute(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
@@ -46,7 +49,7 @@ public class LoginAction extends BaseAction {
 		String loginRst = loginServiceBean.login(userName + COM_SPACE
 				+ password);
 /** put the following part into method makeJSONObject(HttpServletResponse response, String objName, Object obj) of the common class BaseAction
- * 
+ * part.2
 		this.contentType = contentType + ";charset=" + encoding;
 		
 		LogUtil.log.info("Set contentType to: " + contentType);
@@ -80,7 +83,7 @@ public class LoginAction extends BaseAction {
 //		jsonObj.put("loginResult", persons);
 
 /** put the following part into method makeJSONObject(HttpServletResponse response, String objName, Object obj) of the common class BaseAction
- * 
+ * part.3
 		response.setContentType(contentType);
 		response.setCharacterEncoding(encoding);
 		PrintWriter pw = response.getWriter(); 
