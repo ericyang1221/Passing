@@ -67,5 +67,43 @@ public class TbEnWordDaoBean extends HibernateDaoSupport implements TbEnWordDao 
 		
 		return list;
 	}
+	
+public List<Object[]> getEnExtdWordInfo(String searchWord) {
+		
+		String sql = "select "
+					+ "ewd.EXTD_WORD "
+					+ ",ewda.EXTD_WORD_EXTD_ATTR "
+					+ ",ewda.EXTD_WORD_MEAN "
+					+ ",ewde.DICT_ID "
+					+ ",ewde.WORD_ID "
+					+ ",ewde.EXTD_WORD_ID "
+					+ ",ewde.EXTD_WORD_PTSP "
+					+ ",ewde.EXTD_WORD_MEAN_NUM "
+					+ ",ewde.EXTD_WORD_EXMP_NUM "
+					+ ",ewde.EXTD_WORD_EXMP_EXTD_ATTR "
+					+ ",ewde.EXTD_WORD_EXMP "
+					+ ",ewde.EXTD_WORD_EXMP_MEAN "
+					+ "from "
+					+ "TbEnWord wd, "
+					+ "TbEnExtdWord ewd,"
+					+ "TbEnExtdWordAttr ewda, "
+					+ "TbEnExtdWordExmp ewde "
+					+ "where "
+					+ "wd.DICT_ID = ewd.DICT_ID "
+					+ "and wd.WORD_ID = ewd.WORD_ID "
+					+ "and ewd.DICT_ID = ewda.DICT_ID "
+					+ "and ewd.WORD_ID = ewda.WORD_ID "
+					+ "and ewd.EXTD_WORD_ID = ewda.EXTD_WORD_ID "
+					+ "and ewda.DICT_ID = ewde.DICT_ID "
+					+ "and ewda.WORD_ID = ewde.WORD_ID "
+					+ "and ewda.EXTD_WORD_ID = ewde.EXTD_WORD_ID "
+					+ "and ewda.EXTD_WORD_PTSP = ewde.EXTD_WORD_PTSP "
+					+ "and ewda.EXTD_WORD_MEAN_NUM = ewde.EXTD_WORD_MEAN_NUM "
+					+ "and wd.word = '" + searchWord + "'";
+
+		List<Object[]> list = getHibernateTemplate().find(sql);
+		
+		return list;
+	}
 
 }

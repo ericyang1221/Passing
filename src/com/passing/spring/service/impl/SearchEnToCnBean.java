@@ -12,9 +12,10 @@ public class SearchEnToCnBean implements SearchEnToCn{
 	
 	public List<Object[]> searchEnToCn(String searchStr) {
 		
-		List<Object[]> tbEnWord = tbEnWordDao.getEnWordInfoWithoutExtdInfo(searchStr);
+		List<Object[]> tbEnWordInfoWithoutExtdInfo = tbEnWordDao.getEnWordInfoWithoutExtdInfo(searchStr);
+		List<Object[]> tbEnExtdWordInfo = tbEnWordDao.getEnExtdWordInfo(searchStr);
 		
-		return tbEnWord;
+		return tbEnWordInfoWithoutExtdInfo;
 	}
 
 
