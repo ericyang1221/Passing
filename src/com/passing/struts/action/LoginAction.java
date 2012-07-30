@@ -23,11 +23,11 @@ import com.passing.spring.service.impl.LoginServiceBean;
 import com.passing.struts.form.LoginForm;
 import com.passing.util.LogUtil;
 
-public class LoginAction extends Action {
+public class LoginAction extends BaseAction {
 
 	private LoginServiceBean loginServiceBean;
-	private String encoding = "UTF-8";
-	private String contentType = "application/json";
+//	private String encoding = "UTF-8";
+//	private String contentType = "application/json";
 
 	@Override
 	public ActionForward execute(ActionMapping mapping, ActionForm form,
@@ -46,12 +46,13 @@ public class LoginAction extends Action {
 		String loginRst = loginServiceBean.login(userName + COM_SPACE
 				+ password);
 
-		this.contentType = contentType + ";charset=" + encoding;
+//		this.contentType = contentType + ";charset=" + encoding;
 		
-		LogUtil.log.info("Set contentType to: " + contentType);
+//		LogUtil.log.info("Set contentType to: " + contentType);
 		
-		JSONObject jsonObj = new JSONObject();
-		jsonObj.put("loginResult", loginRst);
+//		JSONObject jsonObj = new JSONObject();
+//		jsonObj.put("loginResult", loginRst);
+		makeJSONObject(response, "loginResult", loginRst);
 		
 		/** make a jsonObject with map */
 //		Map<String, Object> person1 = new HashMap<String, Object>();
@@ -75,11 +76,11 @@ public class LoginAction extends Action {
 //		
 //		jsonObj.put("loginResult", persons);
 		
-		response.setContentType(contentType);
-		response.setCharacterEncoding(encoding);
-		PrintWriter pw = response.getWriter(); 
-		pw.write(jsonObj.toString());
-		pw.flush();
+//		response.setContentType(contentType);
+//		response.setCharacterEncoding(encoding);
+//		PrintWriter pw = response.getWriter(); 
+//		pw.write(jsonObj.toString());
+//		pw.flush();
 		
 		return mapping.findForward(null);
 		

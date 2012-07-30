@@ -6,5 +6,5 @@ import com.passing.hibernate.beans.TbEnWord;
 
 public interface SearchEnToCn {
 
-	public List<Object[]> searchEnToCn(String searchStr);
+	public List<Object> searchEnToCn(String searchStr);
 }
