@@ -18,7 +18,7 @@ public class TbEnWordDaoBean extends HibernateDaoSupport implements TbEnWordDao 
 
 //	public static Logger log = Logger.getLogger(TbEnWordDaoBean.class);
 	
-	public List<Object[]> getEnWordInfoWithExtdInfo(String searchWord) {
+	public List<Object[]> getEnWordInfoWithoutExtdInfo(String searchWord) {
 		
 		String sql = "select "
 					+ "enword.word "

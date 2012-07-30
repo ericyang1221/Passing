@@ -5,6 +5,6 @@ import java.util.List;
 import com.passing.hibernate.beans.TbEnWord;
 
 public interface TbEnWordDao {
-	List<Object[]> getEnWordInfoWithExtdInfo(String searchWord);
+	List<Object[]> getEnWordInfoWithoutExtdInfo(String searchWord);
 	
 }

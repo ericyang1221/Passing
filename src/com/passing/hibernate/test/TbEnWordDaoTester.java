@@ -28,7 +28,7 @@ public class TbEnWordDaoTester {
 	
 	@Test
 	public void testGetEnWord(){
-		List<Object[]> list = dao.getEnWordInfoWithExtdInfo("a");
+		List<Object[]> list = dao.getEnWordInfoWithoutExtdInfo("a");
 		Object[] word = (Object[])list.get(0);
 		System.out.println(word[0]);
 	}
