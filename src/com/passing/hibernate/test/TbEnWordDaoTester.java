@@ -28,8 +28,8 @@ public class TbEnWordDaoTester {
 	
 	@Test
 	public void testGetEnWord(){
-		List<TbEnWord> list = dao.getEnWordInfoWithExtdInfo("a");
-		TbEnWord word = (TbEnWord)list.get(0);
-		System.out.println(word.getDict_id());
+		List<Object[]> list = dao.getEnWordInfoWithExtdInfo("a");
+		Object[] word = (Object[])list.get(0);
+		System.out.println(word[0]);
 	}
 }
