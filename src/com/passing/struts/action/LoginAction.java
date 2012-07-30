@@ -2,26 +2,14 @@ package com.passing.struts.action;
 
 import static com.passing.consts.CommonConsts.COM_SPACE;
 
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sf.json.JSONObject;
-
-import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import com.passing.consts.LoginConsts;
 import com.passing.spring.service.impl.LoginServiceBean;
-import com.passing.struts.form.LoginForm;
-import com.passing.util.LogUtil;
 
 public class LoginAction extends BaseAction {
 
