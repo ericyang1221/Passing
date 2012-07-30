@@ -45,15 +45,18 @@ public class LoginAction extends BaseAction {
 
 		String loginRst = loginServiceBean.login(userName + COM_SPACE
 				+ password);
+/** put the following part into method makeJSONObject(HttpServletResponse response, String objName, Object obj) of the common class BaseAction
+ * 
+		this.contentType = contentType + ";charset=" + encoding;
+		
+		LogUtil.log.info("Set contentType to: " + contentType);
+		
+		JSONObject jsonObj = new JSONObject();
+		jsonObj.put("loginResult", loginRst);
+*/
 
-//		this.contentType = contentType + ";charset=" + encoding;
-		
-//		LogUtil.log.info("Set contentType to: " + contentType);
-		
-//		JSONObject jsonObj = new JSONObject();
-//		jsonObj.put("loginResult", loginRst);
 		makeJSONObject(response, "loginResult", loginRst);
-		
+
 		/** make a jsonObject with map */
 //		Map<String, Object> person1 = new HashMap<String, Object>();
 //		Map<String, String> person2 = new HashMap<String, String>();
@@ -75,13 +78,16 @@ public class LoginAction extends BaseAction {
 //		persons.add(new Person("name13",122,new String[]{"basketball222","football222"}));
 //		
 //		jsonObj.put("loginResult", persons);
-		
-//		response.setContentType(contentType);
-//		response.setCharacterEncoding(encoding);
-//		PrintWriter pw = response.getWriter(); 
-//		pw.write(jsonObj.toString());
-//		pw.flush();
-		
+
+/** put the following part into method makeJSONObject(HttpServletResponse response, String objName, Object obj) of the common class BaseAction
+ * 
+		response.setContentType(contentType);
+		response.setCharacterEncoding(encoding);
+		PrintWriter pw = response.getWriter(); 
+		pw.write(jsonObj.toString());
+		pw.flush();
+*/
+
 		return mapping.findForward(null);
 		
 		/** actionForward must be returned when using form for data transform */
