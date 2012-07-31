@@ -1,9 +1,7 @@
 package com.passing.spring.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import com.passing.hibernate.beans.TbEnWord;
 import com.passing.hibernate.dao.TbEnWordDao;
 import com.passing.spring.service.SearchEnToCn;
 
@@ -11,16 +9,18 @@ public class SearchEnToCnBean implements SearchEnToCn{
 
 	private TbEnWordDao tbEnWordDao;
 	
-	public List<Object> searchEnToCn(String searchStr) {
+	public List<Object[]> searchEnToCn(String searchStr) {
 		
 		List<Object[]> tbEnWordInfoWithoutExtdInfo = tbEnWordDao.getEnWordInfoWithoutExtdInfo(searchStr);
+		
+		return tbEnWordInfoWithoutExtdInfo;
+	}
+	
+	public List<Object[]> searchEnToCnExtdInfo(String searchStr) {
+		
 		List<Object[]> tbEnExtdWordInfo = tbEnWordDao.getEnExtdWordInfo(searchStr);
 		
-		List<Object> enWordList = new ArrayList<Object>();
-		enWordList.add(tbEnWordInfoWithoutExtdInfo);
-		enWordList.add(tbEnExtdWordInfo);
-		
-		return enWordList;
+		return tbEnExtdWordInfo;
 	}
 
 
