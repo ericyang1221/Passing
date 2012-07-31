@@ -1,23 +1,13 @@
 package com.passing.hibernate.dao.impl;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
-import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
-import org.hibernate.Query;
-import org.hibernate.Session;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
-import com.passing.hibernate.beans.TbEnWord;
-import com.passing.hibernate.beans.TbEnWordAttr;
 import com.passing.hibernate.dao.TbEnWordDao;
 
 public class TbEnWordDaoBean extends HibernateDaoSupport implements TbEnWordDao {
 
-//	public static Logger log = Logger.getLogger(TbEnWordDaoBean.class);
-	
 	public List<Object[]> getEnWordInfoWithoutExtdInfo(String searchWord) {
 		
 		String sql = "select "
@@ -47,23 +37,7 @@ public class TbEnWordDaoBean extends HibernateDaoSupport implements TbEnWordDao 
 					+ "where "
 					+ "enword.word = '" + searchWord + "'";
 
-//		log.info("SQL = " + sql);
 		List<Object[]> list = getHibernateTemplate().find(sql);
-		
-//		Session session = getHibernateTemplate().getSessionFactory().openSession();
-//		Query q= session.createQuery("from TbEnWord where WORD = ?");
-//		q.setParameter(0, searchWord);
-//		List<TbEnWord> list = q.list();
-
-//		Object[] enw;
-//		for (int i = 0; i < list.size(); i ++) {
-//			enw = list.get(i);
-//			int len = enw.length;
-//			for (int j = 0; j < len; j ++) {
-//				Object tmp = enw[j];
-//				System.out.println(tmp);
-//			}
-//		}
 		
 		return list;
 	}
@@ -71,34 +45,34 @@ public class TbEnWordDaoBean extends HibernateDaoSupport implements TbEnWordDao 
 public List<Object[]> getEnExtdWordInfo(String searchWord) {
 		
 		String sql = "select "
-					+ "ewd.EXTD_WORD "
-					+ ",ewda.EXTD_WORD_EXTD_ATTR "
-					+ ",ewda.EXTD_WORD_MEAN "
-					+ ",ewde.DICT_ID "
-					+ ",ewde.WORD_ID "
-					+ ",ewde.EXTD_WORD_ID "
-					+ ",ewde.EXTD_WORD_PTSP "
-					+ ",ewde.EXTD_WORD_MEAN_NUM "
-					+ ",ewde.EXTD_WORD_EXMP_NUM "
-					+ ",ewde.EXTD_WORD_EXMP_EXTD_ATTR "
-					+ ",ewde.EXTD_WORD_EXMP "
-					+ ",ewde.EXTD_WORD_EXMP_MEAN "
+					+ "ewd.extd_word "
+					+ ",ewda.extd_word_extd_attr "
+					+ ",ewda.extd_word_mean "
+					+ ",ewde.dict_id "
+					+ ",ewde.word_id "
+					+ ",ewde.extd_word_id "
+					+ ",ewde.extd_word_ptsp "
+					+ ",ewde.extd_word_mean_num "
+					+ ",ewde.extd_word_exmp_num "
+					+ ",ewde.extd_word_exmp_extd_attr "
+					+ ",ewde.extd_word_exmp "
+					+ ",ewde.extd_word_exmp_mean "
 					+ "from "
 					+ "TbEnWord wd, "
 					+ "TbEnExtdWord ewd,"
 					+ "TbEnExtdWordAttr ewda, "
 					+ "TbEnExtdWordExmp ewde "
 					+ "where "
-					+ "wd.DICT_ID = ewd.DICT_ID "
-					+ "and wd.WORD_ID = ewd.WORD_ID "
-					+ "and ewd.DICT_ID = ewda.DICT_ID "
-					+ "and ewd.WORD_ID = ewda.WORD_ID "
-					+ "and ewd.EXTD_WORD_ID = ewda.EXTD_WORD_ID "
-					+ "and ewda.DICT_ID = ewde.DICT_ID "
-					+ "and ewda.WORD_ID = ewde.WORD_ID "
-					+ "and ewda.EXTD_WORD_ID = ewde.EXTD_WORD_ID "
-					+ "and ewda.EXTD_WORD_PTSP = ewde.EXTD_WORD_PTSP "
-					+ "and ewda.EXTD_WORD_MEAN_NUM = ewde.EXTD_WORD_MEAN_NUM "
+					+ "wd.dict_id = ewd.dict_id "
+					+ "and wd.word_id = ewd.word_id "
+					+ "and ewd.dict_id = ewda.dict_id "
+					+ "and ewd.word_id = ewda.word_id "
+					+ "and ewd.extd_word_id = ewda.extd_word_id "
+					+ "and ewda.dict_id = ewde.dict_id "
+					+ "and ewda.word_id = ewde.word_id "
+					+ "and ewda.extd_word_id = ewde.extd_word_id "
+					+ "and ewda.extd_word_ptsp = ewde.extd_word_ptsp "
+					+ "and ewda.extd_word_mean_num = ewde.extd_word_mean_num "
 					+ "and wd.word = '" + searchWord + "'";
 
 		List<Object[]> list = getHibernateTemplate().find(sql);

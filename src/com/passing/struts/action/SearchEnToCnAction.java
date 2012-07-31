@@ -21,12 +21,10 @@ import com.passing.hibernate.dao.TbEnWordDao;
 import com.passing.spring.service.impl.SearchEnToCnBean;
 import com.passing.struts.form.SearchEnToCnForm;
 
-public class SearchEnToCnAction extends Action {
+public class SearchEnToCnAction extends BaseAction {
 
 	// 使用普遍依赖注入方式
 	private SearchEnToCnBean searchEnToCnBean;
-
-	// TbEnWordDao dao;
 
 	public ActionForward execute(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
@@ -36,13 +34,8 @@ public class SearchEnToCnAction extends Action {
 
 		List<Object> searchRslt = searchEnToCnBean.searchEnToCn(searchStr);
 
-		if (searchRslt.size() != 0) {
-			request.getSession().setAttribute("searchRslt", searchRslt);
-			return (mapping.findForward("success"));
-		} else {
-			request.getSession().setAttribute("error", "对不起，您输入的用户名或者密码错误！");
-			return (mapping.findForward("failure"));
-		}
+		
+		return (mapping.findForward(null));
 	}
 
 	public void setSearchEnToCnBean(SearchEnToCnBean searchEnToCnBean) {

@@ -2,33 +2,24 @@ package com.passing.struts.action;
 
 import static com.passing.consts.CommonConsts.COM_SPACE;
 
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sf.json.JSONObject;
-
-import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import com.passing.consts.LoginConsts;
 import com.passing.spring.service.impl.LoginServiceBean;
-import com.passing.struts.form.LoginForm;
-import com.passing.util.LogUtil;
 
 public class LoginAction extends BaseAction {
 
 	private LoginServiceBean loginServiceBean;
-//	private String encoding = "UTF-8";
-//	private String contentType = "application/json";
-
+/** put the following part into method makeJSONObject(HttpServletResponse response, String objName, Object obj) of the common class BaseAction
+ * part.1
+	private String encoding = "UTF-8";
+	private String contentType = "application/json";
+*/
+	
 	@Override
 	public ActionForward execute(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
@@ -45,15 +36,18 @@ public class LoginAction extends BaseAction {
 
 		String loginRst = loginServiceBean.login(userName + COM_SPACE
 				+ password);
+/** put the following part into method makeJSONObject(HttpServletResponse response, String objName, Object obj) of the common class BaseAction
+ * part.2
+		this.contentType = contentType + ";charset=" + encoding;
+		
+		LogUtil.log.info("Set contentType to: " + contentType);
+		
+		JSONObject jsonObj = new JSONObject();
+		jsonObj.put("loginResult", loginRst);
+*/
 
-//		this.contentType = contentType + ";charset=" + encoding;
-		
-//		LogUtil.log.info("Set contentType to: " + contentType);
-		
-//		JSONObject jsonObj = new JSONObject();
-//		jsonObj.put("loginResult", loginRst);
 		makeJSONObject(response, "loginResult", loginRst);
-		
+
 		/** make a jsonObject with map */
 //		Map<String, Object> person1 = new HashMap<String, Object>();
 //		Map<String, String> person2 = new HashMap<String, String>();
@@ -75,13 +69,16 @@ public class LoginAction extends BaseAction {
 //		persons.add(new Person("name13",122,new String[]{"basketball222","football222"}));
 //		
 //		jsonObj.put("loginResult", persons);
-		
-//		response.setContentType(contentType);
-//		response.setCharacterEncoding(encoding);
-//		PrintWriter pw = response.getWriter(); 
-//		pw.write(jsonObj.toString());
-//		pw.flush();
-		
+
+/** put the following part into method makeJSONObject(HttpServletResponse response, String objName, Object obj) of the common class BaseAction
+ * part.3
+		response.setContentType(contentType);
+		response.setCharacterEncoding(encoding);
+		PrintWriter pw = response.getWriter(); 
+		pw.write(jsonObj.toString());
+		pw.flush();
+*/
+
 		return mapping.findForward(null);
 		
 		/** actionForward must be returned when using form for data transform */
