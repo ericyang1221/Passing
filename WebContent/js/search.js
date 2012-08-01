@@ -16,6 +16,6 @@ $(document).ready(function() {
 	
 	function searchResponse(result) { 
 		// 'result' is the json object returned from the server 
-		alert("ok");
+		alert(result.enWordResponse.enWordInfo[0].word + ":" + result.enWordResponse.enExtdWordInfo[0].extdWord);
 	}
 });

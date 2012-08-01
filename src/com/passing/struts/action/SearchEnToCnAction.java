@@ -1,7 +1,9 @@
 package com.passing.struts.action;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -38,7 +40,7 @@ public class SearchEnToCnAction extends BaseAction {
 
 		if (enWordInfo.isEmpty()) {
 			
-			this.makeJSONObject(response, "enWordInfo", SearchEnToCnConsts.ENTOCN_RSLT_NONE);
+			this.makeJSONObject(response, "enWordResponse", SearchEnToCnConsts.ENTOCN_RSLT_NONE);
 		} else {
 			// json process for EnWord
 			List<EnWord> jsonEnWordLs = new ArrayList<EnWord>();
@@ -50,15 +52,13 @@ public class SearchEnToCnAction extends BaseAction {
 						enWord[8], enWord[9], enWord[10]);
 				jsonEnWordLs.add(jsonEnWord);
 			}
-			this.makeJSONObject(response, "enWordInfo", jsonEnWordLs);
 			
 			// json process for EnExtdWord
 			List<Object[]> enExtdWordInfo = searchEnToCnBean.searchEnToCnExtdInfo(searchStr);
+			List<EnExtdWord> jsonEnExtdWordLs = new ArrayList<EnExtdWord>();
 			if (enExtdWordInfo.isEmpty()) {
-				
-				this.makeJSONObject(response, "enExtdWordInfo", SearchEnToCnConsts.ENTOCN_RSLT_NONE);
+				jsonEnExtdWordLs = null;
 			} else {
-				List<EnExtdWord> jsonEnExtdWordLs = new ArrayList<EnExtdWord>();
 				EnExtdWord jsonEnExtdWord;
 				for (int i = 0; i < enExtdWordInfo.size(); i ++) {
 					Object[] enExtdWord = enExtdWordInfo.get(i);
@@ -67,8 +67,13 @@ public class SearchEnToCnAction extends BaseAction {
 							enExtdWord[8], enExtdWord[9], enExtdWord[10], enExtdWord[11]);
 					jsonEnExtdWordLs.add(jsonEnExtdWord);
 				}
-				this.makeJSONObject(response, "enExtdWordInfo", jsonEnExtdWordLs);
 			}
+			
+			Map<String, Object> jsonResponseLs = new HashMap<String, Object>();
+			jsonResponseLs.put("enWordInfo", jsonEnWordLs);
+			jsonResponseLs.put("enExtdWordInfo", jsonEnExtdWordLs);
+			
+			this.makeJSONObject(response, "enWordResponse", jsonResponseLs);
 		}
 		
 		return (mapping.findForward(null));
