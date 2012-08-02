@@ -15,12 +15,12 @@
 	<!-- MAPPINGS -->
 	<action-mappings>
 		<action path="/doSearch" type="org.springframework.web.struts.DelegatingActionProxy" input="/html/search.html" name="searchForm" scope="request" validate="false">
-			<forward name="success" path="/html/success.html"></forward>
-			<forward name="failure" path="/html/failed.html"></forward>
+			<forward name="success" path="/html/searchresult.html"></forward>
+			<forward name="failure" path="/html/searchresult.html"></forward>
 		</action>
 		<action path="/doLogin" type="org.springframework.web.struts.DelegatingActionProxy" input="/html/login.html" name="loginForm" scope="request" validate="false">
-			<forward name="success" path="/html/success.html"></forward>
-			<forward name="failure" path="/html/failed.html"></forward>
+			<forward name="success" path="/html/search.html"></forward>
+			<forward name="failure" path="/html/login.html"></forward>
 		</action>
 	</action-mappings>
 	

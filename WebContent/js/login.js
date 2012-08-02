@@ -17,7 +17,7 @@ $(document).ready(function() {
 
 /************************************************** to transform data without form START*******************************************************/
 	$('input[name=submit]').click(function() {
-		var userInfo = "userName=" + $('input[name=userName]').fieldValue() + "&password=" + $('input[name=password]').val();//.fieldValue() and .val() can both getthe value
+		var userInfo = "userName=" + $('input[name=userName]').fieldValue() + "&password=" + $('input[name=password]').val();//.fieldValue() and .val() can both get the value
 		var options = {
 				url:'../doLogin.do',
 				type:'POST',
@@ -36,6 +36,13 @@ $(document).ready(function() {
 	
 	function loginResponse(result) { 
 		// 'result' is the json object returned from the server 
-		alert(result.loginResult);
+		var loginRsl = eval(result);
+		if (loginRsl.loginResult == "登陆成功") {
+			window.location = "search.html";
+		} else {
+			alert(loginRsl.loginResult);
+		}
+		
+		
 	}
 });

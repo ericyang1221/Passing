@@ -9,6 +9,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import com.passing.consts.LoginConsts;
 import com.passing.spring.service.impl.LoginServiceBean;
 
 public class LoginAction extends BaseAction {
@@ -79,6 +80,11 @@ public class LoginAction extends BaseAction {
 		pw.flush();
 */
 
+//		if (!LoginConsts.LOG_SUCCESS.equals(loginRst)) {
+//			return mapping.findForward("failed");
+//		}
+//		return mapping.findForward("success");
+		
 		return mapping.findForward(null);
 		
 		/** actionForward must be returned when using form for data transform */
