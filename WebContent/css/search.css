@@ -1,6 +1,6 @@
 #searchTabs{
-	width:25em;
-	height:8em;
+	width:36em;
+	height:6.5em;
 	margin-top:10%;
 	margin-left:auto;
 	margin-right:auto;
@@ -17,13 +17,37 @@
 }
 input[name=searchStr]{
 	position:absolute;
-	top:4em;
-	left:1.5em;
+	top:3.5em;
+	left:4.5em;
+	width:20em;
 }
 input[name=transferButton]{
 	height:1.7em;
 	position:absolute;
-	top:4em;
-	right:1.5em;
+	top:3.5em;
+	right:4.5em;
 	padding-top:0.2em;
+}
+#outer-line{
+	border:0.1em solid #CCC;
+	width:40em;
+	margin-left:auto;
+	margin-right:auto;
+	margin-top:1.5em;
+	margin-bottom:5em;
+	border-bottom-left-radius: 0.5em;
+	border-bottom-right-radius: 0.5em;
+	border-top-left-radius: 0.5em;
+	border-top-right-radius: 0.5em;
+}
+#allInfo{
+/*	border:0.1em solid; */
+	width:38em;
+	margin-left:auto;
+	margin-right:auto;
+	margin-top:1.5em;
+	margin-bottom:1.5em;
+}
+hr{
+	border:0.0625em dotted #E7E7E7;
 }
