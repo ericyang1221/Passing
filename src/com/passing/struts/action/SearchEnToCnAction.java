@@ -39,8 +39,11 @@ public class SearchEnToCnAction extends BaseAction {
 		List<Object[]> enWordInfo = searchEnToCnBean.searchEnToCn(searchStr);
 
 		if (enWordInfo.isEmpty()) {
+			Map<String, Object> jsonResponseLs = new HashMap<String, Object>();
+//			jsonResponseLs.put("enWordInfo", SearchEnToCnConsts.ENTOCN_RSLT_NONE);
+			jsonResponseLs.put("enWordInfo", null);
 			
-			this.makeJSONObject(response, "enWordResponse", SearchEnToCnConsts.ENTOCN_RSLT_NONE);
+			this.makeJSONObject(response, "enWordResponse", jsonResponseLs);
 		} else {
 			// json process for EnWord
 			List<EnWord> jsonEnWordLs = new ArrayList<EnWord>();

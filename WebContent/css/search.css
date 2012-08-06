@@ -29,6 +29,7 @@ input[name=transferButton]{
 	padding-top:0.2em;
 }
 #outer-line{
+	display:none;
 	border:0.1em solid #CCC;
 	width:40em;
 	margin-left:auto;
