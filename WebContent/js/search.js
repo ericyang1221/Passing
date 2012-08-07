@@ -101,7 +101,7 @@ $(document).ready(function() {
 ////		}
 //	});
 	
-	function searchResponse(result) { 
+	function searchResponse(result) {
 		// 'result' is the json object returned from the server 
 		$('#allInfo').empty();
 		$('#allInfo').css("display","none");
@@ -171,20 +171,25 @@ $(document).ready(function() {
 					wrapStr += 
 					   "<p>"
 					 + "	<span>" + k + "." + mean[j] + "&nbsp;"
+//					 + "		<a href='javascript:void(0)' id='ptsp" + i + "-mean" + j + "' onclick='exampleToggle(" + i + ", " + j + ")'>"
 					 + "		<a href='javascript:void(0)' id='ptsp" + i + "-mean" + j + "'>"
 					 + "			<img src='../images/sent_on.gif' alt='例句' title='点击显示/隐藏例句'>"
 					 + "		</a>"
 					 + "	</span>"
 					 + "</p>"
-					 + "<div id='ptsp" + i + "-mean" + j + "-exam-all' style='margin-left:1em;'>";
+					 + "<div id='ptsp" + i + "-mean" + j + "-exmp-all' style='display:none;margin-left:1em;'>";
+					
+					// to get the count of the same meaningNum which is necessary in loop creation of ptsp-mean-exmp div
+					var meanCnt = 1;
+					for (var tmpJ = j; tmpJ < enWordArr.length; tmpJ ++) {
+						if (meaningNum[tmpJ] != meaningNum[tmpJ + 1]) {
+							break;
+						}
+						meanCnt++;
+					}
 					
 					// to create ptsp-mean-exmp div by loop
-					for ( var m = 0; m < enWordArr.length; m ++) {
-						if (m != 0) {
-							if (exampleNum[m] == exampleNum[m - 1]) {
-								continue;
-							}
-						}
+					for ( var m = j; m < j + meanCnt; m ++) {
 						wrapStr += 
 							   "<div name='ptsp-mean-exmp'>"
 							 + "	<p>"
@@ -208,6 +213,29 @@ $(document).ready(function() {
 		$('#allInfo').append(wrapStr);
 		$('#allInfo').fadeIn("slow");
 		$('#outer-line').fadeIn("slow");
+		
+		$("a[id^='ptsp']").click(function() {
+			
+			var id = $(this).attr("id");
+			var i = id.substring(4,5);
+			var j = id.substring(10,11);
+			
+			var exmpDivId = "#ptsp" + i +"-mean" + j + "-exmp-all";
+			
+			// to change image of ptsp-mean href
+			if ($(exmpDivId).css("display") == "none") {
+				$("a[id=" + id + "] > img").attr("src","../images/sent_off.gif");
+			} else if ($(exmpDivId).css("display") == "block") {
+				$("a[id=" + id + "] > img").attr("src","../images/sent_on.gif");
+			}
+			
+			// to change display attribute of example div
+			$(exmpDivId).toggle("normal");
+		});
 	}
 	
+//	function exampleToggle(i, j) {
+//		alert("1");
+//		$("#ptsp" + i +"-mean" + j + "-exmp-all").toggle();
+//	}
 });
