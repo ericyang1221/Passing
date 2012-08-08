@@ -115,6 +115,7 @@ $(document).ready(function() {
 			return ;
 		}
 		
+		// to process enWordInfo START
 		var word = [enWordArr.length];
 		var extdAttr = [enWordArr.length];
 		var mean = [enWordArr.length];
@@ -210,10 +211,133 @@ $(document).ready(function() {
 		}
 			wrapStr += 
 			   "</article>";
+		// to process enWordInfo END
+			
+		// to process enExtdWordInfo START
+		var enExtdWordArr = result.enWordResponse.enExtdWordInfo;
+		
+		if (enExtdWordArr != null) {
+			var extdWord = [enExtdWordArr.length];
+			var extdWordExtdAttr = [enExtdWordArr.length];
+			var extdWordMean = [enExtdWordArr.length];
+			var dictId = [enExtdWordArr.length];
+			var wordId = [enExtdWordArr.length];
+			var extdWordPtsp = [enExtdWordArr.length];
+			var extdWordMeanNum = [enExtdWordArr.length];
+			var extdWordExmpNum = [enExtdWordArr.length];
+			var extdWordExmpExtdAttr = [enExtdWordArr.length];
+			var extdWordExmp = [enExtdWordArr.length];
+			var extdWordExmpMean = [enExtdWordArr.length];
+			for (var i = 0; i < enExtdWordArr.length; i ++) {
+				extdWord[i] = $.trim(enExtdWordArr[i].extdWord);
+				extdWordExtdAttr[i] = $.trim(enExtdWordArr[i].extdWordExtdAttr);
+				extdWordMean[i] = $.trim(enExtdWordArr[i].extdWordMean);
+				dictId[i] = $.trim(enExtdWordArr[i].dictId);
+				wordId[i] = $.trim(enExtdWordArr[i].wordId);
+				extdWordPtsp[i] = $.trim(enExtdWordArr[i].extdWordPtsp);
+				extdWordMeanNum[i] = $.trim(enExtdWordArr[i].extdWordMeanNum);
+				extdWordExmpNum[i] = $.trim(enExtdWordArr[i].extdWordExmpNum);
+				extdWordExmpExtdAttr[i] = $.trim(enExtdWordArr[i].extdWordExmpExtdAttr);
+				extdWordExmp[i] = $.trim(enExtdWordArr[i].extdWordExmp);
+				extdWordExmpMean[i] = $.trim(enExtdWordArr[i].extdWordExmpMean);
+			}
+			
+
+			wrapStr += 
+				   "<br>"
+				 + "<div id='more'>"
+				 + "	<center>"
+				 + "		<a href='javascript:void(0)' id='moreInfo'>更多详细释义"
+				 + "			<img src='../images/down.gif' alt='More'>"
+				 + "		</a>"
+				 + "	</center>"
+				 + "</div>"
+				 + "<div id='enExtdWordInfoDiv' style='display:none'>"
+				 + "<article id='enExtdWordInfo'>"
+				 + "	<header><h4>" + extdWord[0] + "</h4></header>"
+				 + "	<hr>";
+			
+			// to create ptsp div by loop
+			for ( var i = 0; i < enExtdWordArr.length; i ++) {
+				if (i != 0) {
+					if (extdWordPtsp[i] == extdWordPtsp[i - 1]) {
+						continue;
+					}
+				}
+				wrapStr += 
+					   "<div name='extdword-ptsp'>"
+					 + "	<h4>" + extdWordPtsp[i] + ".</h4>";
+					if (extdWordExtdAttr[i] != null && extdWordExtdAttr[i] != "") {
+					wrapStr += 
+					   "	<p>" + extdWordExtdAttr[i] + "</p>";
+					}
+					// meaning number for page display
+					var k = 1;
+					// to create ptsp-mean div by loop
+					for ( var j = 0; j < enExtdWordArr.length; j ++) {
+						if (j != 0) {
+							if (extdWordMeanNum[j] == extdWordMeanNum[j - 1]) {
+								continue;
+							}
+						}
+						wrapStr += 
+						   "<p>"
+						 + "	<span>" + k + "." + extdWordMean[j] + "&nbsp;"
+						 + "		<a href='javascript:void(0)' id='extdword-ptsp" + i + "-mean" + j + "'>"
+						 + "			<img src='../images/sent_on.gif' alt='例句' title='点击显示/隐藏例句'>"
+						 + "		</a>"
+						 + "	</span>"
+						 + "</p>"
+						 + "<div id='extdword-ptsp" + i + "-mean" + j + "-exmp-all' style='display:none;margin-left:1em;'>";
+						
+						// to get the count of the same meaningNum which is necessary in loop creation of ptsp-mean-exmp div
+						var meanCnt = 1;
+						for (var tmpJ = j; tmpJ < enExtdWordArr.length; tmpJ ++) {
+							if (extdWordMeanNum[tmpJ] != extdWordMeanNum[tmpJ + 1]) {
+								break;
+							}
+							meanCnt++;
+						}
+						
+						// to create ptsp-mean-exmp div by loop
+						for ( var m = j; m < j + meanCnt; m ++) {
+							wrapStr += 
+								   "<div name='extdword-ptsp-mean-exmp'>"
+								 + "	<p>"
+								 + "		<span>" + extdWordExmp[m] + "&nbsp;" + extdWordExmpExtdAttr[m] + "</span>"
+								 + "		<br>"
+								 + "		<span>" + extdWordExmpMean[m] + "</span>"
+								 + "	</p>"
+								 + "	<hr>"
+								 + "</div>";
+						}
+							
+						wrapStr += 
+						   "</div>";
+						k ++;
+					}
+					wrapStr += 
+					   "</div>";
+			}
+				wrapStr += 
+				   "</article>"
+				 + "</div>"
+				 + "<div id='hide' style='display:none'>"
+				 + "	<center>"
+				 + "		<a href='javascript:void(0)' id='hideExtdInfo'>收起"
+				 + "			<img src='../images/up.gif' alt='Hide'>"
+				 + "		</a>"
+				 + "	</center>"
+				 + "</div>";
+		}
+		// to process enExtdWordInfo END
+			
+		// to append the html string to the page
 		$('#allInfo').append(wrapStr);
 		$('#allInfo').fadeIn("slow");
 		$('#outer-line').fadeIn("slow");
 		
+		// to add onclick event for enWordMeaning
 		$("a[id^='ptsp']").click(function() {
 			
 			var id = $(this).attr("id");
@@ -232,6 +356,47 @@ $(document).ready(function() {
 			// to change display attribute of example div
 			$(exmpDivId).toggle("normal");
 		});
+		
+		// to add onclick event for enExtdWordMeaning
+		$("a[id^='extdword-ptsp']").click(function() {
+			
+			var id = $(this).attr("id");
+			var i = id.substring(13,14);
+			var j = id.substring(19,20);
+			
+			var exmpDivId = "#extdword-ptsp" + i +"-mean" + j + "-exmp-all";
+			
+			// to change image of ptsp-mean href
+			if ($(exmpDivId).css("display") == "none") {
+				$("a[id=" + id + "] > img").attr("src","../images/sent_off.gif");
+			} else if ($(exmpDivId).css("display") == "block") {
+				$("a[id=" + id + "] > img").attr("src","../images/sent_on.gif");
+			}
+			
+			// to change display attribute of example div
+			$(exmpDivId).toggle("normal");
+		});
+		
+		// to add onclick event for “更多详细释义” link
+		$("a[id='moreInfo']").click(function() {
+			$("#more").css("display","none");
+			
+			// to change display attribute of example div
+			$("#enExtdWordInfoDiv").toggle("normal");
+			
+			$("#hide").css("display","block");
+		});
+		
+		// to add onclick event for “收起” link
+		$("a[id='hideExtdInfo']").click(function() {
+			$("#hide").css("display","none");
+			
+			// to change display attribute of example div
+			$("#enExtdWordInfoDiv").toggle("normal");
+			
+			$("#more").css("display","block");
+		});
+		
 	}
 	
 //	function exampleToggle(i, j) {
