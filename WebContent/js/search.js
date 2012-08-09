@@ -143,7 +143,7 @@ $(document).ready(function() {
 
 		var wrapStr = 
 			   "<article id='enWordInfo'>"
-			 + "	<header><h2>" + word[0] + "</h2></header>"
+			 + "	<header><h1>" + word[0] + "</h1></header>"
 			 + "	<hr>";
 		
 		// to create ptsp div by loop
@@ -245,7 +245,7 @@ $(document).ready(function() {
 			}
 			
 			wrapStr += 
-				   "<br>"
+				   "<br><br><br>"
 				 + "<div id='more'>"
 				 + "	<center>"
 				 + "		<a href='javascript:void(0)' id='moreInfo'>更多详细释义"
@@ -287,7 +287,7 @@ $(document).ready(function() {
 					}
 					wrapStr += 
 						   "<div name='extdword-ptsp'>"
-						 + "	<h4>" + extdWordPtsp[i] + ".</h4>";
+						 + "	<h5>" + extdWordPtsp[i] + ".</h5>";
 						if (extdWordExtdAttr[i] != null && extdWordExtdAttr[i] != "") {
 						wrapStr += 
 						   "	<p>" + extdWordExtdAttr[i] + "</p>";
@@ -315,7 +315,7 @@ $(document).ready(function() {
 							// to get the count of the same extdWordMean which is necessary in loop creation of extdword-ptsp-mean-exmp div
 							var extdWordMeanCnt = 1;
 							for (var tmpJ = j; tmpJ < j + extdWordPtspCnt; tmpJ ++) {
-								if (extdWordMeanNum[tmpJ] != extdWordMeanNum[tmpJ + 1]) {
+								if (extdWordPtsp[tmpJ] != extdWordPtsp[tmpJ + 1] || extdWordMeanNum[tmpJ] != extdWordMeanNum[tmpJ + 1]) {
 									break;
 								}
 								extdWordMeanCnt++;
