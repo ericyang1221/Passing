@@ -222,6 +222,7 @@ $(document).ready(function() {
 			var extdWordMean = [enExtdWordArr.length];
 			var dictId = [enExtdWordArr.length];
 			var wordId = [enExtdWordArr.length];
+			var extdWordId = [enExtdWordArr.length];
 			var extdWordPtsp = [enExtdWordArr.length];
 			var extdWordMeanNum = [enExtdWordArr.length];
 			var extdWordExmpNum = [enExtdWordArr.length];
@@ -234,6 +235,7 @@ $(document).ready(function() {
 				extdWordMean[i] = $.trim(enExtdWordArr[i].extdWordMean);
 				dictId[i] = $.trim(enExtdWordArr[i].dictId);
 				wordId[i] = $.trim(enExtdWordArr[i].wordId);
+				extdWordId[i] = $.trim(enExtdWordArr[i].extdWordId);
 				extdWordPtsp[i] = $.trim(enExtdWordArr[i].extdWordPtsp);
 				extdWordMeanNum[i] = $.trim(enExtdWordArr[i].extdWordMeanNum);
 				extdWordExmpNum[i] = $.trim(enExtdWordArr[i].extdWordExmpNum);
@@ -242,7 +244,6 @@ $(document).ready(function() {
 				extdWordExmpMean[i] = $.trim(enExtdWordArr[i].extdWordExmpMean);
 			}
 			
-
 			wrapStr += 
 				   "<br>"
 				 + "<div id='more'>"
@@ -252,76 +253,100 @@ $(document).ready(function() {
 				 + "		</a>"
 				 + "	</center>"
 				 + "</div>"
-				 + "<div id='enExtdWordInfoDiv' style='display:none'>"
-				 + "<article id='enExtdWordInfo'>"
-				 + "	<header><h4>" + extdWord[0] + "</h4></header>"
-				 + "	<hr>";
+				 + "<div id='enExtdWordInfoDiv-all' style='display:none'>";
 			
-			// to create ptsp div by loop
-			for ( var i = 0; i < enExtdWordArr.length; i ++) {
-				if (i != 0) {
-					if (extdWordPtsp[i] == extdWordPtsp[i - 1]) {
+			// to create extdWord article by loop
+			for (var s = 0; s<enExtdWordArr.length; s ++) {
+				
+				if (s != 0) {
+					if (extdWordId[s] == extdWordId[s - 1]) {
 						continue;
 					}
 				}
+				
 				wrapStr += 
-					   "<div name='extdword-ptsp'>"
-					 + "	<h4>" + extdWordPtsp[i] + ".</h4>";
-					if (extdWordExtdAttr[i] != null && extdWordExtdAttr[i] != "") {
-					wrapStr += 
-					   "	<p>" + extdWordExtdAttr[i] + "</p>";
+					   "<article id='enExtdWordInfo" + s + "'>"
+					 + "	<header><h4>" + extdWord[s] + "</h4></header>"
+					 + "	<hr>";
+				
+				// to get the count of the same extdWordPtsp which is necessary in loop creation of ptsp div
+				var extdWordPtspCnt = 1;
+				for (var tmpJ = s; tmpJ < enExtdWordArr.length; tmpJ ++) {
+					if (extdWordPtsp[tmpJ] != extdWordPtsp[tmpJ + 1]) {
+						break;
 					}
-					// meaning number for page display
-					var k = 1;
-					// to create ptsp-mean div by loop
-					for ( var j = 0; j < enExtdWordArr.length; j ++) {
-						if (j != 0) {
-							if (extdWordMeanNum[j] == extdWordMeanNum[j - 1]) {
-								continue;
-							}
+					extdWordPtspCnt ++;
+				}
+				
+				// to create ptsp div by loop
+				for ( var i = s; i < s + extdWordPtspCnt; i ++) {
+					if (i != s) {
+						if (extdWordPtsp[i] == extdWordPtsp[i - 1]) {
+							continue;
 						}
+					}
+					wrapStr += 
+						   "<div name='extdword-ptsp'>"
+						 + "	<h4>" + extdWordPtsp[i] + ".</h4>";
+						if (extdWordExtdAttr[i] != null && extdWordExtdAttr[i] != "") {
 						wrapStr += 
-						   "<p>"
-						 + "	<span>" + k + "." + extdWordMean[j] + "&nbsp;"
-						 + "		<a href='javascript:void(0)' id='extdword-ptsp" + i + "-mean" + j + "'>"
-						 + "			<img src='../images/sent_on.gif' alt='例句' title='点击显示/隐藏例句'>"
-						 + "		</a>"
-						 + "	</span>"
-						 + "</p>"
-						 + "<div id='extdword-ptsp" + i + "-mean" + j + "-exmp-all' style='display:none;margin-left:1em;'>";
+						   "	<p>" + extdWordExtdAttr[i] + "</p>";
+						}
 						
-						// to get the count of the same meaningNum which is necessary in loop creation of ptsp-mean-exmp div
-						var meanCnt = 1;
-						for (var tmpJ = j; tmpJ < enExtdWordArr.length; tmpJ ++) {
-							if (extdWordMeanNum[tmpJ] != extdWordMeanNum[tmpJ + 1]) {
-								break;
+						// meaning number for page display
+						var k = 1;
+						// to create ptsp-mean div by loop
+						for ( var j = i; j < i + extdWordPtspCnt; j ++) {
+							if (j != i) {
+								if (extdWordMeanNum[j] == extdWordMeanNum[j - 1]) {
+									continue;
+								}
 							}
-							meanCnt++;
-						}
-						
-						// to create ptsp-mean-exmp div by loop
-						for ( var m = j; m < j + meanCnt; m ++) {
 							wrapStr += 
-								   "<div name='extdword-ptsp-mean-exmp'>"
-								 + "	<p>"
-								 + "		<span>" + extdWordExmp[m] + "&nbsp;" + extdWordExmpExtdAttr[m] + "</span>"
-								 + "		<br>"
-								 + "		<span>" + extdWordExmpMean[m] + "</span>"
-								 + "	</p>"
-								 + "	<hr>"
-								 + "</div>";
-						}
+							   "<p>"
+							 + "	<span>" + k + "." + extdWordMean[j] + "&nbsp;"
+							 + "		<a href='javascript:void(0)' id='extdword-ptsp" + i + "-mean" + j + "'>"
+							 + "			<img src='../images/sent_on.gif' alt='例句' title='点击显示/隐藏例句'>"
+							 + "		</a>"
+							 + "	</span>"
+							 + "</p>"
+							 + "<div id='extdword-ptsp" + i + "-mean" + j + "-exmp-all' style='display:none;margin-left:1em;'>";
 							
+							// to get the count of the same extdWordMean which is necessary in loop creation of extdword-ptsp-mean-exmp div
+							var extdWordMeanCnt = 1;
+							for (var tmpJ = j; tmpJ < j + extdWordPtspCnt; tmpJ ++) {
+								if (extdWordMeanNum[tmpJ] != extdWordMeanNum[tmpJ + 1]) {
+									break;
+								}
+								extdWordMeanCnt++;
+							}
+							
+							// to create extdword-ptsp-mean-exmp div by loop
+							for ( var m = j; m < j + extdWordMeanCnt; m ++) {
+								wrapStr += 
+									   "<div name='extdword-ptsp-mean-exmp'>"
+									 + "	<p>"
+									 + "		<span>" + extdWordExmp[m] + "&nbsp;" + extdWordExmpExtdAttr[m] + "</span>"
+									 + "		<br>"
+									 + "		<span>" + extdWordExmpMean[m] + "</span>"
+									 + "	</p>"
+									 + "	<hr>"
+									 + "</div>";
+							}
+								
+							wrapStr += 
+							   "</div>";
+							k ++;
+						}
 						wrapStr += 
 						   "</div>";
-						k ++;
-					}
-					wrapStr += 
-					   "</div>";
-			}
+				}
 				wrapStr += 
-				   "</article>"
-				 + "</div>"
+					   "</article>";
+			}
+			
+				wrapStr += 
+				   "</div>"
 				 + "<div id='hide' style='display:none'>"
 				 + "	<center>"
 				 + "		<a href='javascript:void(0)' id='hideExtdInfo'>收起"
@@ -382,7 +407,7 @@ $(document).ready(function() {
 			$("#more").css("display","none");
 			
 			// to change display attribute of example div
-			$("#enExtdWordInfoDiv").toggle("normal");
+			$("#enExtdWordInfoDiv-all").toggle("normal");
 			
 			$("#hide").css("display","block");
 		});
@@ -392,7 +417,7 @@ $(document).ready(function() {
 			$("#hide").css("display","none");
 			
 			// to change display attribute of example div
-			$("#enExtdWordInfoDiv").toggle("normal");
+			$("#enExtdWordInfoDiv-all").toggle("normal");
 			
 			$("#more").css("display","block");
 		});
