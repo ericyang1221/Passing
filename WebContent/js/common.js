@@ -41,5 +41,6 @@ $(document).ready(function(){
 	$.include('../js/jquery-ui-1.8.21.custom.min.js');
 	$.include('../css/black-tie/jquery-ui-1.8.21.custom.css');
 	
+	$("footer").append("<center style='color:#A5A2A2;font-size:0.6em;'>Copyright(c) Passing Corporation. All Rights Reserved.</center>");
 });
 
