@@ -1,0 +1,7 @@
+1.每个序号都要有释义
+2.序号重复
+3.例句与释义颜色区分
+4.回车查询
+5.字典解析错误（honey，alpha，just 1）
+6.空字符提示有误
+7.webservice 访问 google translation
