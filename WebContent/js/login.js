@@ -1,7 +1,7 @@
 $(document).ready(function() {
 	$('.button').button();
 	
-/************************************************** to transform data with form START *********************************************************
+/************************************************** to transport data with form START *********************************************************
 	$('#loginForm').submit(function() {
 		var options = {
 				url:'../doLogin.do',
@@ -13,10 +13,17 @@ $(document).ready(function() {
 		// return false to prevent normal browser submit and page navigation
 		return false;
 	});
-*************************************************** to transform data with form END ********************************************************/
+*************************************************** to transport data with form END ********************************************************/
 
-/************************************************** to transform data without form START*******************************************************/
+/************************************************** to transport data without form START*******************************************************/
 	$('input[name=submit]').click(function() {
+		if ($('input[name=userName]').val() == "" || $('input[name=password]').val() == "") {
+			$("#errMsgDiv").css("visibility","visible");
+			if ($("#errMsgDiv").val() != "请输入用户名和密码") {
+				$("#errMsgDiv").text("请输入用户名和密码");
+			}
+			return false;
+		}
 		var userInfo = "userName=" + $('input[name=userName]').fieldValue() + "&password=" + $('input[name=password]').val();//.fieldValue() and .val() can both get the value
 		var options = {
 				url:'../doLogin.do',
@@ -27,7 +34,7 @@ $(document).ready(function() {
 			};
 		$.ajax(options); 
 	});
-/************************************************** to transform data without form END*******************************************************/
+/************************************************** to transport data without form END*******************************************************/
 
 	$('input[name=reset]').click(function() {
 		$('input[name=userName]').val("");
@@ -40,9 +47,26 @@ $(document).ready(function() {
 		if (loginRsl.loginResult == "登陆成功") {
 			window.location = "search.html";
 		} else {
-			alert(loginRsl.loginResult);
+			$("#errMsgDiv").css("visibility","visible");
+			$("#errMsgDiv").text(loginRsl.loginResult);
 		}
-		
-		
 	}
+	
+	// Enter Submit
+	$("input[id='userName']").keydown(function(e) {
+		var curKey = e.which;
+		if (curKey == 13) {
+			$("input[type='submit']").click();
+			return false;
+		}
+	});
+	
+	// Enter Submit
+	$("input[id='password']").keydown(function(e) {
+		var curKey = e.which;
+		if (curKey == 13) {
+			$("input[type='submit']").click();
+			return false;
+		}
+	});
 });

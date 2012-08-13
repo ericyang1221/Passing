@@ -2,7 +2,27 @@ $(document).ready(function() {
 	$('#searchTabs').tabs();
 	$('input[type=submit]').button();
 	
-	$('input[type=submit]').click(function() {
+	$('input[id=searchChtoEn]').click(function() {
+		if ($('input[name=searchStr]').val() == "") {
+			if ($("#errMsgDiv").text() == "对不起，没有找到你想要查询的单词！") {
+				$("#errMsgDiv").text("请输入你想要查询的单词！");
+			// null search after one search action succeed
+			} else if ($("#errMsgDiv").text() == "Research After Success") {
+				var errMsg = "<center><div id='errMsgDiv' style='color:red;'>请输入你想要查询的单词！</div></center>";
+
+				$('#allInfo').empty();
+				$('#allInfo').append(errMsg);
+				$('#allInfo').fadeIn("slow");
+				$('#outer-line').fadeIn("slow");
+				return ;
+			}
+			
+			$("#errMsgDiv").css("display","block");
+			$('#allInfo').fadeIn("slow");
+			$('#outer-line').fadeIn("slow");
+			return ;
+		}
+		
 		var searchStr = "searchStr=" + $('input[name=searchStr]').val();
 		var options = {
 				url:'../doSearch.do',
@@ -21,7 +41,8 @@ $(document).ready(function() {
 		
 		var enWordArr = result.enWordResponse.enWordInfo;
 		if (enWordArr == null) {
-			var errMsg = "<center style='color:red'>对不起，没有找到你想要查询的单词！</center>";
+			var errMsg = "<center><div id='errMsgDiv' style='color:red;'>对不起，没有找到你想要查询的单词！</div></center>";
+
 			$('#allInfo').append(errMsg);
 			$('#allInfo').fadeIn("slow");
 			$('#outer-line').fadeIn("slow");
@@ -43,7 +64,7 @@ $(document).ready(function() {
 		for (var i = 0; i < enWordArr.length; i ++) {
 			word[i] = $.trim(enWordArr[i].word);
 			extdAttr[i] = $.trim(enWordArr[i].extdAttr);
-			mean[i] = $.trim(enWordArr[i].mean);
+			mean[i] = ($.trim(enWordArr[i].mean) == "" ? "(无释义，点击直接查看例句)" : $.trim(enWordArr[i].mean));
 			dictId[i] = $.trim(enWordArr[i].dictId);
 			wordId[i] = $.trim(enWordArr[i].wordId);
 			partOfSpeech[i] = $.trim(enWordArr[i].partOfSpeech);
@@ -52,6 +73,11 @@ $(document).ready(function() {
 			exampleExtdAttr[i] = $.trim(enWordArr[i].exampleExtdAttr);
 			enExmp[i] = $.trim(enWordArr[i].enExmp);
 			exmpMeaning[i] = $.trim(enWordArr[i].exmpMeaning);
+			
+			// if the meaning match the condition which is "以 '数字+空格' 开头，后缀任意个字符", delete the number and space;
+			if (/\d .*/.test(mean[i])) {
+				mean[i] = mean[i].substring(mean[i].indexOf(" ") + 1);
+			}
 		}
 
 		var wrapStr = 
@@ -91,7 +117,7 @@ $(document).ready(function() {
 					 + "		</a>"
 					 + "	</span>"
 					 + "</p>"
-					 + "<div id='ptsp" + i + "-mean" + j + "-exmp-all' style='display:none;margin-left:1em;'>";
+					 + "<div id='ptsp" + i + "-mean" + j + "-exmp-all' style='display:none;margin-left:1em;color:#646464;'>";
 					
 					// to get the count of the same meaningNum which is necessary in loop creation of ptsp-mean-exmp div
 					var meanCnt = 1;
@@ -145,7 +171,7 @@ $(document).ready(function() {
 			for (var i = 0; i < enExtdWordArr.length; i ++) {
 				extdWord[i] = $.trim(enExtdWordArr[i].extdWord);
 				extdWordExtdAttr[i] = $.trim(enExtdWordArr[i].extdWordExtdAttr);
-				extdWordMean[i] = $.trim(enExtdWordArr[i].extdWordMean);
+				extdWordMean[i] = ($.trim(enExtdWordArr[i].extdWordMean) == "" ? "(无释义，点击直接查看例句)" : $.trim(enExtdWordArr[i].extdWordMean));
 				dictId[i] = $.trim(enExtdWordArr[i].dictId);
 				wordId[i] = $.trim(enExtdWordArr[i].wordId);
 				extdWordId[i] = $.trim(enExtdWordArr[i].extdWordId);
@@ -155,6 +181,11 @@ $(document).ready(function() {
 				extdWordExmpExtdAttr[i] = $.trim(enExtdWordArr[i].extdWordExmpExtdAttr);
 				extdWordExmp[i] = $.trim(enExtdWordArr[i].extdWordExmp);
 				extdWordExmpMean[i] = $.trim(enExtdWordArr[i].extdWordExmpMean);
+				
+				// if the meaning match the condition which is "以 '数字+空格' 开头，后缀任意个字符", delete the number and space;
+				if (/\d .*/.test(extdWordMean[i])) {
+					extdWordMean[i] = extdWordMean[i].substring(extdWordMean[i].indexOf(" ") + 1);
+				}
 			}
 			
 			wrapStr += 
@@ -223,7 +254,7 @@ $(document).ready(function() {
 							 + "		</a>"
 							 + "	</span>"
 							 + "</p>"
-							 + "<div id='extdword-ptsp" + i + "-mean" + j + "-exmp-all' style='display:none;margin-left:1em;'>";
+							 + "<div id='extdword-ptsp" + i + "-mean" + j + "-exmp-all' style='display:none;margin-left:1em;color:#646464;'>";
 							
 							// to get the count of the same extdWordMean which is necessary in loop creation of extdword-ptsp-mean-exmp div
 							var extdWordMeanCnt = 1;
@@ -266,12 +297,13 @@ $(document).ready(function() {
 				 + "			<img src='../images/up.gif' alt='Hide'>"
 				 + "		</a>"
 				 + "	</center>"
-				 + "</div>";
+				 + "</div>"
+				 + "<center><div id='errMsgDiv' style='color:red;display:none;'>Research After Success</div></center>";
 		}
 		// to process enExtdWordInfo END
 			
 		// to append the html string to the page
-		$('#allInfo').append(wrapStr);
+		$('#allInfo').prepend(wrapStr);
 		$('#allInfo').fadeIn("slow");
 		$('#outer-line').fadeIn("slow");
 		
@@ -337,6 +369,14 @@ $(document).ready(function() {
 		
 	}
 	
+	// Enter Submit
+	$("input[id='inputChToEn']").keydown(function(e) {
+		var curKey = e.which;
+		if (curKey == 13) {
+			$("input[id='searchChtoEn']").click();
+			return false;
+		}
+	});
 //	function exampleToggle(i, j) {
 //		alert("1");
 //		$("#ptsp" + i +"-mean" + j + "-exmp-all").toggle();
