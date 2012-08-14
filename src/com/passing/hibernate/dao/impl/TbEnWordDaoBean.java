@@ -10,7 +10,10 @@ public class TbEnWordDaoBean extends HibernateDaoSupport implements TbEnWordDao 
 
 	public List<Object[]> getEnWordInfoWithoutExtdInfo(String searchWord) {
 		
-		/** HQL的join用法与SQL不同，它不支持on关键字，所以语句上也与普通的SQL不同，它的on条件实际上是通过标签定义在hbm文件中的，以表示两个表之间的关联关系，如下就是一句正确的HQL语句（hbm文件已经配好，可以正确执行）  START
+		/** HQL的join用法与SQL不同，它不支持on关键字，所以语句上也与普通的SQL不同，
+		 * 它的on条件实际上是通过标签定义在hbm文件中的，以表示两个表之间的关联关系，
+		 * 如下就是一句正确的HQL语句（hbm文件已经配好，可以正确执行）  
+		 * ==============================================================================START
 		String sql = "select "
 					+ "enword.word "
 					+ ",attr.extd_attr "
@@ -37,7 +40,7 @@ public class TbEnWordDaoBean extends HibernateDaoSupport implements TbEnWordDao 
 //					+ "and enword.attr.meaning_num = enword.exmp.meaning_num "
 					+ "where "
 					+ "enword.word = '" + searchWord + "'";
-		 ============================================================================================================================= END */
+		 =================================================================================== END */
 		
 		/** HQL同样支持本地SQL语句，由于HQL的join比较繁琐，此处使用如下的简单SQL来查询  */
 		String sql = "select "
@@ -63,7 +66,7 @@ public class TbEnWordDaoBean extends HibernateDaoSupport implements TbEnWordDao 
 				+ "and attr.word_id = exmp.word_id "
 				+ "and attr.part_of_speech = exmp.part_of_speech "
 				+ "and attr.meaning_num = exmp.meaning_num "
-				+ "and enword.word = '" + searchWord + "'";
+				+ "and enword.word like '" + searchWord + "%'";
 
 		List<Object[]> list = getHibernateTemplate().find(sql);
 		

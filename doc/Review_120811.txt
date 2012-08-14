@@ -2,6 +2,6 @@
 2.序号重复 OK
 3.例句与释义颜色区分 OK
 4.回车查询 OK
-5.字典解析错误（honey，alpha，just 1）
+5.字典解析错误（honey，alpha，just 1）just 1 OK;
 6.空字符提示有误 OK
 7.webservice 访问 google translation

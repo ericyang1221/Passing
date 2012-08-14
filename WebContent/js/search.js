@@ -65,6 +65,7 @@ $(document).ready(function() {
 			word[i] = $.trim(enWordArr[i].word);
 			extdAttr[i] = $.trim(enWordArr[i].extdAttr);
 			mean[i] = ($.trim(enWordArr[i].mean) == "" ? "(无释义，点击直接查看例句)" : $.trim(enWordArr[i].mean));
+//			mean[i] = htmlEscape(mean[i]);
 			dictId[i] = $.trim(enWordArr[i].dictId);
 			wordId[i] = $.trim(enWordArr[i].wordId);
 			partOfSpeech[i] = $.trim(enWordArr[i].partOfSpeech);
@@ -75,81 +76,110 @@ $(document).ready(function() {
 			exmpMeaning[i] = $.trim(enWordArr[i].exmpMeaning);
 			
 			// if the meaning match the condition which is "以 '数字+空格' 开头，后缀任意个字符", delete the number and space;
-			if (/\d .*/.test(mean[i])) {
+			/*只要子字符串满足表达式，test()方法就会返回true，所以这里为了限制"以'数字+空格'开头"这个条件，
+			 * 要同时加上/\d/.test(mean[i].substring(0,1))这个判断条件
+			 */
+			if (/\d/.test(mean[i].substring(0,1)) && /\d .*/.test(mean[i])) {
 				mean[i] = mean[i].substring(mean[i].indexOf(" ") + 1);
 			}
 		}
 
 		var wrapStr = 
-			   "<article id='enWordInfo'>"
-			 + "	<header><h1>" + word[0] + "</h1></header>"
-			 + "	<hr>";
+			"<div id='enWordInfoDiv-all'>";
 		
-		// to create ptsp div by loop
-		for ( var i = 0; i < enWordArr.length; i ++) {
-			if (i != 0) {
-				if (partOfSpeech[i] == partOfSpeech[i - 1]) {
+		// to create wordInfo article by loop
+		for (var q = 0; q < enWordArr.length; q ++) {
+			
+			if (q != 0) {
+				if (wordId[q] == wordId[q - 1]) {
 					continue;
 				}
 			}
+			
 			wrapStr += 
-				   "<div name='ptsp'>"
-				 + "	<h4>" + partOfSpeech[i] + ".</h4>";
-				if (extdAttr[i] != null && extdAttr[i] != "") {
-				wrapStr += 
-				   "	<p>" + extdAttr[i] + "</p>";
+				   "<article id='enWordInfo'>"
+				 + "	<header><h1>" + word[q] + "</h1></header>"
+				 + "	<hr>";
+			
+			// to get the count of the same ptsp which is necessary in loop creation of ptsp div
+			var wordPtspCnt = 1;
+			for (var tmpQ = q; tmpQ < enWordArr.length; tmpQ ++) {
+				if (partOfSpeech[tmpQ] != partOfSpeech[tmpQ + 1]) {
+					break;
 				}
-				// meaning number for page display
-				var k = 1;
-				// to create ptsp-mean div by loop
-				for ( var j = 0; j < enWordArr.length; j ++) {
-					if (j != 0) {
-						if (meaningNum[j] == meaningNum[j - 1]) {
-							continue;
-						}
+				wordPtspCnt ++;
+			}
+			
+			// to create ptsp div by loop
+			for ( var i = q; i < q + wordPtspCnt; i ++) {
+				if (i != q) {
+					if (partOfSpeech[i] == partOfSpeech[i - 1]) {
+						continue;
 					}
+				}
+				wrapStr += 
+					   "<div name='ptsp'>"
+					 + "	<h4>" + partOfSpeech[i] + ".</h4>";
+					if (extdAttr[i] != null && extdAttr[i] != "") {
 					wrapStr += 
-					   "<p>"
-					 + "	<span>" + k + "." + mean[j] + "&nbsp;"
-//					 + "		<a href='javascript:void(0)' id='ptsp" + i + "-mean" + j + "' onclick='exampleToggle(" + i + ", " + j + ")'>"
-					 + "		<a href='javascript:void(0)' id='ptsp" + i + "-mean" + j + "'>"
-					 + "			<img src='../images/sent_on.gif' alt='例句' title='点击显示/隐藏例句'>"
-					 + "		</a>"
-					 + "	</span>"
-					 + "</p>"
-					 + "<div id='ptsp" + i + "-mean" + j + "-exmp-all' style='display:none;margin-left:1em;color:#646464;'>";
-					
-					// to get the count of the same meaningNum which is necessary in loop creation of ptsp-mean-exmp div
-					var meanCnt = 1;
-					for (var tmpJ = j; tmpJ < enWordArr.length; tmpJ ++) {
-						if (meaningNum[tmpJ] != meaningNum[tmpJ + 1]) {
-							break;
+					   "	<p>" + extdAttr[i] + "</p>";
+					}
+					// meaning number for page display
+					var k = 1;
+					// to create ptsp-mean div by loop
+					for ( var j = i; j < i + wordPtspCnt; j ++) {
+						if (j != i) {
+							if (meaningNum[j] == meaningNum[j - 1]) {
+								continue;
+							}
 						}
-						meanCnt++;
-					}
-					
-					// to create ptsp-mean-exmp div by loop
-					for ( var m = j; m < j + meanCnt; m ++) {
 						wrapStr += 
-							   "<div name='ptsp-mean-exmp'>"
-							 + "	<p>"
-							 + "		<span>" + enExmp[m] + "&nbsp;" + exampleExtdAttr[m] + "</span>"
-							 + "		<br>"
-							 + "		<span>" + exmpMeaning[m] + "</span>"
-							 + "	</p>"
-							 + "	<hr>"
-							 + "</div>";
-					}
+						   "<p>"
+						 + "	<span>" + k + "." + mean[j] + "&nbsp;"
+//						 + "		<a href='javascript:void(0)' id='ptsp" + i + "-mean" + j + "' onclick='exampleToggle(" + i + ", " + j + ")'>"
+						 + "		<a href='javascript:void(0)' id='ptsp" + i + "-mean" + j + "'>"
+						 + "			<img src='../images/sent_on.gif' alt='例句' title='点击显示/隐藏例句'>"
+						 + "		</a>"
+						 + "	</span>"
+						 + "</p>"
+						 + "<div id='ptsp" + i + "-mean" + j + "-exmp-all' style='display:none;margin-left:1em;color:#646464;'>";
 						
+						// to get the count of the same meaningNum which is necessary in loop creation of ptsp-mean-exmp div
+						var meanCnt = 1;
+						for (var tmpJ = j; tmpJ < j + wordPtspCnt; tmpJ ++) {
+							if (partOfSpeech[tmpJ] != partOfSpeech[tmpJ + 1] || meaningNum[tmpJ] != meaningNum[tmpJ + 1]) {
+								break;
+							}
+							meanCnt++;
+						}
+						
+						// to create ptsp-mean-exmp div by loop
+						for ( var m = j; m < j + meanCnt; m ++) {
+							wrapStr += 
+								   "<div name='ptsp-mean-exmp'>"
+								 + "	<p>"
+								 + "		<span>" + enExmp[m] + "&nbsp;" + exampleExtdAttr[m] + "</span>"
+								 + "		<br>"
+								 + "		<span>" + exmpMeaning[m] + "</span>"
+								 + "	</p>"
+								 + "	<hr>"
+								 + "</div>";
+						}
+							
+						wrapStr += 
+						   "</div>";
+						k ++;
+					}
 					wrapStr += 
 					   "</div>";
-					k ++;
-				}
+			}
 				wrapStr += 
-				   "</div>";
+				   "</article>";
 		}
-			wrapStr += 
-			   "</article>";
+		// <div id='enWordInfoDiv-all'> end
+		wrapStr += 
+			   "</div>";
+		
 		// to process enWordInfo END
 			
 		// to process enExtdWordInfo START
@@ -183,7 +213,10 @@ $(document).ready(function() {
 				extdWordExmpMean[i] = $.trim(enExtdWordArr[i].extdWordExmpMean);
 				
 				// if the meaning match the condition which is "以 '数字+空格' 开头，后缀任意个字符", delete the number and space;
-				if (/\d .*/.test(extdWordMean[i])) {
+				/*只要子字符串满足表达式，test()方法就会返回true，所以这里为了限制"以'数字+空格'开头"这个条件，
+				 * 要同时加上/\d/.test(mean[i].substring(0,1))这个判断条件
+				 */
+				if (/\d/.test(extdWordMean[i].substring(0,1)) && /\d .*/.test(extdWordMean[i])) {
 					extdWordMean[i] = extdWordMean[i].substring(extdWordMean[i].indexOf(" ") + 1);
 				}
 			}
@@ -213,7 +246,7 @@ $(document).ready(function() {
 					 + "	<header><h4>" + extdWord[s] + "</h4></header>"
 					 + "	<hr>";
 				
-				// to get the count of the same extdWordPtsp which is necessary in loop creation of ptsp div
+				// to get the count of the same extdWordPtsp which is necessary in loop creation of enExtdWordPtsp div
 				var extdWordPtspCnt = 1;
 				for (var tmpJ = s; tmpJ < enExtdWordArr.length; tmpJ ++) {
 					if (extdWordPtsp[tmpJ] != extdWordPtsp[tmpJ + 1]) {
@@ -222,7 +255,7 @@ $(document).ready(function() {
 					extdWordPtspCnt ++;
 				}
 				
-				// to create ptsp div by loop
+				// to create enExtdWordPtsp div by loop
 				for ( var i = s; i < s + extdWordPtspCnt; i ++) {
 					if (i != s) {
 						if (extdWordPtsp[i] == extdWordPtsp[i - 1]) {
@@ -290,6 +323,7 @@ $(document).ready(function() {
 			}
 			
 				wrapStr += 
+					// <div id='enExtdWordInfoDiv-all'> end
 				   "</div>"
 				 + "<div id='hide' style='display:none'>"
 				 + "	<center>"
@@ -309,10 +343,25 @@ $(document).ready(function() {
 		
 		// to add onclick event for enWordMeaning
 		$("a[id^='ptsp']").click(function() {
-			
+			// format of id get here is like "'ptsp' + i + '-mean' + j"
 			var id = $(this).attr("id");
-			var i = id.substring(4,5);
-			var j = id.substring(10,11);
+			
+			// the vary beginning 4 characters of id are "ptsp",this fact will not change,so variable "endIndexOfI" is initialized to 4
+			var endIndexOfI = 4;
+			// tmpIndex is initialized to 3 to make sure that "if" condition will be true when the first time matches a number,
+			// because we know that the first time matches a number will be the time i=4, so i-1=3 should be the value of "tmpIndex"
+			var tmpIndex = 3;
+			// method $.each() traversing every character in "id"(i:index; n:value).
+			$.each( id, function(i, n){
+				  if (/\d/.test(n) && tmpIndex == i-1) {
+					  endIndexOfI ++;
+					  tmpIndex = i;
+				  }
+				});
+			
+			var i = id.substring(4,endIndexOfI);
+			// "5" is length of '-mean'
+			var j = id.substring(endIndexOfI + 5);
 			
 			var exmpDivId = "#ptsp" + i +"-mean" + j + "-exmp-all";
 			
@@ -329,10 +378,25 @@ $(document).ready(function() {
 		
 		// to add onclick event for enExtdWordMeaning
 		$("a[id^='extdword-ptsp']").click(function() {
-			
+			// format of id get here is like "'extdword-ptsp' + i + '-mean' + j"
 			var id = $(this).attr("id");
-			var i = id.substring(13,14);
-			var j = id.substring(19,20);
+			
+			// the vary beginning 13 characters of id are "extdword-ptsp",this fact will not change,so variable "endIndexOfI" is initialized to 13
+			var endIndexOfI = 13;
+			// tmpIndex is initialized to 12 to make sure that "if" condition will be true when the first time matches a number,
+			// because we know that the first time matches a number will be the time i=13, so i-1=12 should be the value of "tmpIndex"
+			var tmpIndex = 12;
+			// method $.each() traversing every character in "id"(i:index; n:value).
+			$.each( id, function(i, n){
+				  if (/\d/.test(n) && tmpIndex == i-1) {
+					  endIndexOfI ++;
+					  tmpIndex = i;
+				  }
+				});
+			
+			var i = id.substring(13,endIndexOfI);
+			// "5" is length of '-mean'
+			var j = id.substring(endIndexOfI + 5);
 			
 			var exmpDivId = "#extdword-ptsp" + i +"-mean" + j + "-exmp-all";
 			
@@ -367,6 +431,20 @@ $(document).ready(function() {
 			$("#more").css("display","block");
 		});
 		
+	}
+	
+	function htmlEscape(str) {
+		var rst = [str.length];
+		$.each(str,function(i,n){
+			if (n == "<") {
+				rst[i] = "&lt;";
+			} else if (n == ">") {
+				rst[i] = "&gt;";
+			} else {
+				rst[i] = n;
+			}
+		});
+		return rst;
 	}
 	
 	// Enter Submit

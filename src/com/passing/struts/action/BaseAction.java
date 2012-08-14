@@ -21,9 +21,11 @@ public class BaseAction extends Action{
 	private String contentType = "application/json";
 	
 	/**
+	 * to make JSON object that will be returned to the front-end and send it
+	 * 
 	 * @param response response
 	 * @param objName jsonObjectName
-	 * @param obj jsonObject
+	 * @param obj object that is used to make jsonObject
 	 * @throws IOException
 	 */
 	protected void makeJSONObject(HttpServletResponse response, String objName, Object obj) throws IOException {

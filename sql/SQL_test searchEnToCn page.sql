@@ -42,7 +42,7 @@ AND attr.word_id         = exmp.word_id
 AND attr.dict_id        = exmp.dict_id
 AND attr.meaning_num    = exmp.meaning_num
 And Attr.Part_Of_Speech = Exmp.Part_Of_Speech
-and enword.word       = 'test'
+and enword.word       like 'just%'
 
 --test search enExtdWordInfo--------------------
 SELECT ewd.extd_word ,
