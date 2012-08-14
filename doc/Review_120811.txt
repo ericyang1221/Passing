@@ -1,7 +1,7 @@
-1.Ã¿¸öÐòºÅ¶¼ÒªÓÐÊÍÒå	OK
-2.ÐòºÅÖØ¸´ OK
-3.Àý¾äÓëÊÍÒåÑÕÉ«Çø·Ö OK
-4.»Ø³µ²éÑ¯ OK
-5.×Öµä½âÎö´íÎó£¨honey£¬alpha£¬just 1£©
-6.¿Õ×Ö·ûÌáÊ¾ÓÐÎó OK
-7.webservice ·ÃÎÊ google translation
+1.æ¯ä¸ªåºå·éƒ½è¦æœ‰é‡Šä¹‰	OK
+2.åºå·é‡å¤ OK
+3.ä¾‹å¥ä¸Žé‡Šä¹‰é¢œè‰²åŒºåˆ† OK
+4.å›žè½¦æŸ¥è¯¢ OK
+5.å­—å…¸è§£æžé”™è¯¯ï¼ˆhoneyï¼Œalphaï¼Œjust 1ï¼‰just 1 OK;honey OK;
+6.ç©ºå­—ç¬¦æç¤ºæœ‰è¯¯ OK
+7.webservice è®¿é—® google translation

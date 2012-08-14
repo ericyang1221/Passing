@@ -1,5 +1,6 @@
 package com.passing.spring.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.passing.hibernate.dao.TbEnWordDao;
@@ -13,7 +14,19 @@ public class SearchEnToCnBean implements SearchEnToCn{
 		
 		List<Object[]> tbEnWordInfoWithoutExtdInfo = tbEnWordDao.getEnWordInfoWithoutExtdInfo(searchStr);
 		
-		return tbEnWordInfoWithoutExtdInfo;
+		// to define a variable to contain right results
+		List<Object[]> rstLs = new ArrayList<Object[]>();
+		// to filter the search results to make sure that only the right results([word] or [word + space + number]) will returned.
+		if (tbEnWordInfoWithoutExtdInfo.size() != 0) {
+			for (int i = 0; i < tbEnWordInfoWithoutExtdInfo.size(); i ++) {
+				String word = (String)tbEnWordInfoWithoutExtdInfo.get(i)[0];
+				// format of the filter is "[word] or [word + space + number]"
+				if (word.trim().matches(searchStr+ "( \\d)?")) {
+					rstLs.add(tbEnWordInfoWithoutExtdInfo.get(i));
+				}
+			}
+		}
+		return rstLs;
 	}
 	
 	public List<Object[]> searchEnToCnExtdInfo(String searchStr) {

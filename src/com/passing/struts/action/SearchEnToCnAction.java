@@ -32,6 +32,7 @@ public class SearchEnToCnAction extends BaseAction {
 	// 使用普遍依赖注入方式
 	private SearchEnToCnBean searchEnToCnBean;
 
+	@Override
 	public ActionForward execute(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
