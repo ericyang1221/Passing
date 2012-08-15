@@ -34,6 +34,9 @@ $(document).ready(function() {
 		$.ajax(options); 
 	});
 
+	/** 
+	 * response function for searchEnToCn request
+	 */
 	function searchResponse(result) {
 		// 'result' is the json object returned from the server 
 		$('#allInfo').empty();
@@ -65,7 +68,6 @@ $(document).ready(function() {
 			word[i] = htmlEscape($.trim(enWordArr[i].word));
 			extdAttr[i] = htmlEscape($.trim(enWordArr[i].extdAttr));
 			mean[i] = htmlEscape($.trim(enWordArr[i].mean) == "" ? "(无释义，点击直接查看例句)" : $.trim(enWordArr[i].mean));
-			mean[i] = strFilterForMeaning(mean[i]);
 			dictId[i] = htmlEscape($.trim(enWordArr[i].dictId));
 			wordId[i] = htmlEscape($.trim(enWordArr[i].wordId));
 			partOfSpeech[i] = htmlEscape($.trim(enWordArr[i].partOfSpeech));
@@ -74,6 +76,13 @@ $(document).ready(function() {
 			exampleExtdAttr[i] = htmlEscape($.trim(enWordArr[i].exampleExtdAttr));
 			enExmp[i] = htmlEscape($.trim(enWordArr[i].enExmp));
 			exmpMeaning[i] = htmlEscape($.trim(enWordArr[i].exmpMeaning));
+			
+			// to filter these strings below
+			extdAttr[i] = strFilterForMeaning(extdAttr[i]);
+			mean[i] = strFilterForMeaning(mean[i]);
+			exampleExtdAttr[i] = strFilterForMeaning(exampleExtdAttr[i]);
+			enExmp[i] = strFilterForMeaning(enExmp[i]);
+			exmpMeaning[i] = strFilterForMeaning(exmpMeaning[i]);
 		}
 
 		var wrapStr = 
@@ -127,12 +136,17 @@ $(document).ready(function() {
 						}
 						wrapStr += 
 						   "<p>"
-						 + "	<span>" + k + "." + mean[j] + "&nbsp;"
-//						 + "		<a href='javascript:void(0)' id='ptsp" + i + "-mean" + j + "' onclick='exampleToggle(" + i + ", " + j + ")'>"
-						 + "		<a href='javascript:void(0)' id='ptsp" + i + "-mean" + j + "'>"
+						 + "	<span>" + k + "." + mean[j] + "&nbsp;";
+						// only the meaning that has examples will be given a "点击显示/隐藏例句" href
+						if (exampleNum[j] != "") {
+						wrapStr += 
+//						   "		<a href='javascript:void(0)' id='ptsp" + i + "-mean" + j + "' onclick='exampleToggle(" + i + ", " + j + ")'>"
+						   "		<a href='javascript:void(0)' id='ptsp" + i + "-mean" + j + "'>"
 						 + "			<img src='../images/sent_on.gif' alt='例句' title='点击显示/隐藏例句'>"
-						 + "		</a>"
-						 + "	</span>"
+						 + "		</a>";
+						}
+						wrapStr += 
+						   "	</span>"
 						 + "</p>"
 						 + "<div id='ptsp" + i + "-mean" + j + "-exmp-all' style='display:none;margin-left:1em;color:#646464;'>";
 						
@@ -194,7 +208,6 @@ $(document).ready(function() {
 				extdWord[i] = htmlEscape($.trim(enExtdWordArr[i].extdWord));
 				extdWordExtdAttr[i] = htmlEscape($.trim(enExtdWordArr[i].extdWordExtdAttr));
 				extdWordMean[i] = htmlEscape($.trim(enExtdWordArr[i].extdWordMean) == "" ? "(无释义，点击直接查看例句)" : $.trim(enExtdWordArr[i].extdWordMean));
-				extdWordMean[i] = strFilterForMeaning(extdWordMean[i]);
 				dictId[i] = htmlEscape($.trim(enExtdWordArr[i].dictId));
 				wordId[i] = htmlEscape($.trim(enExtdWordArr[i].wordId));
 				extdWordId[i] = htmlEscape($.trim(enExtdWordArr[i].extdWordId));
@@ -204,13 +217,21 @@ $(document).ready(function() {
 				extdWordExmpExtdAttr[i] = htmlEscape($.trim(enExtdWordArr[i].extdWordExmpExtdAttr));
 				extdWordExmp[i] = htmlEscape($.trim(enExtdWordArr[i].extdWordExmp));
 				extdWordExmpMean[i] = htmlEscape($.trim(enExtdWordArr[i].extdWordExmpMean));
+				
+				// to filter these strings below
+				extdWord[i] = strFilterForMeaning(extdWord[i]);
+				extdWordExtdAttr[i] = strFilterForMeaning(extdWordExtdAttr[i]);
+				extdWordMean[i] = strFilterForMeaning(extdWordMean[i]);
+				extdWordExmpExtdAttr[i] = strFilterForMeaning(extdWordExmpExtdAttr[i]);
+				extdWordExmp[i] = strFilterForMeaning(extdWordExmp[i]);
+				extdWordExmpMean[i] = strFilterForMeaning(extdWordExmpMean[i]);
 			}
 			
 			wrapStr += 
 				   "<br><br><br>"
 				 + "<div id='more'>"
 				 + "	<center>"
-				 + "		<a href='javascript:void(0)' id='moreInfo'>更多详细释义"
+				 + "		<a href='javascript:void(0)' id='moreInfo' style='color:#646464;'>更多详细释义"
 				 + "			<img src='../images/down.gif' alt='More'>"
 				 + "		</a>"
 				 + "	</center>"
@@ -266,11 +287,16 @@ $(document).ready(function() {
 							}
 							wrapStr += 
 							   "<p>"
-							 + "	<span>" + k + "." + extdWordMean[j] + "&nbsp;"
-							 + "		<a href='javascript:void(0)' id='extdword-ptsp" + i + "-mean" + j + "'>"
+							 + "	<span>" + k + "." + extdWordMean[j] + "&nbsp;";
+							// only the meaning that has examples will be given a "点击显示/隐藏例句" href
+							if (extdWordExmpNum[j] != "") {
+							wrapStr += 
+							   "		<a href='javascript:void(0)' id='extdword-ptsp" + i + "-mean" + j + "'>"
 							 + "			<img src='../images/sent_on.gif' alt='例句' title='点击显示/隐藏例句'>"
-							 + "		</a>"
-							 + "	</span>"
+							 + "		</a>";
+							}
+							wrapStr += 
+							   "	</span>"
 							 + "</p>"
 							 + "<div id='extdword-ptsp" + i + "-mean" + j + "-exmp-all' style='display:none;margin-left:1em;color:#646464;'>";
 							
@@ -312,7 +338,7 @@ $(document).ready(function() {
 				   "</div>"
 				 + "<div id='hide' style='display:none'>"
 				 + "	<center>"
-				 + "		<a href='javascript:void(0)' id='hideExtdInfo'>收起"
+				 + "		<a href='javascript:void(0)' id='hideExtdInfo' style='color:#646464;'>收起"
 				 + "			<img src='../images/up.gif' alt='Hide'>"
 				 + "		</a>"
 				 + "	</center>"
@@ -441,11 +467,36 @@ $(document).ready(function() {
 	function strFilterForMeaning(str) {
 		// if the meaning match the condition which is "以 '数字+空格' 开头，后缀任意个字符", delete the number and space;
 		/*只要子字符串满足表达式，test()方法就会返回true，所以这里为了限制"以'数字+空格'开头"这个条件，
-		 * 要同时加上/\d/.test(str.substring(0,1))这个判断条件
+		 * 要同时加上/\d/.test(str.substring(0,1))这个判断条件或者加上"^"（匹配输入字符串的开始位置）
 		 */
-		if (/\d/.test(str.substring(0,1)) && /\d .*/.test(str)) {
+//		if (/\d/.test(str.substring(0,1)) && /\d .*/.test(str)) {
+		if (/^\d .*/.test(str)) {
 			str = str.substring(str.indexOf(" ") + 1);
 		}
+		
+		// ====to filter the useless string such as "&dn;","&fn;","&nbsp;" in meaning and example START ===========
+		var beginIndex = 0;
+		var endIndex = 0;
+		var flg = false;
+		$.each(str,function(i,n){
+			
+			if (n == "&") {
+				beginIndex = i;
+				flg = true;
+			} else if (flg && n == ";") {
+				endIndex = i;
+				flg = false;
+			}
+		});
+		var len = endIndex - beginIndex;
+		if (len >= 1 && len <= 5) {
+			var tmpStr;
+			tmpStr = str.substring(0,beginIndex);
+			tmpStr += str.substring(endIndex + 1);
+			str = tmpStr;
+		}
+		// ====to filter the useless string such as "&dn;","&fn;","&nbsp;" in meaning and example END =============
+		
 		return str;
 	}
 	
