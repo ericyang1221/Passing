@@ -34,6 +34,9 @@ $(document).ready(function() {
 		$.ajax(options); 
 	});
 
+	/** 
+	 * response function for searchEnToCn request
+	 */
 	function searchResponse(result) {
 		// 'result' is the json object returned from the server 
 		$('#allInfo').empty();
@@ -62,18 +65,17 @@ $(document).ready(function() {
 		var enExmp = [enWordArr.length];
 		var exmpMeaning = [enWordArr.length];
 		for (var i = 0; i < enWordArr.length; i ++) {
-			word[i] = htmlEscape($.trim(enWordArr[i].word));
-			extdAttr[i] = htmlEscape($.trim(enWordArr[i].extdAttr));
-			mean[i] = htmlEscape($.trim(enWordArr[i].mean) == "" ? "(无释义，点击直接查看例句)" : $.trim(enWordArr[i].mean));
-			mean[i] = strFilterForMeaning(mean[i]);
-			dictId[i] = htmlEscape($.trim(enWordArr[i].dictId));
-			wordId[i] = htmlEscape($.trim(enWordArr[i].wordId));
-			partOfSpeech[i] = htmlEscape($.trim(enWordArr[i].partOfSpeech));
-			meaningNum[i] = htmlEscape($.trim(enWordArr[i].meaningNum));
-			exampleNum[i] = htmlEscape($.trim(enWordArr[i].exampleNum));
-			exampleExtdAttr[i] = htmlEscape($.trim(enWordArr[i].exampleExtdAttr));
-			enExmp[i] = htmlEscape($.trim(enWordArr[i].enExmp));
-			exmpMeaning[i] = htmlEscape($.trim(enWordArr[i].exmpMeaning));
+			word[i] = strFilter($.trim(enWordArr[i].word));
+			extdAttr[i] = strFilter($.trim(enWordArr[i].extdAttr));
+			mean[i] = strFilter($.trim(enWordArr[i].mean) == "" ? "(无释义，点击直接查看例句)" : $.trim(enWordArr[i].mean));
+			dictId[i] = strFilter($.trim(enWordArr[i].dictId));
+			wordId[i] = strFilter($.trim(enWordArr[i].wordId));
+			partOfSpeech[i] = strFilter($.trim(enWordArr[i].partOfSpeech));
+			meaningNum[i] = strFilter($.trim(enWordArr[i].meaningNum));
+			exampleNum[i] = strFilter($.trim(enWordArr[i].exampleNum));
+			exampleExtdAttr[i] = strFilter($.trim(enWordArr[i].exampleExtdAttr));
+			enExmp[i] = strFilter($.trim(enWordArr[i].enExmp));
+			exmpMeaning[i] = strFilter($.trim(enWordArr[i].exmpMeaning));
 		}
 
 		var wrapStr = 
@@ -127,12 +129,17 @@ $(document).ready(function() {
 						}
 						wrapStr += 
 						   "<p>"
-						 + "	<span>" + k + "." + mean[j] + "&nbsp;"
-//						 + "		<a href='javascript:void(0)' id='ptsp" + i + "-mean" + j + "' onclick='exampleToggle(" + i + ", " + j + ")'>"
-						 + "		<a href='javascript:void(0)' id='ptsp" + i + "-mean" + j + "'>"
+						 + "	<span>" + k + "." + mean[j] + "&nbsp;";
+						// only the meaning that has examples will be given a "点击显示/隐藏例句" href
+						if (exampleNum[j] != "") {
+						wrapStr += 
+//						   "		<a href='javascript:void(0)' id='ptsp" + i + "-mean" + j + "' onclick='exampleToggle(" + i + ", " + j + ")'>"
+						   "		<a href='javascript:void(0)' id='ptsp" + i + "-mean" + j + "'>"
 						 + "			<img src='../images/sent_on.gif' alt='例句' title='点击显示/隐藏例句'>"
-						 + "		</a>"
-						 + "	</span>"
+						 + "		</a>";
+						}
+						wrapStr += 
+						   "	</span>"
 						 + "</p>"
 						 + "<div id='ptsp" + i + "-mean" + j + "-exmp-all' style='display:none;margin-left:1em;color:#646464;'>";
 						
@@ -191,26 +198,25 @@ $(document).ready(function() {
 			var extdWordExmp = [enExtdWordArr.length];
 			var extdWordExmpMean = [enExtdWordArr.length];
 			for (var i = 0; i < enExtdWordArr.length; i ++) {
-				extdWord[i] = htmlEscape($.trim(enExtdWordArr[i].extdWord));
-				extdWordExtdAttr[i] = htmlEscape($.trim(enExtdWordArr[i].extdWordExtdAttr));
-				extdWordMean[i] = htmlEscape($.trim(enExtdWordArr[i].extdWordMean) == "" ? "(无释义，点击直接查看例句)" : $.trim(enExtdWordArr[i].extdWordMean));
-				extdWordMean[i] = strFilterForMeaning(extdWordMean[i]);
-				dictId[i] = htmlEscape($.trim(enExtdWordArr[i].dictId));
-				wordId[i] = htmlEscape($.trim(enExtdWordArr[i].wordId));
-				extdWordId[i] = htmlEscape($.trim(enExtdWordArr[i].extdWordId));
-				extdWordPtsp[i] = htmlEscape($.trim(enExtdWordArr[i].extdWordPtsp));
-				extdWordMeanNum[i] = htmlEscape($.trim(enExtdWordArr[i].extdWordMeanNum));
-				extdWordExmpNum[i] = htmlEscape($.trim(enExtdWordArr[i].extdWordExmpNum));
-				extdWordExmpExtdAttr[i] = htmlEscape($.trim(enExtdWordArr[i].extdWordExmpExtdAttr));
-				extdWordExmp[i] = htmlEscape($.trim(enExtdWordArr[i].extdWordExmp));
-				extdWordExmpMean[i] = htmlEscape($.trim(enExtdWordArr[i].extdWordExmpMean));
+				extdWord[i] = strFilter($.trim(enExtdWordArr[i].extdWord));
+				extdWordExtdAttr[i] = strFilter($.trim(enExtdWordArr[i].extdWordExtdAttr));
+				extdWordMean[i] = strFilter($.trim(enExtdWordArr[i].extdWordMean) == "" ? "(无释义，点击直接查看例句)" : $.trim(enExtdWordArr[i].extdWordMean));
+				dictId[i] = strFilter($.trim(enExtdWordArr[i].dictId));
+				wordId[i] = strFilter($.trim(enExtdWordArr[i].wordId));
+				extdWordId[i] = strFilter($.trim(enExtdWordArr[i].extdWordId));
+				extdWordPtsp[i] = strFilter($.trim(enExtdWordArr[i].extdWordPtsp));
+				extdWordMeanNum[i] = strFilter($.trim(enExtdWordArr[i].extdWordMeanNum));
+				extdWordExmpNum[i] = strFilter($.trim(enExtdWordArr[i].extdWordExmpNum));
+				extdWordExmpExtdAttr[i] = strFilter($.trim(enExtdWordArr[i].extdWordExmpExtdAttr));
+				extdWordExmp[i] = strFilter($.trim(enExtdWordArr[i].extdWordExmp));
+				extdWordExmpMean[i] = strFilter($.trim(enExtdWordArr[i].extdWordExmpMean));
 			}
 			
 			wrapStr += 
 				   "<br><br><br>"
 				 + "<div id='more'>"
 				 + "	<center>"
-				 + "		<a href='javascript:void(0)' id='moreInfo'>更多详细释义"
+				 + "		<a href='javascript:void(0)' id='moreInfo' style='color:#646464;'>更多详细释义"
 				 + "			<img src='../images/down.gif' alt='More'>"
 				 + "		</a>"
 				 + "	</center>"
@@ -266,11 +272,16 @@ $(document).ready(function() {
 							}
 							wrapStr += 
 							   "<p>"
-							 + "	<span>" + k + "." + extdWordMean[j] + "&nbsp;"
-							 + "		<a href='javascript:void(0)' id='extdword-ptsp" + i + "-mean" + j + "'>"
+							 + "	<span>" + k + "." + extdWordMean[j] + "&nbsp;";
+							// only the meaning that has examples will be given a "点击显示/隐藏例句" href
+							if (extdWordExmpNum[j] != "") {
+							wrapStr += 
+							   "		<a href='javascript:void(0)' id='extdword-ptsp" + i + "-mean" + j + "'>"
 							 + "			<img src='../images/sent_on.gif' alt='例句' title='点击显示/隐藏例句'>"
-							 + "		</a>"
-							 + "	</span>"
+							 + "		</a>";
+							}
+							wrapStr += 
+							   "	</span>"
 							 + "</p>"
 							 + "<div id='extdword-ptsp" + i + "-mean" + j + "-exmp-all' style='display:none;margin-left:1em;color:#646464;'>";
 							
@@ -312,7 +323,7 @@ $(document).ready(function() {
 				   "</div>"
 				 + "<div id='hide' style='display:none'>"
 				 + "	<center>"
-				 + "		<a href='javascript:void(0)' id='hideExtdInfo'>收起"
+				 + "		<a href='javascript:void(0)' id='hideExtdInfo' style='color:#646464;'>收起"
 				 + "			<img src='../images/up.gif' alt='Hide'>"
 				 + "		</a>"
 				 + "	</center>"
@@ -436,17 +447,42 @@ $(document).ready(function() {
 	}
 	
 	/**
-	 * special string filter for meaning
+	 * special character filter for string
 	 */
-	function strFilterForMeaning(str) {
+	function strFilter(str) {
 		// if the meaning match the condition which is "以 '数字+空格' 开头，后缀任意个字符", delete the number and space;
 		/*只要子字符串满足表达式，test()方法就会返回true，所以这里为了限制"以'数字+空格'开头"这个条件，
-		 * 要同时加上/\d/.test(str.substring(0,1))这个判断条件
+		 * 要同时加上/\d/.test(str.substring(0,1))这个判断条件或者加上"^"（匹配输入字符串的开始位置）
 		 */
-		if (/\d/.test(str.substring(0,1)) && /\d .*/.test(str)) {
+//		if (/\d/.test(str.substring(0,1)) && /\d .*/.test(str)) {
+		if (/^\d .*/.test(str)) {
 			str = str.substring(str.indexOf(" ") + 1);
 		}
-		return str;
+		
+		// ====to filter the useless character such as "&dn;","&fn;","&nbsp;" in meaning and example START ===========
+		var beginIndex = 0;
+		var endIndex = 0;
+		var flg = false;
+		$.each(str,function(i,n){
+			
+			if (n == "&") {
+				beginIndex = i;
+				flg = true;
+			} else if (flg && n == ";") {
+				endIndex = i;
+				flg = false;
+			}
+		});
+		var len = endIndex - beginIndex;
+		if (len >= 1 && len <= 5) {
+			var tmpStr;
+			tmpStr = str.substring(0,beginIndex);
+			tmpStr += str.substring(endIndex + 1);
+			str = tmpStr;
+		}
+		// ====to filter the useless string such as "&dn;","&fn;","&nbsp;" in meaning and example END =============
+		
+		return htmlEscape(str);
 	}
 	
 	// Enter Submit

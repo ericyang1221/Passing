@@ -1,5 +1,9 @@
 package com.passing.consts;
 
+/**
+ * @author weishijie
+ * login consts class
+ */
 public class LoginConsts {
 
 	/** login const */

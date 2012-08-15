@@ -2,10 +2,10 @@
 SELECT enword.word ,
   attr.extd_attr ,
   attr.mean ,
-  exmp.dict_id ,
-  exmp.word_id ,
-  exmp.part_of_speech ,
-  exmp.meaning_num ,
+  enword.dict_id ,
+  enword.word_id ,
+  attr.part_of_speech ,
+  attr.meaning_num ,
   exmp.example_num ,
   exmp.example_extd_attr ,
   exmp.en_exmp ,
@@ -19,9 +19,9 @@ ON attr.word_id         = exmp.word_id
 AND attr.dict_id        = exmp.dict_id
 AND attr.meaning_num    = exmp.meaning_num
 AND attr.part_of_speech = exmp.part_of_speech
-WHERE enword.word       = 'test'
+WHERE enword.word       like 'test%'
 
--- test search enWordInfo(no left join)-------------------
+-- test search enWordInfo(inner join)-------------------
 SELECT enword.word ,
   attr.extd_attr ,
   attr.mean ,
