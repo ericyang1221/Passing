@@ -23,7 +23,7 @@
   var text = document.getElementById("englishText").innerHTML;
    var s = document.createElement("script");
    s.type = 'text/javascript';
-   s.src = 'http://api.microsofttranslator.com/V2/Ajax.svc/Translate?oncomplete=doneCallback&appId=EHQXAJJqOyUWwOti0UQvYzi17SiwBUCzyUz5yD6nsCo=&from=en&to=ar' + '&text=' + text;
+   s.src = 'http://api.microsofttranslator.com/V2/Ajax.svc/Translate?oncomplete=doneCallback&appId=Bearer mstranslatetest&from=en&to=ar' + '&text=' + text;
    
    document.getElementsByTagName("head")[0].appendChild(s);
   </script>

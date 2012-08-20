@@ -28,10 +28,10 @@ public class MSTranslateTest {
 		call.setReturnType(org.apache.axis.encoding.XMLType.SOAP_STRING);
 		call.setSOAPActionURI("http://api.microsofttranslator.com/V2/LanguageService/Translate");
 		
-		String result = (String)call.invoke(new Object[]{"YOUR APPID HERE",str,"zh-CHS","zh-CHT"});
+		String result = (String)call.invoke(new Object[]{"EHQXAJJqOyUWwOti0UQvYzi17SiwBUCzyUz5yD6nsCo=",str,"zh-CHS","zh-CHT"});
 		
 		//result
-		System.out.println(result);
+		System.out.println("======" + result + "======");
 	}
 }
 

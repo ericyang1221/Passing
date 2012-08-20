@@ -1,32 +1,37 @@
-<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <script type="text/javascript">
+        var languageFrom = "en";
+        var languageTo = "de";
+        var text = "Use pixels to express measurements for padding and margins.";
+        function translate() {
+            PageMethods.GetAccessToken(OnSucceeded, OnFailed);
 
-<html>
-  <head>
-    <title>Translate API Example</title>
-  </head>
-  <body>
-    <div id="sourceText">Hello world</div>
-    <div id="translation"></div>
-    <script>
-      function translateText(response) {
-//          alert(response);
-        document.getElementById("translation").innerHTML += "<br>" + response.data.translations[0].translatedText;
-      }
-    </script>
-    <script>
-    
-      var newScript = document.createElement('script');
-      newScript.type = 'text/javascript';
-      var sourceText = escape(document.getElementById("sourceText").innerHTML);
-      
-      // WARNING: be aware that YOUR-API-KEY inside html is viewable by all your users.
-      // Restrict your key to designated domains or use a proxy to hide your key
-      // to avoid misuage by other party.
-      var source = 'https://www.googleapis.com/language/translate/v2?key=YAIzaSyAPFtr4ZmXRvVe5XPWyqV3NnXfif0kLz8M&source=en&target=de&callback=translateText&q=' + sourceText;
-      newScript.src = source;
+        }
+        function OnSucceeded(result, usercontext, methodName) {
 
-      // When we add this script to the head, the request is sent off.
-      document.getElementsByTagName('head')[0].appendChild(newScript);
+            window.mycallback = function (response) {
+                document.getElementById('<%= lblResult.ClientID %>').innerHTML = "Translation for <br />source text: '" + text + "'<br /> from en to de <br /> " + response;
+            }
+
+            var s = document.createElement("script");
+            s.src = "http://api.microsofttranslator.com/V2/Ajax.svc/Translate?oncomplete=mycallback&appId=Bearer " + encodeURIComponent(result.access_token) + "&from=" + languageFrom + "&to=" + languageTo + "&text=" + text;
+            document.getElementsByTagName("head")[0].appendChild(s);
+        }
+        function OnFailed(error, userContext, methodName) {
+            alert("Error");
+        }
     </script>
-  </body>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div>
+        <asp:ScriptManager ID="ScriptManager" runat="server" EnablePageMethods="true" />
+        <asp:Button ID="buttonTranslate" runat="server" Text="Translate" OnClientClick="translate();return false;" />
+        <br />
+        <asp:Label ID="lblResult" runat="server"></asp:Label>
+    </div>
+    </form>
+</body>
 </html>
