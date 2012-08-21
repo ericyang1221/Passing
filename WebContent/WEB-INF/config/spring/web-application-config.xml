@@ -97,6 +97,8 @@
 			<ref bean="passingUserDao"/>
 		</property>
 	</bean>
+	<bean id="accessTokenGen" class="com.passing.webservice.AccessTokenGen">
+	</bean>
 	
 	<!-- ACTION BEANS -->
 	<bean name="/doSearch" class="com.passing.struts.action.SearchEnToCnAction">
@@ -107,6 +109,11 @@
 	<bean name="/doLogin" class="com.passing.struts.action.LoginAction">
 		<property name="loginServiceBean">
 			<ref bean="loginServiceBean"/>
+		</property>
+	</bean>
+	<bean name="/doWebTranslate" class="com.passing.webservice.action.AccessTokenGenAction">
+		<property name="accessTokenGen">
+			<ref bean="accessTokenGen"/>
 		</property>
 	</bean>
 	
