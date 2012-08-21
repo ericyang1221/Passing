@@ -2,7 +2,8 @@
 
 <html>
   <head>
-    <title>Bing Translator Test</title>
+    <title>bingtranslatetest.html</title>
+    <script type="text/javascript" src="../js/jquery-1.7.js"></script>
   </head>
   <body>
    <div id="englishText">
@@ -13,19 +14,44 @@
    Arabic: 
    </div>
 
-   <input type="button" value="en 2 ar" onClick="translate();"/>
+   <input type="button" value="en 2 ar"/>
    <script type="text/javascript">
-   function doneCallback(response) {
-	   alert("1");
-   document.getElementById("arabicText").innerHTML +=response; }
-   </script>
-  <script type="text/javascript">
-  var text = document.getElementById("englishText").innerHTML;
-   var s = document.createElement("script");
-   s.type = 'text/javascript';
-   s.src = 'http://api.microsofttranslator.com/V2/Ajax.svc/Translate?oncomplete=doneCallback&appId=Bearer mstranslatetest&from=en&to=ar' + '&text=' + text;
+   $(document).ready(function() {
+	//   function onDoneCallBack(response) {
+//	   alert("1");
+//   document.getElementById("arabicText").innerHTML +=response; }
+
+	$('input[type=button]').click(function translate() {
+//	   AccessTokenGen.GetAccessToken(OnSucceeded, OnFailed);
+	   var options = {
+				url:'../doWebTranslate.do',
+				type:'POST',
+				dataType:'json',
+				success: OnSucceeded
+			};
+		$.ajax(options);
+   });
+
+   function OnSucceeded(result) {
+	   alert("OnSucceeded");
+	   window.mycallback = function(response) {
+		   document.getElementById("arabicText").innerHTML +=response;
+	   }
+	   
+	   var text = document.getElementById("englishText").innerHTML;
+	   var s = document.createElement("script");
+	   s.type = "text/javascript";
+	   s.src = "http://api.microsofttranslator.com/V2/Ajax.svc/Translate?oncomplete=mycallback&appId=Bearer " + result.access_token + "&from=en&to=ar&text=" + text;
+	   
+	   document.getElementsByTagName("head")[0].appendChild(s);
+   }
    
-   document.getElementsByTagName("head")[0].appendChild(s);
+//   function OnFailed(error) {
+//       alert("Error");
+//   }
+   });
+
+  
   </script>
   </body>
 </html>
