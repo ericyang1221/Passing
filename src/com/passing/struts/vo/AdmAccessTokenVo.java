@@ -1,16 +1,16 @@
-package com.passing.webservice.bean;
+package com.passing.struts.vo;
 
-public class AdmAccessToken {
+public class AdmAccessTokenVo {
 
 	public String access_token;
 	public String token_type;
 	public String expires_in;
 	public String scope;
 	
-	public AdmAccessToken(){
+	public AdmAccessTokenVo(){
 	}
 	
-	public AdmAccessToken(String access_token, String token_type,
+	public AdmAccessTokenVo(String access_token, String token_type,
 			String expires_in, String scope) {
 		super();
 		this.access_token = access_token;

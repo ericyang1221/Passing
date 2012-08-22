@@ -1,7 +1,9 @@
 $(document).ready(function() {
 	$('#searchTabs').tabs();
 	$('input[type=submit]').button();
+	$('button[id=bing-translate-butt]').button();
 	
+	/** ================================ search EnToCn START ============================================================*/
 	$('input[id=searchChtoEn]').click(function() {
 		if ($('input[name=searchStr]').val() == "") {
 			if ($("#errMsgDiv").text() == "对不起，没有找到你想要查询的单词！") {
@@ -484,7 +486,7 @@ $(document).ready(function() {
 		
 		return htmlEscape(str);
 	}
-	
+	/** ================================ search EnToCn END ============================================================*/
 	// Enter Submit
 	$("input[id='inputChToEn']").keydown(function(e) {
 		var curKey = e.which;
@@ -493,8 +495,35 @@ $(document).ready(function() {
 			return false;
 		}
 	});
-//	function exampleToggle(i, j) {
-//		alert("1");
-//		$("#ptsp" + i +"-mean" + j + "-exmp-all").toggle();
-//	}
+	
+	/** ================================ Bing Translate START ============================================================*/
+	// Bing Translate button click event
+	$('button[id=bing-translate-butt]').click(function() {
+		var options = {
+				url:'../doWebTranslate.do',
+				type:'POST',
+				dataType:'json',
+				success: BingTranslateSucceed
+			};
+		$.ajax(options);
+	});
+	
+	/** 
+	 * response function for Bing Translate request
+	 */
+	function BingTranslateSucceed(result) {
+		   
+		   window.mycallback = function(searchResponse) {
+			   $("#bing-translate-result").text(searchResponse);
+		   }
+		   
+		   var text = $('input[name=searchStr]').val();
+		   var from = $('select[name=from]').val();
+		   var to = $('select[name=to]').val();
+		   var s = document.createElement("script");
+		   s.type = "text/javascript";
+		   s.src = "http://api.microsofttranslator.com/V2/Ajax.svc/Translate?oncomplete=mycallback&appId=Bearer " + encodeURIComponent(result.response.access_token) + "&from=" + from + "&to=" + to + "&text=" + text;
+		   document.getElementsByTagName("head")[0].appendChild(s);
+	   }
+	/** ================================ Bing Translate END ============================================================*/
 });
