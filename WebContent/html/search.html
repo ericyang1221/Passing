@@ -138,33 +138,39 @@
 					</article>
 				</div>
  -->
- 					<center><div id="errMsgDiv" style="color:red;display:none;">请输入你想要查询的单词！</div></center>
+ 					<center><div id="errMsgDiv" style="margin-top:4em;color:red;display:none;">请输入你想要查询的单词！</div></center>
 				</div>
-				<div id="bing-translate-outter">
+				<div id="bing-translate-outter" style="margin-left:1em;margin-top:5em;margin-bottom:1em;">
 					<div id="bing-translate-inner">
-						<p>你也可以查看来自 Bing Translate 的翻译：</p>
-					<select name="from">
-						<option value="en">English</option>
-						<option value="zh-CHS">Chinese</option>
-						<option value="fr">French</option>
-						<option value="de">German</option>
-						<option value="ja">Japanese</option>
-						<option value="ko">Korean</option>
-						<option value="ru">Russian</option>
-					</select>
-					<label>→</label>
-					<select name="to">
-						<option value="zh-CHS">Chinese</option>
-						<option value="en">English</option>
-						<option value="fr">French</option>
-						<option value="de">German</option>
-						<option value="ja">Japanese</option>
-						<option value="ko">Korean</option>
-						<option value="ru">Russian</option>
-					</select>
-					<button id="bing-translate-butt">Bing</button>
+						<p style="color:#646464;">你也可以查看来自 Bing Translate 的翻译：</p>
+						<div id="bing-translate-inner-body">
+							<span>
+								<select name="from">
+									<option value="en">English</option>
+									<option value="zh-CHS">Chinese</option>
+									<option value="fr">French</option>
+									<option value="de">German</option>
+									<option value="ja">Japanese</option>
+									<option value="ko">Korean</option>
+									<option value="ru">Russian</option>
+								</select>
+								<label style="color:#646464;">→</label>
+								<select name="to">
+									<option value="zh-CHS">Chinese</option>
+									<option value="en">English</option>
+									<option value="fr">French</option>
+									<option value="de">German</option>
+									<option value="ja">Japanese</option>
+									<option value="ko">Korean</option>
+									<option value="ru">Russian</option>
+								</select>
+							</span>
+							<span style="margin-left:0.7em;">
+								<input id="bing-translate-butt" type="submit" value="Bing">
+							</span>
+						</div>
 					</div>
-					<div id="bing-translate-result"></div>
+					<div id="bing-translate-result" style="margin-top:1em;visibility:hidden;">正在查询</div>
 				</div>
 			</div>
 		</div>

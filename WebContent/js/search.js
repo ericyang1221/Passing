@@ -5,25 +5,37 @@ $(document).ready(function() {
 	
 	/** ================================ search EnToCn START ============================================================*/
 	$('input[id=searchChtoEn]').click(function() {
+		
 		if ($('input[name=searchStr]').val() == "") {
 			if ($("#errMsgDiv").text() == "对不起，没有找到你想要查询的单词！") {
 				$("#errMsgDiv").text("请输入你想要查询的单词！");
 			// null search after one search action succeed
 			} else if ($("#errMsgDiv").text() == "Research After Success") {
-				var errMsg = "<center><div id='errMsgDiv' style='color:red;'>请输入你想要查询的单词！</div></center>";
+				var errMsg = "<center><div id='errMsgDiv' style='margin-top:4em;color:red;'>请输入你想要查询的单词！</div></center>";
 
 				$('#allInfo').empty();
 				$('#allInfo').append(errMsg);
 				$('#allInfo').fadeIn("slow");
 				$('#outer-line').fadeIn("slow");
+				// hide the bing translate result
+				$("#bing-translate-result").css("visibility","hidden");
 				return ;
 			}
 			
 			$("#errMsgDiv").css("display","block");
 			$('#allInfo').fadeIn("slow");
 			$('#outer-line').fadeIn("slow");
+			// hide the bing translate result
+			$("#bing-translate-result").css("visibility","hidden");
+			$("#bing-translate-result").css("color","black");
+			$("#bing-translate-result").text("正在查询.");
 			return ;
 		}
+		
+		// hide the bing translate result
+		$("#bing-translate-result").css("visibility","hidden");
+		$("#bing-translate-result").css("color","black");
+		$("#bing-translate-result").text("正在查询.");
 		
 		var searchStr = "searchStr=" + $('input[name=searchStr]').val();
 		var options = {
@@ -46,7 +58,7 @@ $(document).ready(function() {
 		
 		var enWordArr = result.enWordResponse.enWordInfo;
 		if (enWordArr == null) {
-			var errMsg = "<center><div id='errMsgDiv' style='color:red;'>对不起，没有找到你想要查询的单词！</div></center>";
+			var errMsg = "<center><div id='errMsgDiv' style='margin-top:4em;color:red;'>对不起，没有找到你想要查询的单词！</div></center>";
 
 			$('#allInfo').append(errMsg);
 			$('#allInfo').fadeIn("slow");
@@ -179,7 +191,8 @@ $(document).ready(function() {
 		}
 		// <div id='enWordInfoDiv-all'> end
 		wrapStr += 
-			   "</div>";
+			   "</div>"
+			 + "<center><div id='errMsgDiv' style='color:red;display:none;'>Research After Success</div></center>";
 		
 		// to process enWordInfo END
 			
@@ -329,8 +342,7 @@ $(document).ready(function() {
 				 + "			<img src='../images/up.gif' alt='Hide'>"
 				 + "		</a>"
 				 + "	</center>"
-				 + "</div>"
-				 + "<center><div id='errMsgDiv' style='color:red;display:none;'>Research After Success</div></center>";
+				 + "</div>";
 		}
 		// to process enExtdWordInfo END
 			
@@ -497,33 +509,89 @@ $(document).ready(function() {
 	});
 	
 	/** ================================ Bing Translate START ============================================================*/
+	// Time between which the access token obtained and cuurent time
+	var tokenValidTime = 0;
+	// save the access token obtained through doWebTranslate.do
+	var accessToken;
+	// flag if the access token is renewed
+	var renewFlg = true;
 	// Bing Translate button click event
-	$('button[id=bing-translate-butt]').click(function() {
-		var options = {
-				url:'../doWebTranslate.do',
-				type:'POST',
-				dataType:'json',
-				success: BingTranslateSucceed
-			};
-		$.ajax(options);
+	$('input[id=bing-translate-butt]').click(function() {
+		if ($('input[name=searchStr]').val() == "") {
+			$("#bing-translate-result").text("请输入你想要查询的单词！");
+			$("#bing-translate-result").Error;
+			$("#bing-translate-result").css("visibility","visible");
+			$("#bing-translate-result").css("color","red");
+			return;
+		}
+		
+		// if elapsed time doesn't exceed 600 sec,doesn't need to renew access key
+		if (tokenValidTime > 0 && tokenValidTime < 599) {
+			renewFlg = false;
+			BingTranslateSucceed(accessToken);
+		// if elapsed time exceeds 600 sec,renew access key
+		} else {
+			renewFlg = true;
+			var options = {
+					url:'../doWebTranslate.do',
+					type:'POST',
+					dataType:'json',
+					success: BingTranslateSucceed
+				};
+			$.ajax(options);
+			// initialize tokenValidTime once renew a access token
+			tokenValidTime = 0;
+		}
+		
+		if ($('input[name=searchStr]').val() != "" && $("#bing-translate-result").text() == "请输入你想要查询的单词！") {
+			$("#bing-translate-result").text("正在查询.");
+		}
+		
+		$("#bing-translate-result").css("visibility","visible");
+		$("#bing-translate-result").css("color","black");
+		
+		clock = setInterval(SimulatedWaiting,700);
+		// bing access token is valid in 10 minutes(600 sec), so need a counter to control if a new doWebTranslate.do action need to be called
+		setInterval(function(){tokenValidTime ++;},1000);
 	});
 	
 	/** 
 	 * response function for Bing Translate request
 	 */
 	function BingTranslateSucceed(result) {
-		   
-		   window.mycallback = function(searchResponse) {
-			   $("#bing-translate-result").text(searchResponse);
-		   }
-		   
-		   var text = $('input[name=searchStr]').val();
-		   var from = $('select[name=from]').val();
-		   var to = $('select[name=to]').val();
-		   var s = document.createElement("script");
-		   s.type = "text/javascript";
-		   s.src = "http://api.microsofttranslator.com/V2/Ajax.svc/Translate?oncomplete=mycallback&appId=Bearer " + encodeURIComponent(result.response.access_token) + "&from=" + from + "&to=" + to + "&text=" + text;
-		   document.getElementsByTagName("head")[0].appendChild(s);
-	   }
+		window.mycallback = function(searchResponse) {
+			clearInterval(clock);
+			$("#bing-translate-result").text(searchResponse);
+//			$("#bing-translate-result").text(searchResponse + "   clock:" + clock);
+			
+			// initialize the counter after a succeed Bing Translate request
+			sec = 1;
+		}
+		if (!renewFlg) {
+			accessToken = result;
+		} else {
+			accessToken = encodeURIComponent(result.response.access_token);
+		}
+		
+		var text = $('input[name=searchStr]').val();
+		var from = $('select[name=from]').val();
+		var to = $('select[name=to]').val();
+		var s = document.createElement("script");
+		s.type = "text/javascript";
+		s.src = "http://api.microsofttranslator.com/V2/Ajax.svc/Translate?oncomplete=mycallback&appId=Bearer " + accessToken + "&from=" + from + "&to=" + to + "&text=" + text;
+		document.getElementsByTagName("head")[0].appendChild(s);
+	}
+	
+	var clock;
+	var sec = 1;
+	/** 
+	 * Simulated waiting for Bing Translate request
+	 */
+	function SimulatedWaiting() {
+//		$("#bing-translate-result").css("visibility","visible");
+//		$("#bing-translate-result").css("color","black");
+		$("#bing-translate-result").text(sec % 3 == 1 ? "正在查询." : (sec % 3 == 2 ? "正在查询.." : "正在查询..."));
+		sec ++;
+	}
 	/** ================================ Bing Translate END ============================================================*/
 });

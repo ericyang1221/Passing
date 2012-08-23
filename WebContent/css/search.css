@@ -52,3 +52,11 @@ input[name=transferButton]{
 hr{
 	border:0.0625em dotted #E7E7E7;
 }
+#bing-translate-butt{
+	height:1.5em;
+	padding-top:0.0625em;
+	font-size:0.9em;
+}
+select{
+	color:#646464;
+}
