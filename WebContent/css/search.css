@@ -52,11 +52,27 @@ input[name=transferButton]{
 hr{
 	border:0.0625em dotted #E7E7E7;
 }
-#bing-translate-butt{
+#bing-translate-butt-div{
 	height:1.5em;
-	padding-top:0.0625em;
+	width:3em;
+	margin-left:1em;
+	border:solid 0.0625em #CCC;
+	background:#313131;
+	border-bottom-left-radius: 0.2em;
+	border-bottom-right-radius: 0.2em;
+	border-top-left-radius: 0.2em;
+	border-top-right-radius: 0.2em;
+	
+}
+#bing-translate-butt{
+	position:relative;
+	top:0.2em;
+	left:0.7em;
 	font-size:0.9em;
+	color:white;
+	/* delete the under line*/
+	text-decoration:none;
+	/* delete the displayed dotted line after click(for firefox and ie)*/
+	outline:none;
 }
-select{
-	color:#646464;
-}
+

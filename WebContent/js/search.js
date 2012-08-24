@@ -1,7 +1,6 @@
 $(document).ready(function() {
 	$('#searchTabs').tabs();
 	$('input[type=submit]').button();
-	$('button[id=bing-translate-butt]').button();
 	
 	/** ================================ search EnToCn START ============================================================*/
 	$('input[id=searchChtoEn]').click(function() {
@@ -148,8 +147,8 @@ $(document).ready(function() {
 						if (exampleNum[j] != "") {
 						wrapStr += 
 //						   "		<a href='javascript:void(0)' id='ptsp" + i + "-mean" + j + "' onclick='exampleToggle(" + i + ", " + j + ")'>"
-						   "		<a href='javascript:void(0)' id='ptsp" + i + "-mean" + j + "'>"
-						 + "			<img src='../images/sent_on.gif' alt='例句' title='点击显示/隐藏例句'>"
+						   "		<a href='javascript:void(0)' id='ptsp" + i + "-mean" + j + "' Style='outline:none;'>"
+						 + "			<img src='../images/sent_on.gif' alt='例句' title='点击显示/隐藏例句' border='0'>"
 						 + "		</a>";
 						}
 						wrapStr += 
@@ -231,8 +230,8 @@ $(document).ready(function() {
 				   "<br><br><br>"
 				 + "<div id='more'>"
 				 + "	<center>"
-				 + "		<a href='javascript:void(0)' id='moreInfo' style='color:#646464;'>更多详细释义"
-				 + "			<img src='../images/down.gif' alt='More'>"
+				 + "		<a href='javascript:void(0)' id='moreInfo' style='color:#646464;' Style='outline:none;'>更多详细释义"
+				 + "			<img src='../images/down.gif' alt='More' border='0'>"
 				 + "		</a>"
 				 + "	</center>"
 				 + "</div>"
@@ -291,8 +290,8 @@ $(document).ready(function() {
 							// only the meaning that has examples will be given a "点击显示/隐藏例句" href
 							if (extdWordExmpNum[j] != "") {
 							wrapStr += 
-							   "		<a href='javascript:void(0)' id='extdword-ptsp" + i + "-mean" + j + "'>"
-							 + "			<img src='../images/sent_on.gif' alt='例句' title='点击显示/隐藏例句'>"
+							   "		<a href='javascript:void(0)' id='extdword-ptsp" + i + "-mean" + j + "' Style='outline:none;'>"
+							 + "			<img src='../images/sent_on.gif' alt='例句' title='点击显示/隐藏例句' border='0'>"
 							 + "		</a>";
 							}
 							wrapStr += 
@@ -338,8 +337,8 @@ $(document).ready(function() {
 				   "</div>"
 				 + "<div id='hide' style='display:none'>"
 				 + "	<center>"
-				 + "		<a href='javascript:void(0)' id='hideExtdInfo' style='color:#646464;'>收起"
-				 + "			<img src='../images/up.gif' alt='Hide'>"
+				 + "		<a href='javascript:void(0)' id='hideExtdInfo' style='color:#646464;' Style='outline:none;'>收起"
+				 + "			<img src='../images/up.gif' alt='Hide' border='0'>"
 				 + "		</a>"
 				 + "	</center>"
 				 + "</div>";
@@ -515,8 +514,14 @@ $(document).ready(function() {
 	var accessToken;
 	// flag if the access token is renewed
 	var renewFlg = true;
+	// flag if the privious bing translate request has done
+	var preReqDoneFlg = true;
+	
 	// Bing Translate button click event
-	$('input[id=bing-translate-butt]').click(function() {
+	$('a[id=bing-translate-butt]').click(function() {
+		if (!preReqDoneFlg) {
+			return;
+		}
 		if ($('input[name=searchStr]').val() == "") {
 			$("#bing-translate-result").text("请输入你想要查询的单词！");
 			$("#bing-translate-result").Error;
@@ -528,10 +533,12 @@ $(document).ready(function() {
 		// if elapsed time doesn't exceed 600 sec,doesn't need to renew access key
 		if (tokenValidTime > 0 && tokenValidTime < 599) {
 			renewFlg = false;
+			preReqDoneFlg = false;
 			BingTranslateSucceed(accessToken);
 		// if elapsed time exceeds 600 sec,renew access key
 		} else {
 			renewFlg = true;
+			preReqDoneFlg = false;
 			var options = {
 					url:'../doWebTranslate.do',
 					type:'POST',
@@ -560,6 +567,8 @@ $(document).ready(function() {
 	 */
 	function BingTranslateSucceed(result) {
 		window.mycallback = function(searchResponse) {
+			preReqDoneFlg = true;
+			
 			clearInterval(clock);
 			$("#bing-translate-result").text(searchResponse);
 //			$("#bing-translate-result").text(searchResponse + "   clock:" + clock);
@@ -593,5 +602,21 @@ $(document).ready(function() {
 		$("#bing-translate-result").text(sec % 3 == 1 ? "正在查询." : (sec % 3 == 2 ? "正在查询.." : "正在查询..."));
 		sec ++;
 	}
+	
+	// div that simulates bing translate button
+	$('#bing-translate-butt').mouseover(function(){
+		$('#bing-translate-butt-div').css("background","#515151");
+	});
+	$('#bing-translate-butt').mouseout(function(){
+		$('#bing-translate-butt-div').css("background","#313131");
+	});
+	$('#bing-translate-butt').mousedown(function(){
+		$('#bing-translate-butt-div').css("background","white");
+		$(this).css("color","black");
+	});
+	$('#bing-translate-butt').mouseup(function(){
+		$('#bing-translate-butt-div').css("background","#313131");
+		$(this).css("color","white");
+	});
 	/** ================================ Bing Translate END ============================================================*/
 });
