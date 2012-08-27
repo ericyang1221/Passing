@@ -17,7 +17,7 @@ $(document).ready(function() {
 				$('#allInfo').fadeIn("slow");
 				$('#outer-line').fadeIn("slow");
 				// hide the bing translate result
-				$("#bing-translate-result").css("visibility","hidden");
+				$("#bing-translate-result-div").css("display","none");
 				return ;
 			}
 			
@@ -25,16 +25,9 @@ $(document).ready(function() {
 			$('#allInfo').fadeIn("slow");
 			$('#outer-line').fadeIn("slow");
 			// hide the bing translate result
-			$("#bing-translate-result").css("visibility","hidden");
-			$("#bing-translate-result").css("color","black");
-			$("#bing-translate-result").text("正在查询.");
+			$("#bing-translate-result-div").css("display","none");
 			return ;
 		}
-		
-		// hide the bing translate result
-		$("#bing-translate-result").css("visibility","hidden");
-		$("#bing-translate-result").css("color","black");
-		$("#bing-translate-result").text("正在查询.");
 		
 		var searchStr = "searchStr=" + $('input[name=searchStr]').val();
 		var options = {
@@ -45,6 +38,9 @@ $(document).ready(function() {
 				success: searchResponse
 			};
 		$.ajax(options); 
+		
+		// Call Bing Translate
+		BingTranslate();
 	});
 
 	/** 
@@ -516,15 +512,17 @@ $(document).ready(function() {
 	var renewFlg = true;
 	// flag if the privious bing translate request has done
 	var preReqDoneFlg = true;
-	
+
+	/** ==================== Delete bing translate button and select box due to review result by Eric START================
 	// Bing Translate button click event
-	$('a[id=bing-translate-butt]').click(function() {
+	$('a[id=bing-translate-butt]').click(BingTranslate);
+	
+	function BingTranslate() {
 		if (!preReqDoneFlg) {
 			return;
 		}
 		if ($('input[name=searchStr]').val() == "") {
 			$("#bing-translate-result").text("请输入你想要查询的单词！");
-			$("#bing-translate-result").Error;
 			$("#bing-translate-result").css("visibility","visible");
 			$("#bing-translate-result").css("color","red");
 			return;
@@ -560,7 +558,51 @@ $(document).ready(function() {
 		clock = setInterval(SimulatedWaiting,700);
 		// bing access token is valid in 10 minutes(600 sec), so need a counter to control if a new doWebTranslate.do action need to be called
 		setInterval(function(){tokenValidTime ++;},1000);
-	});
+	}
+	==================== Delete bing translate button and select box due to review result by Eric END================ */
+	
+	/** ================ Bing Translate for $('input[id=searchChtoEn]').click START ================================= */
+	function BingTranslate() {
+		$("#bing-translate-result-div").css("display","block");
+		if (!preReqDoneFlg) {
+			return;
+		}
+		if ($('input[name=searchStr]').val() == "") {
+			$("#bing-translate-result-div").css("visibility","hidden");
+			return;
+		}
+		
+		// if elapsed time doesn't exceed 600 sec,doesn't need to renew access key
+		if (tokenValidTime > 0 && tokenValidTime < 599) {
+			renewFlg = false;
+			preReqDoneFlg = false;
+			BingTranslateSucceed(accessToken);
+		// if elapsed time exceeds 600 sec,renew access key
+		} else {
+			renewFlg = true;
+			preReqDoneFlg = false;
+			var options = {
+					url:'../doWebTranslate.do',
+					type:'POST',
+					dataType:'json',
+					success: BingTranslateSucceed
+				};
+			$.ajax(options);
+			// initialize tokenValidTime once renew a access token
+			tokenValidTime = 0;
+		}
+		
+		if ($('input[name=searchStr]').val() != "" && $("#bing-translate-result").text() == "请输入你想要查询的单词！") {
+			$("#bing-translate-result").text("正在查询.");
+		}
+		
+		$("#bing-translate-result-div").css("visibility","visible");
+		
+		clock = setInterval(SimulatedWaiting,700);
+		// bing access token is valid in 10 minutes(600 sec), so need a counter to control if a new doWebTranslate.do action need to be called
+		setInterval(function(){tokenValidTime ++;},1000);
+	}
+	/** ================ Bing Translate for $('input[id=searchChtoEn]').click END ================================= */
 	
 	/** 
 	 * response function for Bing Translate request
@@ -583,8 +625,10 @@ $(document).ready(function() {
 		}
 		
 		var text = $('input[name=searchStr]').val();
-		var from = $('select[name=from]').val();
-		var to = $('select[name=to]').val();
+//		var from = $('select[name=from]').val();
+		var from = "en";
+//		var to = $('select[name=to]').val();
+		var to = "zh-CHS";
 		var s = document.createElement("script");
 		s.type = "text/javascript";
 		s.src = "http://api.microsofttranslator.com/V2/Ajax.svc/Translate?oncomplete=mycallback&appId=Bearer " + accessToken + "&from=" + from + "&to=" + to + "&text=" + text;
@@ -597,12 +641,13 @@ $(document).ready(function() {
 	 * Simulated waiting for Bing Translate request
 	 */
 	function SimulatedWaiting() {
-//		$("#bing-translate-result").css("visibility","visible");
+		$("#bing-translate-result").css("visibility","visible");
 //		$("#bing-translate-result").css("color","black");
 		$("#bing-translate-result").text(sec % 3 == 1 ? "正在查询." : (sec % 3 == 2 ? "正在查询.." : "正在查询..."));
 		sec ++;
 	}
 	
+	/** ==================== Delete bing translate button and select box due to review result by Eric START================
 	// div that simulates bing translate button
 	$('#bing-translate-butt').mouseover(function(){
 		$('#bing-translate-butt-div').css("background","#515151");
@@ -618,5 +663,7 @@ $(document).ready(function() {
 		$('#bing-translate-butt-div').css("background","#313131");
 		$(this).css("color","white");
 	});
+	==================== Delete bing translate button and select box due to review result by Eric END================ */
+	
 	/** ================================ Bing Translate END ============================================================*/
 });
