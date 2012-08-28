@@ -1,6 +1,7 @@
 $(document).ready(function() {
 	$('#searchTabs').tabs();
 	$('input[type=submit]').button();
+	$('input[name=searchStr]').autocomplete({ source: ["c++", "java", "php", "coldfusion", "javascript", "asp", "ruby"] });
 	
 	/** ================================ search EnToCn START ============================================================*/
 	$('input[id=searchChtoEn]').click(function() {
