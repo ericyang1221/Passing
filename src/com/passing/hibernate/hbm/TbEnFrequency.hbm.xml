@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- 
+    apping file generated manually
+-->
+<hibernate-mapping>
+    <class name="com.passing.hibernate.beans.TbEnFrequency" table="TB_EN_FREQUENCY" schema="PASSING">
+        <id name="word_id" type="java.lang.Integer">
+            <column name="WORD_ID" precision="8" scale="0" />
+        </id>
+        <property name="word" type="java.lang.String">
+            <column name="WORD" length="50" not-null="true"/>
+        </property>
+        <property name="frequency" type="java.lang.String">
+            <column name="FREQUENCY" length="10" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -22,7 +22,9 @@
 			<forward name="success" path="/html/search.html"></forward>
 			<forward name="failure" path="/html/login.html"></forward>
 		</action>
-		<action path="/doWebTranslate" type="org.springframework.web.struts.DelegatingActionProxy" input="/html/bingtranslatetest.html" scope="request" validate="false">
+		<action path="/doWebTranslate" type="org.springframework.web.struts.DelegatingActionProxy" input="/html/search.html" scope="request" validate="false">
+		</action>
+		<action path="/doAutoComplete" type="org.springframework.web.struts.DelegatingActionProxy" input="/html/search.html" scope="request" validate="false">
 		</action>
 	</action-mappings>
 	

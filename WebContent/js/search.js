@@ -1,7 +1,6 @@
 $(document).ready(function() {
 	$('#searchTabs').tabs();
 	$('input[type=submit]').button();
-	$('input[name=searchStr]').autocomplete({ source: ["c++", "java", "php", "coldfusion", "javascript", "asp", "ruby"] });
 	
 	/** ================================ search EnToCn START ============================================================*/
 	$('input[id=searchChtoEn]').click(function() {
@@ -667,4 +666,34 @@ $(document).ready(function() {
 	==================== Delete bing translate button and select box due to review result by Eric END================ */
 	
 	/** ================================ Bing Translate END ============================================================*/
+	
+	/** ================================ Auto Complete START ============================================================*/
+//	$('input[name=searchStr]').autocomplete({ source: autoComplete});
+	$('input[name=searchStr]').keyup(autoComplete);
+	
+	var preContent = "";
+	function autoComplete() {
+		var content = $(this).val();
+		if (preContent != content && content.length != 0) {
+			alert("request");
+			var searchStr = "searchStr=" + $('input[name=searchStr]').val();
+			var options = {
+					url:'../doAutoComplete.do',
+					type:'POST',
+					dataType:'json',
+					data:searchStr,
+					success: autoCompleteResponse
+				};
+			$.ajax(options); 
+		}
+		preContent = content;
+	}
+	
+	function autoCompleteResponse(result) {
+		
+		var sourceWords = result.source;
+		alert(sourceWords);
+		return sourceWords;
+	}
+	/** ================================ Auto Complete END ============================================================*/
 });

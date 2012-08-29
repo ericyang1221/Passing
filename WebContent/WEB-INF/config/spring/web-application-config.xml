@@ -99,6 +99,11 @@
 	</bean>
 	<bean id="accessTokenGen" class="com.passing.spring.service.impl.AccessTokenGen">
 	</bean>
+	<bean id="autoCompleteServiceBean" class="com.passing.spring.service.impl.AutoCompleteServiceBean">
+		<property name="tbEnFrequencyDao">
+			<ref bean="tbEnFrequencyDao"/>
+		</property>
+	</bean>
 	
 	<!-- ACTION BEANS -->
 	<bean name="/doSearch" class="com.passing.struts.action.SearchEnToCnAction">
@@ -114,6 +119,11 @@
 	<bean name="/doWebTranslate" class="com.passing.struts.action.AccessTokenGenAction">
 		<property name="accessTokenGen">
 			<ref bean="accessTokenGen"/>
+		</property>
+	</bean>
+	<bean name="/doAutoComplete" class="com.passing.struts.action.AutoCompleteAction">
+		<property name="autoCompleteServiceBean">
+			<ref bean="autoCompleteServiceBean"/>
 		</property>
 	</bean>
 	

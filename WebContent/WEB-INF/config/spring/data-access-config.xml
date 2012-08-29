@@ -58,6 +58,9 @@
 				<value>
 					com/passing/hibernate/hbm/TbEnExtdWordExmp.hbm.xml
 				</value>
+				<value>
+					com/passing/hibernate/hbm/TbEnFrequency.hbm.xml
+				</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">
@@ -91,6 +94,12 @@
 	</bean>
 	<bean id="tbEnWordDao"
 		class="com.passing.hibernate.dao.impl.TbEnWordDaoBean">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="tbEnFrequencyDao"
+		class="com.passing.hibernate.dao.impl.TbEnFrequencyDaoBean">
 		<property name="sessionFactory">
 			<ref bean="sessionFactory" />
 		</property>
