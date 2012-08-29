@@ -668,32 +668,25 @@ $(document).ready(function() {
 	/** ================================ Bing Translate END ============================================================*/
 	
 	/** ================================ Auto Complete START ============================================================*/
-//	$('input[name=searchStr]').autocomplete({ source: autoComplete});
-	$('input[name=searchStr]').keyup(autoComplete);
-	
-	var preContent = "";
-	function autoComplete() {
-		var content = $(this).val();
-		if (preContent != content && content.length != 0) {
-			alert("request");
-			var searchStr = "searchStr=" + $('input[name=searchStr]').val();
+	// @see jQuery UI
+	// The callback for source gets two arguments:request and response
+	$('input[name=searchStr]').autocomplete({source: autoComplete});
+	// A request object, with a single property called "term", which refers to the value currently in the text input.
+	// A response callback, which expects a single argument to contain the data to suggest to the user.
+	function autoComplete(request, response) {
 			var options = {
 					url:'../doAutoComplete.do',
 					type:'POST',
 					dataType:'json',
-					data:searchStr,
-					success: autoCompleteResponse
+					data:{searchStr:request.term},
+					success:function(result) {
+						response(result.matchedWords);
+//						response($.map(result.matchedWords, function(item){
+//							return item;
+//						}));
+					}
 				};
 			$.ajax(options); 
-		}
-		preContent = content;
-	}
-	
-	function autoCompleteResponse(result) {
-		
-		var sourceWords = result.source;
-		alert(sourceWords);
-		return sourceWords;
 	}
 	/** ================================ Auto Complete END ============================================================*/
 });

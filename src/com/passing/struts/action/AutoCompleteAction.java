@@ -24,8 +24,23 @@ public class AutoCompleteAction extends BaseAction {
 		String searchStr = request.getParameter("searchStr");
 
 		List<String> searchRst = autoCompleteServiceBean.searchForAutoComplete(searchStr);
+		// test code
+//		if (searchStr.equals("t")) {
+//			searchRst.add("test");
+//			searchRst.add("teacher");
+//			searchRst.add("teach");
+//			searchRst.add("tree");
+//		} else if (searchStr.equals("te")){
+//			searchRst.add("test");
+//			searchRst.add("teacher");
+//			searchRst.add("teach");
+//		} else if (searchStr.equals("tea")) {
+//			searchRst.add("teacher");
+//			searchRst.add("teach");
+//		}
+		
 
-		super.makeJSONObject(response, "source", searchRst);
+		super.makeJSONObject(response, "matchedWords", searchRst);
 
 		return mapping.findForward(null);
 		
