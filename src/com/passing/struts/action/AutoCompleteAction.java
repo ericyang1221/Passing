@@ -9,7 +9,6 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import com.passing.hibernate.beans.TbEnFrequency;
 import com.passing.spring.service.impl.AutoCompleteServiceBean;
 
 public class AutoCompleteAction extends BaseAction {
@@ -24,21 +23,6 @@ public class AutoCompleteAction extends BaseAction {
 		String searchStr = request.getParameter("searchStr");
 
 		List<String> searchRst = autoCompleteServiceBean.searchForAutoComplete(searchStr);
-		// test code
-//		if (searchStr.equals("t")) {
-//			searchRst.add("test");
-//			searchRst.add("teacher");
-//			searchRst.add("teach");
-//			searchRst.add("tree");
-//		} else if (searchStr.equals("te")){
-//			searchRst.add("test");
-//			searchRst.add("teacher");
-//			searchRst.add("teach");
-//		} else if (searchStr.equals("tea")) {
-//			searchRst.add("teacher");
-//			searchRst.add("teach");
-//		}
-		
 
 		super.makeJSONObject(response, "matchedWords", searchRst);
 

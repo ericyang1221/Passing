@@ -10,6 +10,7 @@ public interface TbEnFrequencyDao {
 	 * @return a list contains matched records for auto complete source
 	 */
 	List<TbEnFrequency> searchForAutoComplete(String searchWord);
-	
+	boolean insertWord(TbEnFrequency wordInFrequency);
+	boolean updateWordFrequency(TbEnFrequency wordInFrequency);
 	
 }

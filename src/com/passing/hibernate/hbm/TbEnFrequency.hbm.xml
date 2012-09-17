@@ -12,7 +12,7 @@
         <property name="word" type="java.lang.String">
             <column name="WORD" length="50" not-null="true"/>
         </property>
-        <property name="frequency" type="java.lang.String">
+        <property name="frequency" type="java.lang.Integer">
             <column name="FREQUENCY" length="10" not-null="true" />
         </property>
     </class>

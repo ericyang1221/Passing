@@ -104,6 +104,11 @@
 			<ref bean="tbEnFrequencyDao"/>
 		</property>
 	</bean>
+	<bean id="updFrequencyTbServiceBean" class="com.passing.spring.service.impl.UpdFrequencyTbServiceBean">
+		<property name="tbEnFrequencyDao">
+			<ref bean="tbEnFrequencyDao"/>
+		</property>
+	</bean>
 	
 	<!-- ACTION BEANS -->
 	<bean name="/doSearch" class="com.passing.struts.action.SearchEnToCnAction">
@@ -124,6 +129,11 @@
 	<bean name="/doAutoComplete" class="com.passing.struts.action.AutoCompleteAction">
 		<property name="autoCompleteServiceBean">
 			<ref bean="autoCompleteServiceBean"/>
+		</property>
+	</bean>
+	<bean name="/doUpdFrequencyTb" class="com.passing.struts.action.UpdFrequencyTbAction">
+		<property name="updFrequencyTbServiceBean">
+			<ref bean="updFrequencyTbServiceBean"/>
 		</property>
 	</bean>
 	

@@ -41,7 +41,7 @@ public abstract class AbstractTbEnFrequency  implements java.io.Serializable {
 	}
 
 	public String getWord() {
-		return word;
+		return word.trim();
 	}
 
 	public void setWord(String word) {

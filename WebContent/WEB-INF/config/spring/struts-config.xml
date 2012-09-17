@@ -22,10 +22,10 @@
 			<forward name="success" path="/html/search.html"></forward>
 			<forward name="failure" path="/html/login.html"></forward>
 		</action>
-		<action path="/doWebTranslate" type="org.springframework.web.struts.DelegatingActionProxy" input="/html/search.html" scope="request" validate="false">
-		</action>
-		<action path="/doAutoComplete" type="org.springframework.web.struts.DelegatingActionProxy" input="/html/search.html" scope="request" validate="false">
-		</action>
+		<action path="/doWebTranslate" type="org.springframework.web.struts.DelegatingActionProxy" input="/html/search.html" scope="request" validate="false" />
+		<action path="/doAutoComplete" type="org.springframework.web.struts.DelegatingActionProxy" input="/html/search.html" scope="request" validate="false" />
+		<action path="/doUpdFrequencyTb" type="org.springframework.web.struts.DelegatingActionProxy" input="/html/search.html" scope="request" validate="false" />
+		
 	</action-mappings>
 	
 	<!-- spring与struts整合：把struts的Action托管给spring -->

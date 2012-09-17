@@ -11,6 +11,7 @@
 				<value>classpath:../config/spring/jdbc.properties</value>
 			</list>
 		</property>
+		
 	</bean>
 
 	<bean id="dataSource"
@@ -68,6 +69,7 @@
 				<prop key="hibernate.dialect">
 					org.hibernate.dialect.Oracle9Dialect
 				</prop>
+				<prop key="hibernate.connection.autocommit">false</prop>
 			<!-- 由于配置了log4j以进行日志记录，这里关闭hibernate自带的show sql功能 -->
 			<!--	<prop key="hibernate.show_sql">true</prop> -->
 			<!--	<prop key="hibernate.format_sql">true</prop> -->
@@ -77,6 +79,7 @@
 		<property name="dataSource">
 			<ref bean="dataSource" />
 		</property>
+		
 	</bean>
 
 	<!-- DAO -->

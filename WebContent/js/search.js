@@ -28,8 +28,8 @@ $(document).ready(function() {
 			$("#bing-translate-result-div").css("display","none");
 			return ;
 		}
-		
-		var searchStr = "searchStr=" + $('input[name=searchStr]').val();
+		tmpSearchWord = $('input[name=searchStr]').val();
+		var searchStr = "searchStr=" + tmpSearchWord;
 		var options = {
 				url:'../doSearch.do',
 				type:'POST',
@@ -43,6 +43,8 @@ $(document).ready(function() {
 		BingTranslate();
 	});
 
+	// template word that contains word which was searched
+	var tmpSearchWord = "";
 	/** 
 	 * response function for searchEnToCn request
 	 */
@@ -87,6 +89,18 @@ $(document).ready(function() {
 			exmpMeaning[i] = strFilter($.trim(enWordArr[i].exmpMeaning));
 		}
 
+		/** To insert or update tb_en_frequency for auto complete */
+		var dataInfo = "wordId=" + wordId[0] + "&word=" + tmpSearchWord;
+		var options = {
+				url:'../doUpdFrequencyTb.do',
+				type:'POST',
+				dataType:'json',
+				data:dataInfo
+				// does not need response function 
+//				success: updFrenquencyTbResponse
+			};
+		$.ajax(options);
+		
 		var wrapStr = 
 			"<div id='enWordInfoDiv-all'>";
 		
