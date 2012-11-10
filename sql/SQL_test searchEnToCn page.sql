@@ -21,6 +21,7 @@ AND attr.meaning_num    = exmp.meaning_num
 AND attr.part_of_speech = exmp.part_of_speech
 WHERE enword.word       like 'test%'
 
+
 -- test search enWordInfo(inner join)-------------------
 SELECT enword.word ,
   attr.extd_attr ,
