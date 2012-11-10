@@ -38,8 +38,17 @@ $(document).ready(function(){
 	        }
 	    }
 	});
+	// common.css
+	$.include('../css/common.css');
+	// jquery ui plugin
 	$.include('../js/jquery-ui-1.8.21.custom.min.js');
 	$.include('../css/black-tie/jquery-ui-1.8.21.custom.css');
+	
+	// add button style
+	$("input[type='submit']").button();
+	$("input[type='reset']").button();
+	$("input[type='button']").button();
+	$("button").button();
 	
 	$("footer").append("<center style='color:#A5A2A2;font-size:0.6em;'>Copyright(c) Passing Corporation. All Rights Reserved.</center>");
 });
